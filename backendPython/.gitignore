@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+env/
+venv/
+ENV/
+ENV.bak/
+venv.bak/
+.venv/
+.venv.bak/
+
+# Local environment variables
+.env
+*.env
+
+# IDE configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Pytest
+.pytest_cache/
+.cache/
+.tox/
+coverage/
+*.cover
+.hypothesis/
+
+# Logs
+*.log
+*.out
+*.err
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+instance/
+migrations/
+
+# Test coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Static files (generated during runtime)
+staticfiles/
+mediafiles/
+
+# MacOS
+.DS_Store
+
+# FastAPI specific
+*.db
+alembic/
+alembic.ini
