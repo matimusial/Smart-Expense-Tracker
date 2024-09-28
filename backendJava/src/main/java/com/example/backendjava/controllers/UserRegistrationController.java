@@ -2,6 +2,7 @@ package com.example.backendjava.controllers;
 
 import com.example.backendjava.entities.User;
 import com.example.backendjava.repositories.UserRepository;
+import com.example.backendjava.services.EmailNotificationService;
 import com.example.backendjava.services.user.UserRegistrationService;
 import com.example.backendjava.utils.BcryptUtil;
 import jakarta.mail.MessagingException;
@@ -33,13 +34,16 @@ public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
     private final UserRepository userRepository;
+    private final EmailNotificationService emailNotificationService;
 
     private static final String ANONYMOUS_USER = "anonymousUser";
 
     @Autowired
-    public UserRegistrationController(UserRegistrationService userRegistrationService, UserRepository userRepository) {
+    public UserRegistrationController(UserRegistrationService userRegistrationService, UserRepository userRepository,
+                                      EmailNotificationService emailNotificationService) {
         this.userRegistrationService = userRegistrationService;
         this.userRepository = userRepository;
+        this.emailNotificationService = emailNotificationService;
     }
 
     /**
@@ -102,13 +106,28 @@ public class UserRegistrationController {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        Optional<User> userOpt = userRepository.findByUsername(userDetails.getUsername());
+
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        User user = userOpt.get();
+
         try {
-            userRepository.deleteByUsername(userDetails.getUsername());
+            userRepository.deleteByUsername(user.getUsername());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        try {
+            emailNotificationService.sendAccountDeletionConfirmationEmail(user.getEmail(), user.getFirstName());
+        } catch (MessagingException me) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
         return ResponseEntity.noContent().build();
     }
+
 
     /**
      * Registers a new user.
@@ -125,11 +144,6 @@ public class UserRegistrationController {
 
         if (!user.getPassword().equals(user.getConPassword())) {
             response.put("conPassword", "Hasła nie pasują do siebie");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        if (!UserRegistrationService.isEmailFromAllowedDomain(user.getEmail())) {
-            response.put("email", "Email musi pochodzić z domeny @btc.com.pl");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 

@@ -90,9 +90,5 @@ public class UserRegistrationService {
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
-
-    public static boolean isEmailFromAllowedDomain(String email) {
-        return email.endsWith("@btc.com.pl");
-    }
 }
 

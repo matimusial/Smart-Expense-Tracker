@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     /**
-     * Loads the user user by username and checks if the user is authorized.
+     * Loads the user by username and checks if the user is authorized.
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

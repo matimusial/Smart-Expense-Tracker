@@ -41,11 +41,11 @@ public class EmailNotificationService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(fromEmail);
         helper.setTo(to);
-        helper.setSubject("Email Service reset hasła");
+        helper.setSubject("Smart Expense Tracker reset hasła");
         helper.setText(emailBody, true);
 
-        ClassPathResource image = new ClassPathResource("static/btc_big.png");
-        helper.addInline("btcBigImage", image);
+        ClassPathResource image = new ClassPathResource("static/icon.png");
+        helper.addInline("iconImage", image);
         mailSender.send(message);
         System.out.println("Password reset email sent: URL=" + url + ", Email = " + to);
     }
@@ -64,12 +64,34 @@ public class EmailNotificationService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(fromEmail);
         helper.setTo(to);
-        helper.setSubject("Email Service potwierdzenie rejestracji");
+        helper.setSubject("Smart Expense Tracker potwierdzenie rejestracji");
         helper.setText(emailBody, true);
 
-        ClassPathResource image = new ClassPathResource("static/btc_big.png");
-        helper.addInline("btcBigImage", image);
+        ClassPathResource image = new ClassPathResource("static/icon.png");
+        helper.addInline("iconImage", image);
         mailSender.send(message);
         System.out.println("Registration confirmation email sent: URL=" + url + ", Email = " + to);
+    }
+
+    /**
+     * Sends a deleting account confirmation email to the specified recipient.
+     */
+    public void sendAccountDeletionConfirmationEmail(String to, String firstName) throws MessagingException {
+        Context context = new Context();
+        context.setVariable("firstName", firstName);
+
+        String emailBody = templateEngine.process("/deleteAccountTemplate", context);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(fromEmail);
+        helper.setTo(to);
+        helper.setSubject("Smart Expense Tracker usunięcie konta");
+        helper.setText(emailBody, true);
+
+        ClassPathResource image = new ClassPathResource("static/icon.png");
+        helper.addInline("iconImage", image);
+        mailSender.send(message);
+        System.out.println("Deleting account confirmation email sent: Email = " + to);
     }
 }
