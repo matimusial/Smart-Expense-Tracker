@@ -3,6 +3,7 @@ import pickle
 import tensorflow as tf
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 
+#test
 
 def load_model_and_tokenizer(accuracy):
     from config import BERT_MODEL_PATH
