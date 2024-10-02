@@ -8,10 +8,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.metrics import Precision, Recall
-import tensorflow_addons as tfa
-
 
 def get_bert_data_dict():
     data_dict = {}
@@ -60,8 +56,7 @@ def create_tf_dataset(tokenized_inputs, labels, batch_size=32):
     return dataset
 
 
-def train_model(train_dataset, val_dataset, num_labels, epochs=5):
-    # Wczytanie pretrenowanego modelu
+def train_model(train_dataset, val_dataset, num_labels, epochs=1):
     model = TFAutoModelForSequenceClassification.from_pretrained(
         "allegro/herbert-large-cased",
         num_labels=num_labels
@@ -72,27 +67,15 @@ def train_model(train_dataset, val_dataset, num_labels, epochs=5):
         optimizer=tf.keras.optimizers.Adam(learning_rate=3e-5),
         loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=[
-            'accuracy',  # Monitorowanie dokładności
-            Precision(name='precision'),  # Precyzja
-            Recall(name='recall'),  # Czułość (Recall)
-            tfa.metrics.F1Score(num_classes=num_labels, average='weighted')  # F1-score
+            'accuracy',
         ]
     )
 
-    # # Early stopping: zatrzymanie modelu, jeśli metryki przestają się poprawiać
-    # early_stopping = EarlyStopping(
-    #     monitor='val_loss',  # Monitorowanie straty walidacyjnej
-    #     patience=2,  # Zatrzymanie po 2 epokach bez poprawy
-    #     restore_best_weights=True  # Przywrócenie najlepszych wag
-    # )
-
-    # Trenowanie modelu z monitoringiem
     history = model.fit(
         train_dataset,
         validation_data=val_dataset,
         epochs=epochs,
-        # callbacks=[early_stopping],  # Dodanie callbacku early stopping
-        verbose=2  # Wyświetlanie jednej linii na epokę
+        verbose=1
     )
 
     return model, history
