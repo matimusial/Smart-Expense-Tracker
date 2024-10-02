@@ -1,3 +1,7 @@
+# Custom
+aiTraining/bert_model/*
+!aiTraining/bert_model/link
+
 # Python
 __pycache__/
 *.py[cod]

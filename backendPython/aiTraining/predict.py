@@ -45,10 +45,10 @@ def predict_top_k(text, model, tokenizer, label_encoder, k):
 if __name__ == "__main__":
 
     # Wczytanie modelu, tokenizer'a i label encoder'a
-    model, tokenizer, label_encoder = load_model_and_tokenizer(accuracy="0.9")
+    model, tokenizer, label_encoder = load_model_and_tokenizer(accuracy="0.9034")
 
     # Przykładowy tekst do predykcji
-    text = "Przykładowy tekst do kategoryzacji"
+    text = "yrc6r4dcyvctfdxser4wsrdsxfrdtxewwe"
 
     # Predykcja trzech najbardziej prawdopodobnych kategorii
     predicted_categories = predict_top_k(text, model, tokenizer, label_encoder, k=3)
