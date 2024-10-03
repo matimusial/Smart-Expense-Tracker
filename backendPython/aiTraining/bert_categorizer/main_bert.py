@@ -2,8 +2,8 @@ import os
 
 import numpy as np
 from transformers import AutoTokenizer
-from sklearn.model_selection import train_test_split, compute_class_weight
-
+from sklearn.model_selection import train_test_split
+from sklearn.utils.class_weight import compute_class_weight
 from bert_categorizer.bert_data_processing import get_bert_data_dict, get_pair_list, tokenize_texts, encode_labels, \
     create_tf_dataset
 from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer, print_metrics
