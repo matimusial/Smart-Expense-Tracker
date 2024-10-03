@@ -48,9 +48,9 @@ if __name__ == "__main__":
 
     plot_training_history(history)
 
-    print_metrics(model, test_texts, test_labels)
-
-    loss, accuracy = model.evaluate(test_dataset)
-    print(f"Test Loss: {loss}, Test Accuracy: {accuracy}")
+    loss, accuracy = model.evaluate(test_dataset, verbose=0)
+    print(f"Test Loss: {loss:.4f}, Test Accuracy: {accuracy:.4f}")
 
     save_model_and_tokenizer(model, tokenizer, label_encoder, accuracy)
+
+    print_metrics(model, test_inputs, test_labels)
