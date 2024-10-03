@@ -6,4 +6,6 @@ BERT_DATA_PATH = os.path.join(AI_TRAINING_PATH, 'bert_data')
 
 BERT_MODEL_PATH = os.path.join(AI_TRAINING_PATH, 'bert_model')
 
-BERT_EPOCHS = 1
+BERT_EPOCHS = 3
+
+BERT_BATCH_SIZE = 16

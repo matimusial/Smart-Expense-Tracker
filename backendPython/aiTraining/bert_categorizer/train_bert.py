@@ -1,8 +1,24 @@
 import os
-import pickle
-from config import BERT_DATA_PATH, BERT_EPOCHS
+import logging
+import warnings
+from absl import logging as absl_logging
+from transformers import logging as transformers_logging
 
+# Ignorowanie FutureWarnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+# Konfiguracja logowania
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+logging.basicConfig(level=logging.ERROR)
 import tensorflow as tf
+
+tf.config.optimizer.set_experimental_options({"disable_meta_optimizer": True})
+absl_logging.set_verbosity(absl_logging.ERROR)
+transformers_logging.set_verbosity_error()
+
+import pickle
+from config import BERT_DATA_PATH, BERT_EPOCHS, BERT_BATCH_SIZE, BERT_MODEL_PATH
+
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -39,6 +55,7 @@ def tokenize_texts(texts, tokenizer, max_length=32):
         truncation=True,
         max_length=max_length,
         return_tensors="tf"
+        # clean_up_tokenization_spaces=True  # Usuń ten argument
     )
     return tokenized_inputs
 
@@ -49,14 +66,14 @@ def encode_labels(labels):
     return encoded_labels, label_encoder
 
 
-def create_tf_dataset(tokenized_inputs, labels, batch_size=32):
+def create_tf_dataset(tokenized_inputs, labels):
     labels = tf.convert_to_tensor(labels)
     dataset = tf.data.Dataset.from_tensor_slices((dict(tokenized_inputs), labels))
-    dataset = dataset.shuffle(len(labels)).batch(batch_size)
+    dataset = dataset.shuffle(len(labels)).batch(BERT_BATCH_SIZE).cache().prefetch(tf.data.AUTOTUNE)
     return dataset
 
 
-def train_model(train_dataset, val_dataset, num_labels, epochs=1):
+def train_model(train_dataset, val_dataset, num_labels):
     model = TFAutoModelForSequenceClassification.from_pretrained(
         "allegro/herbert-large-cased",
         num_labels=num_labels
@@ -74,7 +91,7 @@ def train_model(train_dataset, val_dataset, num_labels, epochs=1):
     history = model.fit(
         train_dataset,
         validation_data=val_dataset,
-        epochs=epochs,
+        epochs=BERT_EPOCHS,
         verbose=1
     )
 
@@ -82,32 +99,59 @@ def train_model(train_dataset, val_dataset, num_labels, epochs=1):
 
 
 def plot_training_history(history):
-    # Wyświetlanie strat (loss) dla zbioru treningowego i walidacyjnego
-    plt.plot(history.history['loss'], label='Training Loss')
-    plt.plot(history.history['val_loss'], label='Validation Loss')
+    num_epochs = len(history.history['loss'])
+
+    if num_epochs < 2:
+        print("Za mała liczba epok do rysowania wykresów. Przetrenuj model przez więcej epok.")
+        print("Zawartość history.history:")
+        for key, value in history.history.items():
+            print(f"{key}: {value}")
+        return
+
+    epochs = range(1, num_epochs + 1)
+
+    plt.figure(figsize=(12, 5))
+
+    # Wykres strat (loss)
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, history.history['loss'], marker='o', label='Training Loss')
+    plt.plot(epochs, history.history['val_loss'], marker='o', label='Validation Loss')
     plt.title('Loss during training')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.show()
 
-    # Wyświetlanie dokładności (accuracy) dla zbioru treningowego i walidacyjnego
-    plt.plot(history.history['accuracy'], label='Training Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    # Wykres dokładności (accuracy)
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, history.history['accuracy'], marker='o', label='Training Accuracy')
+    plt.plot(epochs, history.history['val_accuracy'], marker='o', label='Validation Accuracy')
     plt.title('Accuracy during training')
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
+
+    plt.tight_layout()
     plt.show()
 
 
 def save_model_and_tokenizer(model, tokenizer, label_encoder, accuracy):
-    from config import BERT_MODEL_PATH
+    import pickle
+    from pathlib import Path
+    from typing import cast, SupportsWrite
+
+    bert_model_path = Path(BERT_MODEL_PATH)
     accuracy_str = f"{accuracy:.4f}"
-    model.save_pretrained(os.path.join(BERT_MODEL_PATH, accuracy_str + "_model"))
-    tokenizer.save_pretrained(os.path.join(BERT_MODEL_PATH, accuracy_str + "_tokenizer"))
-    with open(os.path.join(BERT_MODEL_PATH, accuracy_str + "_encoder"), 'wb') as f:
-        pickle.dump(label_encoder, f)
+
+    # Zapis modelu i tokenizer
+    model.save_pretrained(bert_model_path / f"{accuracy_str}_model")
+    tokenizer.save_pretrained(bert_model_path / f"{accuracy_str}_tokenizer")
+
+    # Ścieżka do zapisu encodera
+    encoder_path = bert_model_path / f"{accuracy_str}_encoder"
+
+    # Rzutowanie pliku na SupportsWrite[bytes]
+    with open(encoder_path, 'wb') as f:
+        pickle.dump(label_encoder, cast(SupportsWrite[bytes], f))
 
 
 if __name__ == "__main__":
@@ -145,7 +189,7 @@ if __name__ == "__main__":
     val_dataset = create_tf_dataset(val_inputs, val_labels)
     test_dataset = create_tf_dataset(test_inputs, test_labels)
 
-    model, history = train_model(train_dataset, val_dataset, num_labels, epochs=BERT_EPOCHS)
+    model, history = train_model(train_dataset, val_dataset, num_labels)
 
     plot_training_history(history)
 
