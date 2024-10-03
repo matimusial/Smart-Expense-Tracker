@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 from bert_categorizer.bert_data_processing import get_bert_data_dict, get_pair_list, tokenize_texts, encode_labels, \
     create_tf_dataset
-from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer
+from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer, print_metrics
 from config import BERT_MODEL, BERT_TEST_SIZE
 
 if __name__ == "__main__":
@@ -47,6 +47,8 @@ if __name__ == "__main__":
     model, history = train_model(train_dataset, val_dataset, num_labels)
 
     plot_training_history(history)
+
+    print_metrics(model, test_texts, test_labels)
 
     loss, accuracy = model.evaluate(test_dataset)
     print(f"Test Loss: {loss}, Test Accuracy: {accuracy}")
