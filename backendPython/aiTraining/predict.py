@@ -7,13 +7,13 @@ from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 
 def load_model_and_tokenizer(accuracy):
     from config import BERT_MODEL_PATH
-    model = TFAutoModelForSequenceClassification.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, accuracy+"_model"))
+    model = TFAutoModelForSequenceClassification.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, "model"))
 
     # Wczytanie tokenizer'a
-    tokenizer = AutoTokenizer.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, accuracy+"_tokenizer"))
+    tokenizer = AutoTokenizer.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, "tokenizer"))
 
     # Wczytanie label encoder'a
-    with open(os.path.join(BERT_MODEL_PATH, accuracy, accuracy+"_encoder"), 'rb') as f:
+    with open(os.path.join(BERT_MODEL_PATH, accuracy, "encoder"), 'rb') as f:
         label_encoder = pickle.load(f)
 
     return model, tokenizer, label_encoder
