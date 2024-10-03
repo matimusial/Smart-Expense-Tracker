@@ -4,12 +4,12 @@ import tensorflow as tf
 
 from matplotlib import pyplot as plt
 from transformers import TFAutoModelForSequenceClassification
-from typing import cast, SupportsWrite
 
 from config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
 
 
 def train_model(train_dataset, val_dataset, num_labels):
+    print("Number of available GPUs:", len(tf.config.experimental.list_physical_devices('GPU')))
     model = TFAutoModelForSequenceClassification.from_pretrained(
         BERT_MODEL,
         num_labels=num_labels
@@ -27,7 +27,7 @@ def train_model(train_dataset, val_dataset, num_labels):
         train_dataset,
         validation_data=val_dataset,
         epochs=BERT_EPOCHS,
-        verbose=2
+        verbose=1
     )
 
     return model, history
@@ -37,7 +37,7 @@ def plot_training_history(history):
     num_epochs = len(history.history['loss'])
 
     if num_epochs < 2:
-        print("Too few epochs to draw the graphs.")
+        print("Too few epochs to draw the graphs")
         return
 
     epochs = range(1, num_epochs + 1)
@@ -73,4 +73,4 @@ def save_model_and_tokenizer(model, tokenizer, label_encoder, accuracy):
     encoder_path = os.path.join(BERT_MODEL_PATH, accuracy_str, "encoder")
 
     with open(encoder_path, 'wb') as f:
-        pickle.dump(label_encoder, cast(SupportsWrite[bytes], f))
+        pickle.dump(label_encoder, f)

@@ -6,8 +6,7 @@ from sklearn.model_selection import train_test_split
 from bert_categorizer.bert_data_processing import get_bert_data_dict, get_pair_list, tokenize_texts, encode_labels, \
     create_tf_dataset
 from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer
-from config import BERT_MODEL
-
+from config import BERT_MODEL, BERT_TEST_SIZE
 
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -23,7 +22,7 @@ if __name__ == "__main__":
     train_texts, temp_texts, train_labels, temp_labels = train_test_split(
         texts,
         encoded_labels,
-        test_size=0.16,
+        test_size=BERT_TEST_SIZE,
         random_state=42,
         stratify=encoded_labels
     )

@@ -10,3 +10,4 @@ BERT_EPOCHS = 3
 BERT_BATCH_SIZE = 16
 BERT_MODEL = 'allegro/herbert-large-cased'
 BERT_LEARNING_RATE = 3e-5
+BERT_TEST_SIZE = 0.16
