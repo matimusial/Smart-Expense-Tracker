@@ -42,9 +42,10 @@ if __name__ == "__main__":
         classes=np.unique(train_labels),
         y=train_labels
     )
+    class_weights = class_weights.astype(float)
     max_weight = max(class_weights)
     class_weights_normalized = class_weights / max_weight
-    class_weights_dict = dict(enumerate(class_weights_normalized))
+    class_weights_dict = {int(i): float(w) for i, w in enumerate(class_weights_normalized)}
 
     tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL)
     train_inputs = tokenize_texts(train_texts, tokenizer)
