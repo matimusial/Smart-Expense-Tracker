@@ -1,11 +1,13 @@
 import os
 
+import numpy as np
 from transformers import AutoTokenizer
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, compute_class_weight
 
 from bert_categorizer.bert_data_processing import get_bert_data_dict, get_pair_list, tokenize_texts, encode_labels, \
     create_tf_dataset
 from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer, print_metrics
+
 from config import BERT_MODEL, BERT_TEST_SIZE
 
 if __name__ == "__main__":
@@ -35,6 +37,13 @@ if __name__ == "__main__":
         stratify=temp_labels
     )
 
+    class_weights = compute_class_weight(
+        class_weight='balanced',
+        classes=np.unique(train_labels),
+        y=train_labels
+    )
+    class_weights_dict = dict(enumerate(class_weights))
+
     tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL)
     train_inputs = tokenize_texts(train_texts, tokenizer)
     val_inputs = tokenize_texts(val_texts, tokenizer)
@@ -44,7 +53,7 @@ if __name__ == "__main__":
     val_dataset = create_tf_dataset(val_inputs, val_labels)
     test_dataset = create_tf_dataset(test_inputs, test_labels)
 
-    model, history = train_model(train_dataset, val_dataset, num_labels)
+    model, history = train_model(train_dataset, val_dataset, num_labels, class_weights_dict)
 
     plot_training_history(history)
 

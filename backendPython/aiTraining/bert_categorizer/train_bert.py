@@ -7,10 +7,11 @@ from transformers import TFAutoModelForSequenceClassification
 from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, classification_report
 import numpy as np
 
+
 from config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
 
 
-def train_model(train_dataset, val_dataset, num_labels):
+def train_model(train_dataset, val_dataset, num_labels, class_weights_dict):
     print("Number of available GPUs:", len(tf.config.experimental.list_physical_devices('GPU')))
     model = TFAutoModelForSequenceClassification.from_pretrained(
         BERT_MODEL,
@@ -27,7 +28,8 @@ def train_model(train_dataset, val_dataset, num_labels):
         train_dataset,
         validation_data=val_dataset,
         epochs=BERT_EPOCHS,
-        verbose=1
+        verbose=1,
+        class_weight=class_weights_dict
     )
 
     return model, history
