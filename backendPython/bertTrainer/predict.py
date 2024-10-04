@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 #test
 
 def load_model_and_tokenizer(accuracy):
-    from config import BERT_MODEL_PATH
+    from bert_config import BERT_MODEL_PATH
     model = TFAutoModelForSequenceClassification.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, "model"))
 
     # Wczytanie tokenizer'a

@@ -6,11 +6,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 from bert_categorizer.bert_data_processing import get_bert_data_dict, get_pair_list, tokenize_texts, encode_labels, \
     create_tf_dataset
-from bert_categorizer.train_bert import train_model, plot_training_history, save_model_and_tokenizer, print_metrics
+from bert_categorizer.bert_train_service import train_model, plot_training_history, save_model_and_tokenizer, print_metrics
 
-from config import BERT_MODEL, BERT_TEST_SIZE
+from bert_config import BERT_MODEL, BERT_TEST_SIZE
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
+
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     data_dict = get_bert_data_dict()
     data = get_pair_list(data_dict)

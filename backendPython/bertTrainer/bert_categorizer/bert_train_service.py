@@ -8,7 +8,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, confusion_m
 import numpy as np
 
 
-from config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
+from bert_config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
 
 
 def train_model(train_dataset, val_dataset, num_labels, class_weights_dict):

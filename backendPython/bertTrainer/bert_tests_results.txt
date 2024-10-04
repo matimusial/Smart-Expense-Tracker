@@ -375,7 +375,7 @@ weighted avg       0.91      0.90      0.90      1334
 Precision (Weighted): 0.9094
 Recall (Weighted): 0.9033
 F1-Score (Weighted): 0.9045
-Test Loss: 0.3305, Test Accuracy: 0.9033
+Test Loss: 0.3305, Test Accuracy: 0.9063
 
 
 
@@ -687,4 +687,4 @@ weighted avg       0.94      0.93      0.93      1334
 Precision (Weighted): 0.9359
 Recall (Weighted): 0.9340
 F1-Score (Weighted): 0.9342
-Test Loss: 0.2272, Test Accuracy: 0.9333
+Test Loss: 0.2272, Test Accuracy: 0.9228
