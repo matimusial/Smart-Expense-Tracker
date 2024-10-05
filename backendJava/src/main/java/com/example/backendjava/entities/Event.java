@@ -30,7 +30,7 @@ public class Event {
     private LocalDateTime date;
 
     @Lob
-    @Column(name = "receipt_image", columnDefinition = "BLOB")
+    @Column(name = "receipt_image", columnDefinition = "BYTEA")
     private byte[] receiptImage;
 
     @Column(name = "description")

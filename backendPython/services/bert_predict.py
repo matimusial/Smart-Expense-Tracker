@@ -3,9 +3,10 @@ import pickle
 import tensorflow as tf
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 
+from bertTrainer.bert_config import BERT_MODEL_PATH
+
 
 def load_model_and_tokenizer(accuracy):
-    from bertTrainer.bert_config import BERT_MODEL_PATH
 
     model = TFAutoModelForSequenceClassification.from_pretrained(os.path.join(BERT_MODEL_PATH, accuracy, "model"))
 

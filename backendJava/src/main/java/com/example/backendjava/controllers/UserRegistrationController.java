@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/springapi/user")
 public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
