@@ -1,0 +1,42 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
+    padding: 0 25%;
+    height: 80px;
+}
+
+.mainIcon {
+    height: 60px;
+    width: auto;
+}
+
+
+h1 {
+    color: hsl(0, 0%, 28%);
+    font-size: 40px;
+    font-weight: bold;
+    font-family: monospace;
+    letter-spacing: 7px;
+    cursor: pointer;
+}
+
+h1 span {
+    transition: 0.5s ease-out;
+}
+
+h1:hover span:nth-child(1) {
+    margin-right: 50px;
+}
+
+h1:hover span:nth-child(3) {
+    margin-left: 20px;
+}
+
+h1:hover span {
+    color: #3bb788;
+}
+
+
