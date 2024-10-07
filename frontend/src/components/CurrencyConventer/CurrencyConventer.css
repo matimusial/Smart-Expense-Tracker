@@ -1,0 +1,52 @@
+.converter-form {
+    padding: 20px;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+.form-group .form-label {
+    color: #2A2A2A; /* Stonowany ciemnoszary zamiast czerni */
+    margin-bottom: 9px;
+}
+
+.form-group .form-input {
+    font-size: 1.1rem;
+    padding: 0 15px;
+    min-height: 48px;
+    border-radius: 6px;
+    background: #F7F7F7; /* Delikatny jasnoszary dla eleganckiego wyglądu */
+    border: 1px solid #E0E0E0; /* Subtelna, jasnoszara ramka */
+}
+
+.form-currency-group {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-currency-group .currency-select {
+    display: flex;
+    margin-top: 10px;
+    padding: 0 10px;
+    min-height: 45px;
+    align-items: center;
+    border-radius: 6px;
+    background: #C2D6D6; /* Zastąpiono intensywną zieleń subtelnym chłodnym odcieniem */
+    border: 1px solid #B0B0B0; /* Delikatniejsza ramka */
+}
+
+.exchange-rate-result {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 25px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    background: #F2E6C2; /* Subtelny odcień żółtego, mniej intensywny */
+    color: #2A2A2A; /* Kolor tekstu bardziej stonowany */
+}

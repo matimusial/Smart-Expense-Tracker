@@ -51,7 +51,8 @@ public class SecurityConfig {
                                 "/api/admin/me",
                                 "/api/form/{hash}",
                                 "api/submit",
-                                "api/sendForm"
+                                "api/sendForm,",
+                                "/currency-rates"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

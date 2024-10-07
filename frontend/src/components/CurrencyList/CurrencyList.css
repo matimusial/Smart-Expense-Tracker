@@ -1,0 +1,9 @@
+.currency-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 2px 0 0 0 rgba(0, 0, 0, 0.1);
+}

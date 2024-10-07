@@ -44,10 +44,8 @@
 }
 
 .dropdown-menu a {
-    font-family: Circular, sans-serif;
     display: block;
     padding: 15px;
-    color: #222222;
     font-size: 14px;
     text-decoration: none;
     transition: background-color 0.2s;

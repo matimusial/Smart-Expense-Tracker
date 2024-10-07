@@ -1,0 +1,50 @@
+.currency-rate {
+    font-size: 15px;
+    color: #4A4A4A; /* Stonowany ciemnoszary */
+    text-align: center;
+}
+
+.currency-code {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+    text-align: center;
+    color: #2A2A2A; /* Neutralny, elegancki ciemnoszary */
+}
+
+.flag-icon {
+    width: 25px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.flag-icon:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.currency-tile:hover {
+    transform: translateY(-3px) scale(1.02);
+    background-color: #F2F2F2; /* Neutralny, jasnoszary na hover */
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.currency-tile.selected {
+    background-color: #C2D6D6; /* Subtelny, chłodny odcień zamiast zielonego */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Delikatny cień dla subtelności */
+}
+
+.currency-tile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
+    border: 1px solid #E0E0E0; /* Jaśniejsza ramka */
+    border-radius: 12px;
+    background-color: #FFFFFF; /* Czyste, białe tło */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Delikatniejszy cień dla nowoczesnego wyglądu */
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+}

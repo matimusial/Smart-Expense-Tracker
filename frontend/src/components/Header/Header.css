@@ -4,7 +4,7 @@
     align-items: center;
     background-color: white;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    padding: 0 25%;
+    padding: 0 15%;
     height: 80px;
 }
 
@@ -29,14 +29,14 @@ h1 span {
 
 h1:hover span:nth-child(1) {
     margin-right: 50px;
+    font-size: 45px;
 }
 
 h1:hover span:nth-child(3) {
     margin-left: 20px;
+    font-size: 45px;
 }
 
 h1:hover span {
     color: #3bb788;
 }
-
-

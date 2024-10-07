@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.currency-list-container {
+    flex: 0;
+}
+
+.currency-calculator-container {
+    margin-top: 140px;
+    flex: 1;
+}
+
