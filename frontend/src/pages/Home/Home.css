@@ -4,12 +4,10 @@
     gap: 20px;
 }
 
-.currency-list-container {
-    flex: 0;
-}
-
 .currency-calculator-container {
-    margin-top: 140px;
-    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
 }
-
