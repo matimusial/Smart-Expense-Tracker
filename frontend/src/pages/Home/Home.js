@@ -9,13 +9,16 @@ const Home = () => {
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const apiUrl = 'http://localhost:8080/currency-rates';
+    const apiUrl = 'http://localhost:8080/springapi/currency-rates';
 
     useEffect(() => {
+
         fetch(apiUrl)
-            .then(response => response.json())
+            .then(response => {
+                return response.json();
+            })
             .then(data => {
-                const processedRates = processRates(data.currentRateList);
+                const processedRates = processRates(data);
                 setCurrencyRates(processedRates);
 
                 const eurCurrency = processedRates.find(rate =>
@@ -24,22 +27,30 @@ const Home = () => {
                 if (eurCurrency) {
                     setSelectedCurrency(eurCurrency);
                 }
+
                 setIsLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
                 setIsLoading(false);
             });
-        },
-        []);
+    }, []);
 
-    const processRates = (rateList) => {
+
+    const processRates = (data) => {
+        const rateList = data.currentRateList;
+        const prevRateList = data.prevRateList;
+
         return Object.entries(rateList)
             .filter(([key]) => key !== 'id' && key !== 'insertDate')
-            .map(([currencyCode, rate]) => ({
-                currencyCode: currencyCode.toUpperCase(),
-                rate: parseFloat(rate).toFixed(3)
-            }));
+            .map(([currencyCode, rate]) => {
+                const prevRate = prevRateList[currencyCode];
+
+                return {
+                    currencyCode: currencyCode.toUpperCase(),
+                    rate: parseFloat(rate).toFixed(3),
+                    prevRate: parseFloat(prevRate).toFixed(3)
+                };
+            });
     };
 
     if (isLoading) {

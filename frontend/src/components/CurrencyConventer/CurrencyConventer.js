@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Ripples from 'react-ripples';
 import './CurrencyConventer.css';
+import { TextField } from '@mui/material';
 
 const ConverterForm = ({ selectedCurrency }) => {
     const [amountPLN, setAmountPLN] = useState(100);
@@ -32,15 +33,35 @@ const ConverterForm = ({ selectedCurrency }) => {
     return (
         <form className="converter-form" onSubmit={handleSubmit}>
             <div className="form-group">
-                <label className="form-label">Wpisz kwotę</label>
-                <input
+                <TextField
+                    id="outlined-number"
+                    label="Wpisz kwotę"
                     type="number"
-                    className="form-input"
                     value={amountPLN}
                     onChange={handleAmountChange}
+                    variant="outlined"
                     required
                     min="0"
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "&:hover fieldset": {
+                                borderColor: "#88B0B0",
+                            },
+                            "&.Mui-focused fieldset": {
+                                borderColor: "#A0C4C4",
+                            },
+                        },
+                        "& .MuiInputLabel-root": {
+                            "&:hover": {
+                                color: "#88B0B0",
+                            },
+                            "&.Mui-focused": {
+                                color: "#588c8c",
+                            },
+                        },
+                    }}
                 />
+
             </div>
 
             <div className="form-currency-group">
@@ -72,7 +93,6 @@ const ConverterForm = ({ selectedCurrency }) => {
                 {result}
             </p>
         </form>
-
     );
 };
 

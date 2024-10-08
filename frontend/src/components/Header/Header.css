@@ -13,14 +13,14 @@
     width: auto;
 }
 
-
 h1 {
-    color: hsl(0, 0%, 28%);
-    font-size: 40px;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: bold;
     font-family: monospace;
-    letter-spacing: 7px;
-    cursor: pointer;
+    letter-spacing: 5px;
+    margin: 0;
+    line-height: 1.2; /* Upewnij się, że tekst dobrze mieści się w headerze */
+    white-space: nowrap; /* Zapobiega zawijaniu tekstu na nową linię */
 }
 
 h1 span {
@@ -39,4 +39,38 @@ h1:hover span:nth-child(3) {
 
 h1:hover span {
     color: #3bb788;
+}
+
+@media (max-width: 1200px) {
+    h1 {
+        letter-spacing: 5px;
+    }
+
+    h1 span {
+        transition: none;
+    }
+
+    h1:hover span:nth-child(1),
+    h1:hover span:nth-child(3),
+    h1:hover span {
+        margin: 0;
+        color: hsl(0, 0%, 28%);
+    }
+
+    h1:hover span:nth-child(1),
+    h1:hover span:nth-child(3) {
+        margin-right: 0;
+        margin-left: 0;
+        font-size: inherit; /* Ustawienia domyślnego rozmiaru */
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        letter-spacing: 2px; /* Dostosuj odstępy między literami */
+    }
+
+    .header-container {
+        padding: 0 5px;
+    }
 }

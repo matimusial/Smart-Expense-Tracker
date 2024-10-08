@@ -2,10 +2,31 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    font-family: Circular, sans-serif;
+    font-family: Circular, sans-serif !important;
     color: #222222;
 }
 
 .container {
     padding: 0 15%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 500px), (max-height: 500px) {
+    body {
+        display: none;
+    }
+
+    html::before {
+        content: "Rozdzielczość ekranu jest zbyt mała!";
+        display: block;
+        text-align: center;
+        font-size: 100%;
+        color: red;
+        padding: 20%;
+    }
 }

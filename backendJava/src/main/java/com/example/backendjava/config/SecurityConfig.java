@@ -43,27 +43,24 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(
-                                "/api/admin/authorize-registration/{pincode}",
-                                "/api/admin/forgot-password",
-                                "/api/admin/registration",
-                                "/api/admin/reset-password/{pincode}/{email}",
-                                "/api/admin/verify-reset/{pincode}/{email}",
-                                "/api/admin/me",
-                                "/api/form/{hash}",
-                                "api/submit",
-                                "api/sendForm,",
-                                "/currency-rates"
+                                "/springapi/user/authorize-registration/{pincode}",
+                                "/springapi/user/forgot-password",
+                                "/springapi/user/registration",
+                                "/springapi/user/reset-password/{pincode}/{email}",
+                                "/springapi/user/verify-reset/{pincode}/{email}",
+                                "/springapi/user/me",
+                                "springapi/currency-rates"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/api/admin/login")
+                        .loginPage("/springapi/user/login")
                         .successHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/api/admin/logout")
+                        .logoutUrl("/springapi/user/logout")
                         .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
