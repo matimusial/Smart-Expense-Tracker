@@ -2,13 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import './DropdownMenu.css';
 import Avatar from '../Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+import RegistrationDialog from '../RegistrationDialog/RegistrationDialog';
 
 function DropdownMenu({ user }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+    };
+
+    const openRegistrationDialog = () => {
+        setIsRegistrationOpen(true);
+        setIsOpen(false);
+    };
+
+    const closeRegistrationDialog = () => {
+        setIsRegistrationOpen(false);
     };
 
     useEffect(() => {
@@ -44,12 +55,21 @@ function DropdownMenu({ user }) {
                         </>
                     ) : (
                         <>
-                            <a href="/login">Zaloguj się</a>
-                            <a href="/signup">Zarejestruj się</a>
+                            {/*<button onClick={openLoginDialog}>Zaloguj się</button>*/}
+                            <button
+                                onClick={openRegistrationDialog}>Zarejestruj się
+                            </button>
+
+
                         </>
                     )}
                 </div>
             )}
+
+            <RegistrationDialog
+                open={isRegistrationOpen}
+                onClose={closeRegistrationDialog}
+            />
         </div>
     );
 }

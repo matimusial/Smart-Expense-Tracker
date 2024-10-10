@@ -39,23 +39,28 @@
     z-index: 100;
 }
 
-.dropdown-menu a:first-child {
+.dropdown-menu button:first-child {
     font-weight: bold;
 }
 
-.dropdown-menu a {
+.dropdown-menu button {
     display: block;
     padding: 15px;
     font-size: 14px;
     text-decoration: none;
     transition: background-color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu button:hover {
     background-color: #f0f0f0;
 }
 
-/* Style responsywne */
+
 @media (max-width: 768px) {
     .dropdown-menu {
         min-width: 100%;

@@ -15,37 +15,32 @@ public class User {
     private Long id;
 
     @Pattern(
-            regexp = "^[a-z0-9._-]+$",
-            message = "Nazwa użytkownika może zawierać tylko małe litery, cyfry, kropki, podkreślenia i myślniki"
+            regexp = "^[a-z0-9._-]+$"
     )
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Email(message = "To nie jest prawidłowy adres email")
+    @Email
     @Pattern(
-            regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
-            message = "To nie jest prawidłowy adres email"
+            regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
     )
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$",
-            message = "Hasło musi mieć co najmniej 6 znaków, zawierać co najmniej jedną małą literę, jedną dużą literę i jedną cyfrę"
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$"
     )
     @Column(name = "password", nullable = false)
     private String password;
 
     @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$",
-            message = "Potwierdzenie hasła musi spełniać te same kryteria co hasło"
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$"
     )
     @Transient
     private String conPassword;
 
     @Pattern(
-            regexp = "^[a-zA-Z]+$",
-            message = "Imię może zawierać tylko litery"
+            regexp = "^[a-zA-Z]+$"
     )
     @Column(name = "first_name", nullable = false)
     private String firstName;

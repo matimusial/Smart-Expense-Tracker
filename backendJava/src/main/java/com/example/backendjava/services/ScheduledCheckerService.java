@@ -40,7 +40,7 @@ public class ScheduledCheckerService {
         }
     }
 
-    @Scheduled(fixedRate = 43200000, initialDelay = 1800000) // 12 hours; 30 minutes
+    @Scheduled(fixedRate = 43200000, initialDelay = 900000) // 12 hours; 15 minutes
     @Transactional
     public void checkExchangeRate() {
         ExchangeRate latestExchangeRate = exchangeRateService.fetchCurrencyRates();
