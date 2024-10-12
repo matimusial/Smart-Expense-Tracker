@@ -1,9 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogTitle, Button, TextField, IconButton } from '@mui/material';
+import {
+    Dialog, DialogContent, DialogTitle, IconButton
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Ripples from "react-ripples";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import SubmitButton from "../SubmitButton/SubmitButton";
+import './RegistrationDialog.css';
+
+import {
+    validateFirstName,
+    validateUsername,
+    validatePasswordLength,
+    validatePasswordSign,
+    validatePasswordMatch,
+    validateEmail
+} from '../../utils/validation';
+
+import {
+    checkEmailAvailability,
+    checkUsernameAvailability
+} from '../../utils/api';
+
+import './RegistrationDialog.css';
+import InputLabel from '../InputLabel/InputLabel';
 
 const RegistrationDialog = ({ open, onClose }) => {
     const [emailAddress, setEmailAddress] = useState('');
@@ -11,135 +33,170 @@ const RegistrationDialog = ({ open, onClose }) => {
     const [conPassword, setConPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [username, setUsername] = useState('');
-    const [passwordLengthFlag, setPasswordLengthFlag] = useState(false);
-    const [passwordSignFlag, setPasswordSignFlag] = useState(false);
-    const [passwordMatchFlag, setPasswordMatchFlag] = useState(false);
+    const [passwordLengthValid, setPasswordLengthValid] = useState(false);
+    const [passwordSignValid, setPasswordSignValid] = useState(false);
+    const [passwordMatchValid, setPasswordMatchValid] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);
+    const [usernameLoading, setUsernameLoading] = useState(false);
+    const [emailLoading, setEmailLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-    const validateFirstName = (name) => {
-        const regex = /^[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż]+$/;
-        return regex.test(name) && name.trim().length > 0;
+    const handleEmailBlur = async () => {
+        if (!validateEmail(emailAddress)) {
+            setEmailError(true);
+            return;
+        }
+        setEmailLoading(true);
+        const isAvailable = await checkEmailAvailability(emailAddress);
+        setEmailError(!isAvailable);
+        setEmailLoading(false);
     };
 
-    const validatePasswordLength = (password) => {
-        return password.length >= 8;
-    };
-
-    const validatePasswordSign = (password) => {
-        const regex = /[0-9!@#$%^&*]/;
-        return regex.test(password);
-    };
-
-    const validatePasswordMatch = (password, conPassword) => {
-        return password === conPassword;
+    const handleUsernameBlur = async () => {
+        if (!validateUsername(username)) {
+            setUsernameError(true);
+            return;
+        }
+        setUsernameLoading(true);
+        const isAvailable = await checkUsernameAvailability(username);
+        setUsernameError(!isAvailable);
+        setUsernameLoading(false);
     };
 
     useEffect(() => {
         setFirstNameError(!validateFirstName(firstName));
-        setPasswordLengthFlag(validatePasswordLength(password));
-        setPasswordSignFlag(validatePasswordSign(password));
-        setPasswordMatchFlag(validatePasswordMatch(password, conPassword));
+        setPasswordLengthValid(validatePasswordLength(password));
+        setPasswordSignValid(validatePasswordSign(password));
+        setPasswordMatchValid(validatePasswordMatch(password, conPassword));
     }, [firstName, password, conPassword]);
 
+    const isFormValid = () => {
+        return (
+            !firstNameError &&
+            !emailError &&
+            !usernameError &&
+            passwordLengthValid &&
+            passwordSignValid &&
+            passwordMatchValid &&
+            !emailLoading && !usernameLoading
+        );
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isFormValid()) {
+            console.log('Form submitted:', { firstName, emailAddress, username, password });
+            setFirstName('');
+            setEmailAddress('');
+            setUsername('');
+            setPassword('');
+            setConPassword('');
+            onClose();
+        }
+    };
+
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>
+        <Dialog open={open} onClose={onClose} PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}>
+            <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 Zarejestruj
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
-                    style={{ position: 'absolute', right: 8, top: 8 }}
+                    style={{ position: 'absolute', right: 8, top: 8, color: '#999' }}
                 >
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                Witaj w Smart Expense Tracker
-                <TextField
-                    label="Imię"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    error={firstNameError}
-                    InputLabelProps={{
-                        style: { color: firstNameError ? 'red' : undefined }
-                    }}
-                    InputProps={{
-                        style: { backgroundColor: firstNameError ? '#fff4f4' : undefined }
-                    }}
-                />
-                <TextField
-                    label="Adres e-mail"
-                    value={emailAddress}
-                    onChange={(e) => setEmailAddress(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                />
-                <TextField
-                    label="Login"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                />
-                <TextField
-                    label="Hasło"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                />
-                <TextField
-                    label="Potwierdź hasło"
-                    type="password"
-                    value={conPassword}
-                    onChange={(e) => setConPassword(e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                />
-                <div className={"password-checker"}>
-                    {passwordSignFlag ? (
-                        <CheckCircleIcon style={{ color: 'green', fontSize: "small" }} />
-                    ) : (
-                        <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                    )}
-                    <span className={`password-check ${passwordSignFlag ? 'ok' : 'error'}`}>
-                        Zawiera liczbę lub znak specjalny<br />
-                    </span>
-                    {passwordLengthFlag ? (
-                        <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
-                    ) : (
-                        <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                    )}
-                    <span className={`password-check ${passwordLengthFlag ? 'ok' : 'error'}`}>
-                        Minimalna wymagana liczba znaków: 8
-                    </span>
-                    <br />
-                    {passwordMatchFlag ? (
-                        <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
-                    ) : (
-                        <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                    )}
-                    <span className={`password-check ${passwordMatchFlag ? 'ok' : 'error'}`}>
-                        Hasła są zgodne
-                    </span>
-                </div>
-                <Ripples>
-                    <Button
-                        disabled={firstNameError || !passwordLengthFlag || !passwordSignFlag || !passwordMatchFlag} // Walidacja wszystkich pól
-                    >
-                        Kontynuuj
-                    </Button>
-                </Ripples>
+                <div className="welcome-message">Witaj w Smart Expense Tracker</div>
+                <form onSubmit={handleSubmit}>
+
+                    <InputLabel
+                        label="Imię"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        error={firstNameError}
+                        helperText={firstNameError ? 'Imię jest wymagane i musi zawierać tylko litery.' : ''}
+                    />
+
+                    <InputLabel
+                        label="Adres e-mail"
+                        type="email"
+                        value={emailAddress}
+                        onChange={(e) => setEmailAddress(e.target.value)}
+                        onBlur={handleEmailBlur}
+                        error={emailError}
+                        helperText={emailError ? 'Adres e-mail jest nieprawidłowy lub już zajęty.' : ''}
+                    />
+
+                    <InputLabel
+                        label="Login"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        onBlur={handleUsernameBlur}
+                        error={usernameError}
+                        helperText={usernameError ? 'Login jest nieprawidłowy lub już zajęty.' : ''}
+                    />
+
+                    <InputLabel
+                        label="Hasło"
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        endAdornment={
+                            <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        }
+                    />
+
+                    <InputLabel
+                        label="Potwierdź hasło"
+                        type={showPassword ? 'text' : 'password'}
+                        value={conPassword}
+                        onChange={(e) => setConPassword(e.target.value)}
+                    />
+
+                    <div className="password-checker">
+                        <div className="password-check-item">
+                            {passwordSignValid ? (
+                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
+                            ) : (
+                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
+                            )}
+                            <span className={`password-check ${passwordSignValid ? 'ok' : 'error'}`}>
+                                Zawiera liczbę lub znak specjalny
+                            </span>
+                        </div>
+                        <div className="password-check-item">
+                            {passwordLengthValid ? (
+                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
+                            ) : (
+                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
+                            )}
+                            <span className={`password-check ${passwordLengthValid ? 'ok' : 'error'}`}>
+                                Minimalna wymagana liczba znaków: 8
+                            </span>
+                        </div>
+                        <div className="password-check-item">
+                            {passwordMatchValid ? (
+                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
+                            ) : (
+                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
+                            )}
+                            <span className={`password-check ${passwordMatchValid ? 'ok' : 'error'}`}>
+                                Hasła są zgodne
+                            </span>
+                        </div>
+                    </div>
+
+                    <SubmitButton label="Kontynuuj" onClick={handleSubmit}></SubmitButton>
+                </form>
             </DialogContent>
         </Dialog>
+
     );
 };
 

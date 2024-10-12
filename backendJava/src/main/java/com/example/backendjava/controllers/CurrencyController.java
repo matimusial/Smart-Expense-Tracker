@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/springapi")
+@RequestMapping("/spring-api")
 public class CurrencyController {
 
     private final ExchangeRateRepository exchangeRateRepository;

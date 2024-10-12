@@ -43,24 +43,27 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(
-                                "/springapi/user/authorize-registration/{pincode}",
-                                "/springapi/user/forgot-password",
-                                "/springapi/user/registration",
-                                "/springapi/user/reset-password/{pincode}/{email}",
-                                "/springapi/user/verify-reset/{pincode}/{email}",
-                                "/springapi/user/me",
-                                "springapi/currency-rates"
+                                "/spring-api/user/authorize-registration/{pincode}",
+                                "/spring-api/user/forgot-password",
+                                "/spring-api/user/registration",
+                                "/spring-api/user/reset-password/{pincode}/{email}",
+                                "/spring-api/user/verify-reset/{pincode}/{email}",
+                                "/spring-api/user/me",
+                                "/spring-api/currency-rates",
+                                "/spring-api/user/check-email",
+                                "/spring-api/user/check-username"
+
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/springapi/user/login")
+                        .loginPage("/spring-api/user/login")
                         .successHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/springapi/user/logout")
+                        .logoutUrl("/spring-api/user/logout")
                         .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")

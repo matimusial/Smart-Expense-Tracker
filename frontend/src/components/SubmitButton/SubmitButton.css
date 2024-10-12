@@ -1,0 +1,25 @@
+.ripple-wrapper-component {
+    display: inline-block;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.submit-button-component {
+    width: 100%;
+    min-height: 52px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #A0C4C4;
+    color: #fff;
+    border: none;
+    outline: none;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.submit-button-component:hover {
+    background: #88B0B0;
+    transform: translateY(-2px);
+}

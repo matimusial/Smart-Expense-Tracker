@@ -1,0 +1,44 @@
+.welcome-message {
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.password-checker {
+    margin-top: 16px;
+}
+
+.password-check-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.password-check {
+    margin-left: 8px;
+    font-size: 1rem;
+}
+
+.password-check.ok {
+    color: green;
+}
+
+.password-check.error {
+    color: red;
+}
+
+/* Ogólne style pola tekstowego */
+.MuiOutlinedInput-root {
+    background-color: #f5f5f5;
+    border-width: 1px;
+}
+
+/* Styl dla aktywnego pola tekstowego (focus) */
+.MuiOutlinedInput-root.Mui-focused {
+    border-width: 2px; /* Pogrubienie ramki, gdy pole jest aktywne */
+    border-color: inherit; /* Dziedziczy kolor, zamiast go zmieniać */
+    box-shadow: none; /* Usuwa domyślny cień */
+}
+

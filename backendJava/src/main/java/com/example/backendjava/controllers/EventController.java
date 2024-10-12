@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/springapi/event")
+@RequestMapping("/spring-api/event")
 public class EventController {
 
     private final EventService eventService;
@@ -25,12 +25,12 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping("/addevent")
+    @PostMapping("/add-event")
     public ResponseEntity<Map<String, String>> createEvent(@RequestBody Event event) {
         return eventService.getIdAndSave(event);
     }
 
-    @GetMapping("/getevents")
+    @GetMapping("/get-events")
     public ResponseEntity<Map<String, Object>> getEventsByMonth(@RequestParam("date") String data) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");

@@ -3,21 +3,17 @@ import CurrencyList from '../../components/CurrencyList/CurrencyList';
 import Header from '../../components/Header/Header';
 import ConverterForm from '../../components/CurrencyConventer/CurrencyConventer';
 import './Home.css';
+import {fetchCurrencyRates} from "../../utils/api";
 
 const Home = () => {
     const [currencyRates, setCurrencyRates] = useState([]);
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const apiUrl = 'http://localhost:8080/springapi/currency-rates';
-
     useEffect(() => {
-
-        fetch(apiUrl)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
+        const getCurrencyRates = async () => {
+            try {
+                const data = await fetchCurrencyRates();
                 const processedRates = processRates(data);
                 setCurrencyRates(processedRates);
 
@@ -29,10 +25,13 @@ const Home = () => {
                 }
 
                 setIsLoading(false);
-            })
-            .catch(error => {
+            } catch (err) {
+                console.error('Failed to fetch currency rates:', err);
                 setIsLoading(false);
-            });
+            }
+        };
+
+        getCurrencyRates();
     }, []);
 
 

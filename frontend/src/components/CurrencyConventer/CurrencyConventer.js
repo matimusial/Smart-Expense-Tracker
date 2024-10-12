@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
-import Ripples from 'react-ripples';
+import SubmitButton from "../SubmitButton/SubmitButton";
 import './CurrencyConventer.css';
-import { TextField } from '@mui/material';
+import InputLabel from '../InputLabel/InputLabel';
 
 const ConverterForm = ({ selectedCurrency }) => {
     const [amountPLN, setAmountPLN] = useState(100);
@@ -31,36 +31,18 @@ const ConverterForm = ({ selectedCurrency }) => {
     };
 
     return (
-        <form className="converter-form" onSubmit={handleSubmit}>
+        <form className="converter-form">
             <div className="form-group">
-                <TextField
-                    id="outlined-number"
-                    label="Wpisz kwotę"
-                    type="number"
-                    value={amountPLN}
-                    onChange={handleAmountChange}
-                    variant="outlined"
-                    required
-                    min="0"
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            "&:hover fieldset": {
-                                borderColor: "#88B0B0",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "#A0C4C4",
-                            },
-                        },
-                        "& .MuiInputLabel-root": {
-                            "&:hover": {
-                                color: "#88B0B0",
-                            },
-                            "&.Mui-focused": {
-                                color: "#588c8c",
-                            },
-                        },
-                    }}
-                />
+
+                <InputLabel
+                label="Wpisz kwotę"
+                value={amountPLN}
+                onChange={handleAmountChange}
+                type="number"
+                min="0"
+                required={false}
+                >
+                </InputLabel>
 
             </div>
 
@@ -85,10 +67,8 @@ const ConverterForm = ({ selectedCurrency }) => {
                     </div>
                 </div>
             </div>
+            <SubmitButton label="Oblicz" onClick={handleSubmit}></SubmitButton>
 
-            <Ripples color="rgba(0, 0, 0, 0.3)" className="ripple-wrapper">
-                <button type="submit" className="submit-button">Oblicz</button>
-            </Ripples>
             <p className={`exchange-rate-result ${showResult ? 'show' : ''}`}>
                 {result}
             </p>

@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/springapi/user")
+@RequestMapping("/spring-api/user")
 public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
@@ -101,7 +101,7 @@ public class UserRegistrationController {
      * Deletes the account of the currently authenticated user.
      */
     @Transactional
-    @DeleteMapping("/deleteAccount")
+    @DeleteMapping("/delete-account")
     public ResponseEntity<Void> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -130,6 +130,37 @@ public class UserRegistrationController {
 
 
     /**
+     *
+     * @return status 409 or 200
+     */
+    @PostMapping("check-email")
+    public ResponseEntity<Void> checkEmail(@RequestBody Map<String, String> emailJson) {
+        String email = emailJson.get("email");
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+
+    /**
+     *
+     * @return status 409 or 200
+     */
+    @PostMapping("check-username")
+    public ResponseEntity<Void> checkLogin(@RequestBody Map<String, String> usernameJson) {
+        String username = usernameJson.get("username");
+
+        if (userRepository.findByUsername(username).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    /**
      * Registers a new user.
      */
     @Transactional
@@ -154,11 +185,6 @@ public class UserRegistrationController {
 
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             response.put("username", "Nazwa użytkownika już istnieje");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        }
-
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            response.put("email", "Email już istnieje");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
