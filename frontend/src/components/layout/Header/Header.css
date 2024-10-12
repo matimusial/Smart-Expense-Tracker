@@ -19,8 +19,8 @@ h1 {
     font-family: monospace;
     letter-spacing: 5px;
     margin: 0;
-    line-height: 1.2; /* Upewnij się, że tekst dobrze mieści się w headerze */
-    white-space: nowrap; /* Zapobiega zawijaniu tekstu na nową linię */
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 h1 span {
@@ -61,13 +61,13 @@ h1:hover span {
     h1:hover span:nth-child(3) {
         margin-right: 0;
         margin-left: 0;
-        font-size: inherit; /* Ustawienia domyślnego rozmiaru */
+        font-size: inherit;
     }
 }
 
 @media (max-width: 768px) {
     h1 {
-        letter-spacing: 2px; /* Dostosuj odstępy między literami */
+        letter-spacing: 2px;
     }
 
     .header-container {

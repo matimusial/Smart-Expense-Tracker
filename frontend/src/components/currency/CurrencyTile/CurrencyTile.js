@@ -8,7 +8,7 @@ const CurrencyTile = ({ rate, selectedCurrency }) => {
     return (
         <div className={`currency-tile ${selectedCurrency?.currencyCode === rate.currencyCode ? 'selected' : ''}`}>
             <img
-                src={require(`../../assets/flags/${rate.currencyCode}.png`)}
+                src={require(`../../../assets/flags/${rate.currencyCode}.png`)}
                 alt={`${rate.currencyCode} flag`}
                 className="flag-icon"
             />

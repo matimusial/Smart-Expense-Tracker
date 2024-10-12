@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import CurrencyList from '../../components/CurrencyList/CurrencyList';
-import Header from '../../components/Header/Header';
-import ConverterForm from '../../components/CurrencyConventer/CurrencyConventer';
+import CurrencyList from '../../components/currency/CurrencyList/CurrencyList';
+import Header from '../../components/layout/Header/Header';
+import ConverterForm from '../../components/currency/CurrencyConventer/CurrencyConventer';
 import './Home.css';
 import {fetchCurrencyRates} from "../../utils/api";
 

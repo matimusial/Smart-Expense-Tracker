@@ -3,6 +3,8 @@ package com.example.backendjava.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,34 +16,26 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Pattern(
-            regexp = "^[a-z0-9._-]+$"
-    )
+    @Pattern(regexp = "^(?=[a-zA-Z0-9])(?!.*[_.-]{2})(?!.*[_.-]{2})(?!.*[_.-]$)[a-zA-Z0-9._-]{3,20}$")
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Email
-    @Pattern(
-            regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-    )
+    @Pattern(regexp = "^[^\\s@,]+(?:\\.[^\\s@.,]+)*@[^\\s@,]+(?:\\.[^\\s@,]+)+$")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$"
-    )
+    @Size(min = 8)
+    @Pattern(regexp = ".*[0-9!@#$%^&*].*")
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$"
-    )
+    @Size(min = 8)
+    @Pattern(regexp = ".*[0-9!@#$%^&*].*")
     @Transient
     private String conPassword;
 
-    @Pattern(
-            regexp = "^[a-zA-Z]+$"
-    )
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 

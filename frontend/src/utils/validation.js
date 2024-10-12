@@ -10,7 +10,10 @@ export const validateUsername = (username) => {
     if (username.trim() === '') {
         return true;
     }
-    const usernameRegex = /^[a-zA-Z0-9._-]{3,20}$/;
+    if (username.trim().toLowerCase() === 'anonymoususer') {
+        return false;
+    }
+    const usernameRegex = /^(?=[a-zA-Z0-9])(?!.*[_.-]{2})(?!.*[_.-]{2})(?!.*[_.-]$)[a-zA-Z0-9._-]{3,20}$/;
     return usernameRegex.test(username);
 };
 
@@ -31,8 +34,9 @@ export const validatePasswordMatch = (password, confirmPassword) => {
 };
 
 export const validateEmail = (email) => {
-    if (email.trim() === '')
+    if (email.trim() === '') {
         return true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && ((email.endsWith('.com') || email.endsWith('.pl')));
+    }
+    const emailRegex = /^[^\s@,]+(?:\.[^\s@.,]+)*@[^\s@,]+(?:\.[^\s@,]+)+$/;
+    return emailRegex.test(email) && (email.endsWith('.com') || email.endsWith('.pl'));
 };

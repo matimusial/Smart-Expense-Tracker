@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
-import SubmitButton from "../SubmitButton/SubmitButton";
+import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 import './CurrencyConventer.css';
-import InputLabel from '../InputLabel/InputLabel';
+import InputLabel from '../../ui/InputLabel/InputLabel';
 
 const ConverterForm = ({ selectedCurrency }) => {
     const [amountPLN, setAmountPLN] = useState(100);
@@ -50,7 +50,7 @@ const ConverterForm = ({ selectedCurrency }) => {
                 <div className="currency-block">
                     <p className="currency-p">Waluta z</p>
                     <div className="currency-select">
-                        <img src={require(`../../assets/flags/PLN.png`)}
+                        <img src={require(`../../../assets/flags/PLN.png`)}
                              alt={`PLN flag`}
                              className="flag-icon"/>
                         <p>PLN</p>
@@ -60,7 +60,7 @@ const ConverterForm = ({ selectedCurrency }) => {
                 <div className="currency-block">
                     <p className="currency-p">Waluta do</p>
                     <div className="currency-select">
-                        <img src={require(`../../assets/flags/${selectedCurrency.currencyCode}.png`)}
+                        <img src={require(`../../../assets/flags/${selectedCurrency.currencyCode}.png`)}
                              alt={`${selectedCurrency.currencyCode} flag`}
                              className="flag-icon"/>
                         <p>{selectedCurrency.currencyCode}</p>

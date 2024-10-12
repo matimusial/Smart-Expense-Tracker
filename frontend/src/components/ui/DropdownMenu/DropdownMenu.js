@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './DropdownMenu.css';
-import Avatar from '../Avatar/Avatar';
+import Avatar from '../../layout/Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
-import RegistrationDialog from '../RegistrationDialog/RegistrationDialog';
+import RegistrationDialog from '../../dialogs/RegistrationDialog/RegistrationDialog';
+import SuccessDialog from '../../dialogs/RegistrationDialog/SuccessDialog';
 
 function DropdownMenu({ user }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+    const [isSuccessOpen, setIsSuccessOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     const toggleMenu = () => {
@@ -20,6 +22,19 @@ function DropdownMenu({ user }) {
 
     const closeRegistrationDialog = () => {
         setIsRegistrationOpen(false);
+    };
+
+    const openSuccessDialog = () => {
+        setIsSuccessOpen(true);
+    };
+
+    const closeSuccessDialog = () => {
+        setIsSuccessOpen(false);
+    };
+
+    const handleRegistrationSuccess = () => {
+        setIsRegistrationOpen(false);
+        openSuccessDialog();
     };
 
     useEffect(() => {
@@ -42,7 +57,7 @@ function DropdownMenu({ user }) {
                 {user ? (
                     <Avatar name={user} />
                 ) : (
-                    <img src={require('../../assets/unauthorizedIcon.png')} alt="Profile" className="unauthorizedIcon" />
+                    <img src={require('../../../assets/unauthorizedIcon.png')} alt="Profile" className="unauthorizedIcon" />
                 )}
             </button>
 
@@ -55,12 +70,7 @@ function DropdownMenu({ user }) {
                         </>
                     ) : (
                         <>
-                            {/*<button onClick={openLoginDialog}>Zaloguj się</button>*/}
-                            <button
-                                onClick={openRegistrationDialog}>Zarejestruj się
-                            </button>
-
-
+                            <button onClick={openRegistrationDialog}>Zarejestruj się</button>
                         </>
                     )}
                 </div>
@@ -69,6 +79,12 @@ function DropdownMenu({ user }) {
             <RegistrationDialog
                 open={isRegistrationOpen}
                 onClose={closeRegistrationDialog}
+                onSuccess={handleRegistrationSuccess}
+            />
+
+            <SuccessDialog
+                open={isSuccessOpen}
+                onClose={closeSuccessDialog}
             />
         </div>
     );

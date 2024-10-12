@@ -165,27 +165,23 @@ public class UserRegistrationController {
      */
     @Transactional
     @PostMapping("/registration")
-    public ResponseEntity<Map<String, Object>> registerUser(@Valid @RequestBody User user, BindingResult result) {
-        Map<String, Object> response = new HashMap<>();
-
+    public ResponseEntity<Void> registerUser(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
-            result.getFieldErrors().forEach(error -> response.put(error.getField(), error.getDefaultMessage()));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            System.out.println("Validation errors: ");
+            result.getAllErrors().forEach(error -> System.out.println(error.toString()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         if (!user.getPassword().equals(user.getConPassword())) {
-            response.put("conPassword", "Hasła nie pasują do siebie");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         if (user.getUsername().equals("anonymousUser")){
-            response.put("username", "Ta nazwa nie jest mozliwa");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            response.put("username", "Nazwa użytkownika już istnieje");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         user.setPassword(BcryptUtil.hashPassword(user.getPassword()));

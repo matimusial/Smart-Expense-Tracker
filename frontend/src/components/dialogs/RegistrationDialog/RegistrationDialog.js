@@ -7,7 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import SubmitButton from "../SubmitButton/SubmitButton";
+import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 import './RegistrationDialog.css';
 
 import {
@@ -17,18 +17,17 @@ import {
     validatePasswordSign,
     validatePasswordMatch,
     validateEmail
-} from '../../utils/validation';
+} from '../../../utils/validation';
 
 import {
     checkEmailAvailability,
-    checkUsernameAvailability
-} from '../../utils/api';
+    checkUsernameAvailability, registerUser
+} from '../../../utils/api';
 
-import './RegistrationDialog.css';
-import InputLabel from '../InputLabel/InputLabel';
+import InputLabel from '../../ui/InputLabel/InputLabel';
 
-const RegistrationDialog = ({ open, onClose }) => {
-    const [emailAddress, setEmailAddress] = useState('');
+const RegistrationDialog = ({ open, onClose, onSuccess}) => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [conPassword, setConPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -42,14 +41,17 @@ const RegistrationDialog = ({ open, onClose }) => {
     const [usernameLoading, setUsernameLoading] = useState(false);
     const [emailLoading, setEmailLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [registrationLoading, setRegistrationLoading] = useState(false);
+    const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
+
 
     const handleEmailBlur = async () => {
-        if (!validateEmail(emailAddress)) {
+        if (!validateEmail(email)) {
             setEmailError(true);
             return;
         }
         setEmailLoading(true);
-        const isAvailable = await checkEmailAvailability(emailAddress);
+        const isAvailable = await checkEmailAvailability(email);
         setEmailError(!isAvailable);
         setEmailLoading(false);
     };
@@ -84,21 +86,45 @@ const RegistrationDialog = ({ open, onClose }) => {
         );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isFormValid()) {
-            console.log('Form submitted:', { firstName, emailAddress, username, password });
-            setFirstName('');
-            setEmailAddress('');
-            setUsername('');
-            setPassword('');
-            setConPassword('');
-            onClose();
+            const userData = {
+                firstName,
+                email,
+                username,
+                password,
+                conPassword
+            };
+
+            try {
+                setRegistrationLoading(true);
+                await registerUser(userData);
+                setFirstName('');
+                setEmail('');
+                setUsername('');
+                setPassword('');
+                setConPassword('');
+                setRegistrationLoading(false);
+                setIsRegistrationSuccessful(true);
+                onSuccess();
+            } catch (error) {
+                console.error('Registration error:', error);
+                throw error;
+            }
         }
     };
 
+
     return (
-        <Dialog open={open} onClose={onClose} PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}
+            TransitionProps={{
+                timeout: isRegistrationSuccessful ? 750 : 0,
+            }}
+            >
             <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 Zarejestruj
                 <IconButton
@@ -124,8 +150,8 @@ const RegistrationDialog = ({ open, onClose }) => {
                     <InputLabel
                         label="Adres e-mail"
                         type="email"
-                        value={emailAddress}
-                        onChange={(e) => setEmailAddress(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
                         onBlur={handleEmailBlur}
                         error={emailError}
                         helperText={emailError ? 'Adres e-mail jest nieprawidłowy lub już zajęty.' : ''}
@@ -134,7 +160,7 @@ const RegistrationDialog = ({ open, onClose }) => {
                     <InputLabel
                         label="Login"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value.toLowerCase())}
                         onBlur={handleUsernameBlur}
                         error={usernameError}
                         helperText={usernameError ? 'Login jest nieprawidłowy lub już zajęty.' : ''}
@@ -146,7 +172,9 @@ const RegistrationDialog = ({ open, onClose }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         endAdornment={
-                            <IconButton onClick={() => setShowPassword(!showPassword)}>
+                            <IconButton tabIndex={-1}
+                                        onClick={() => setShowPassword(!showPassword)}>
+
                                 {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                         }
@@ -192,7 +220,9 @@ const RegistrationDialog = ({ open, onClose }) => {
                         </div>
                     </div>
 
-                    <SubmitButton label="Kontynuuj" onClick={handleSubmit}></SubmitButton>
+                    <SubmitButton label="Kontynuuj" onClick={handleSubmit} isLoading={registrationLoading}>
+                    </SubmitButton>
+
                 </form>
             </DialogContent>
         </Dialog>
