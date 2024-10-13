@@ -1,16 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CurrencyList from '../../components/currency/CurrencyList/CurrencyList';
 import Header from '../../components/layout/Header/Header';
 import ConverterForm from '../../components/currency/CurrencyConventer/CurrencyConventer';
 import './Home.css';
-import {fetchCurrencyRates} from "../../utils/api";
+import { authorizeRegistration, fetchCurrencyRates } from "../../utils/api";
+import { DialogContext } from "../../context/DialogContext";
+import InformationDialog from "../../components/dialogs/InformationDialog/InformationDialog";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [currencyRates, setCurrencyRates] = useState([]);
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    // Stany dla tytułu, wiadomości i ikony okna dialogowego
+    const [authorizationTitle, setAuthorizationTitle] = useState('');
+    const [authorizationMessage, setAuthorizationMessage] = useState('');
+    const [authorizationIcon, setAuthorizationIcon] = useState(null);
+
+    const navigate = useNavigate();
+
+    // Pobierz funkcje otwierania/zamykania dialogu z kontekstu
+    const { isAuthorizationDialogOpen, openAuthorizationDialog, closeDialogs } = useContext(DialogContext);
+
     useEffect(() => {
+        const performAuthorization = async () => {
+            if (window.location.pathname.includes('/user/registration/authorize-registration')) {
+                const params = new URLSearchParams(window.location.search);
+                const pincode = params.get('pincode');
+                const [isAuthorized, message] = await authorizeRegistration(pincode);
+
+                // Ustaw tytuł, wiadomość i ikonę
+                setAuthorizationTitle(isAuthorized ? 'Autoryzacja Sukces' : 'Autoryzacja Błąd');
+                setAuthorizationMessage(message);
+                setAuthorizationIcon(isAuthorized ? CheckCircleOutlineOutlinedIcon : CancelOutlinedIcon);
+
+                // Otwórz okno dialogowe
+                openAuthorizationDialog();
+
+                // Zastąp URL, usuwając parametry
+                window.history.replaceState({}, document.title, '/');
+            }
+        };
+
+        performAuthorization();
+
         const getCurrencyRates = async () => {
             try {
                 const data = await fetchCurrencyRates();
@@ -32,8 +68,7 @@ const Home = () => {
         };
 
         getCurrencyRates();
-    }, []);
-
+    }, [openAuthorizationDialog]);
 
     const processRates = (data) => {
         const rateList = data.currentRateList;
@@ -52,13 +87,18 @@ const Home = () => {
             });
     };
 
+    const closeAuthorizationDialog = () => {
+        closeDialogs();
+        navigate('/');
+    };
+
     if (isLoading) {
-        return;
+        return null;
     }
 
     return (
         <div>
-            <Header/>
+            <Header />
             <div className="container">
                 <div className="currency-list-container">
                     <CurrencyList
@@ -68,11 +108,19 @@ const Home = () => {
                     />
                 </div>
                 <div className="currency-calculator-container">
-                    <ConverterForm selectedCurrency={selectedCurrency}/>
+                    <ConverterForm selectedCurrency={selectedCurrency} />
                 </div>
             </div>
+
+            <InformationDialog
+                open={isAuthorizationDialogOpen}
+                onClose={closeAuthorizationDialog}
+                title={authorizationTitle}
+                message={authorizationMessage}
+                icon={authorizationIcon}
+            />
         </div>
     );
-}
+};
 
 export default Home;

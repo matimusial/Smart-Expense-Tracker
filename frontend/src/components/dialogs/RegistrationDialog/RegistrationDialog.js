@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     Dialog, DialogContent, DialogTitle, IconButton
 } from '@mui/material';
@@ -26,7 +26,10 @@ import {
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
 
-const RegistrationDialog = ({ open, onClose, onSuccess}) => {
+import {DialogContext} from '../../../context/DialogContext';
+
+const RegistrationDialog = ({ onOpen, onClose }) => {
+    const { handleRegistrationSuccess } = useContext(DialogContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [conPassword, setConPassword] = useState('');
@@ -42,7 +45,13 @@ const RegistrationDialog = ({ open, onClose, onSuccess}) => {
     const [emailLoading, setEmailLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [registrationLoading, setRegistrationLoading] = useState(false);
-    const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
+
+    useEffect(() => {
+        setFirstNameError(!validateFirstName(firstName));
+        setPasswordLengthValid(validatePasswordLength(password));
+        setPasswordSignValid(validatePasswordSign(password));
+        setPasswordMatchValid(validatePasswordMatch(password, conPassword));
+    }, [firstName, password, conPassword]);
 
 
     const handleEmailBlur = async () => {
@@ -67,12 +76,6 @@ const RegistrationDialog = ({ open, onClose, onSuccess}) => {
         setUsernameLoading(false);
     };
 
-    useEffect(() => {
-        setFirstNameError(!validateFirstName(firstName));
-        setPasswordLengthValid(validatePasswordLength(password));
-        setPasswordSignValid(validatePasswordSign(password));
-        setPasswordMatchValid(validatePasswordMatch(password, conPassword));
-    }, [firstName, password, conPassword]);
 
     const isFormValid = () => {
         return (
@@ -99,15 +102,15 @@ const RegistrationDialog = ({ open, onClose, onSuccess}) => {
 
             try {
                 setRegistrationLoading(true);
-                await registerUser(userData);
+                //await registerUser(userData);
                 setFirstName('');
                 setEmail('');
                 setUsername('');
                 setPassword('');
                 setConPassword('');
                 setRegistrationLoading(false);
-                setIsRegistrationSuccessful(true);
-                onSuccess();
+                onClose();
+                handleRegistrationSuccess();
             } catch (error) {
                 console.error('Registration error:', error);
                 throw error;
@@ -118,12 +121,9 @@ const RegistrationDialog = ({ open, onClose, onSuccess}) => {
 
     return (
         <Dialog
-            open={open}
+            open={onOpen}
             onClose={onClose}
             PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}
-            TransitionProps={{
-                timeout: isRegistrationSuccessful ? 750 : 0,
-            }}
             >
             <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 Zarejestruj

@@ -93,3 +93,24 @@ export const registerUser = async (userData) => {
     }
 };
 
+export const authorizeRegistration = async (pincode) => {
+    try {
+        if (!pincode) {
+            return [false, 'Brak kodu PIN w adresie URL.'];
+        }
+
+        const response = await fetch(`http://localhost:8080/spring-api/user/authorize-registration/${pincode}`, {
+            method: 'GET',
+        });
+        const data = await response.text();
+
+        if (response.ok) {
+            return [true, data];
+        } else {
+            return [false, data];
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [false, 'Wystąpił błąd podczas autoryzacji rejestracji.'];
+    }
+};

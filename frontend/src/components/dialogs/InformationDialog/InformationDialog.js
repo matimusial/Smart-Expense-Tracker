@@ -1,19 +1,27 @@
 import React from 'react';
 import {
-    Dialog, DialogContent, DialogTitle, IconButton
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Fade
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const SuccessDialog = ({ open, onClose }) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Fade ref={ref} {...props} timeout={{ enter: 750, exit: 0 }} />;
+});
+
+const InformationDialog = ({ open, onClose, title, message, icon: IconComponent }) => {
     return (
         <Dialog
             open={open}
             onClose={onClose}
+            TransitionComponent={Transition}
             PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}
         >
             <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                Rejestracja Udana
+                {title}
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
@@ -23,16 +31,11 @@ const SuccessDialog = ({ open, onClose }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent style={{ textAlign: 'center' }}>
-                <CheckCircleIcon style={{ color: 'green', fontSize: '4rem' }} />
-                <p>
-                    Twoje konto zostało pomyślnie utworzone! Potwierdź je teraz, klikając w link wysłany na adres email.
-                </p>
-                <p>
-                    Bez tej akcji nie będzie można korzystać z serwisu.
-                </p>
+                {IconComponent && <IconComponent style={{ fontSize: '5rem'}} />}
+                <p>{message}</p>
             </DialogContent>
         </Dialog>
     );
 };
 
-export default SuccessDialog;
+export default InformationDialog;

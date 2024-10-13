@@ -28,7 +28,7 @@ public class ScheduledCheckerService {
      * Scheduled task that checks for unauthorized user accounts with expired confirmation codes
      * and removes them from the database.
      */
-    @Scheduled(fixedRate = 21600000, initialDelay = 1800000) // 6 hours, 30 minutes
+    @Scheduled(fixedRate = 21600000, initialDelay = 900000) // 6 hours, 15 minutes
     @Transactional
     public void checkUserExpiryStatus() {
         LocalDateTime currentTime = LocalDateTime.now();
