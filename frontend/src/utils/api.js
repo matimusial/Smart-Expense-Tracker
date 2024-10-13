@@ -94,12 +94,13 @@ export const registerUser = async (userData) => {
 };
 
 export const authorizeRegistration = async (pincode) => {
+    const apiUrl = 'http://localhost:8080/spring-api/user/authorize-registration/';
     try {
         if (!pincode) {
             return [false, 'Brak kodu PIN w adresie URL.'];
         }
 
-        const response = await fetch(`http://localhost:8080/spring-api/user/authorize-registration/${pincode}`, {
+        const response = await fetch(`${apiUrl}${pincode}`, {
             method: 'GET',
         });
         const data = await response.text();
@@ -114,3 +115,46 @@ export const authorizeRegistration = async (pincode) => {
         return [false, 'Wystąpił błąd podczas autoryzacji rejestracji.'];
     }
 };
+
+export const loginUser = async (username, password) => {
+    const apiUrl = `http://localhost:8080/spring-api/user/login`
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({username, password}),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            return data.message;
+        }
+        else {
+            return true;
+        }
+
+    } catch (error) {
+        console.error(`Error logging user`, error);
+        throw error;
+    }
+}
+
+export const logoutUser = async (username) => {
+    const apiUrl = 'http://localhost:8080/spring-api/user/logout';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            return true;
+        } else {
+            console.error('Unexpected logout response status:', response.status);
+        }
+    } catch (error) {
+        console.error(`Logout error`, error);
+        throw error;
+    }
+}

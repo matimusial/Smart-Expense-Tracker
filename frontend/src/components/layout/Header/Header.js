@@ -1,37 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import DropdownMenu from '../../ui/DropdownMenu/DropdownMenu';
 import './Header.css';
 import { Link } from "react-router-dom";
-import InformationDialog from '../../dialogs/InformationDialog/InformationDialog';
-import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined';
-import { DialogContext } from '../../../context/DialogContext';
+import { useUser } from '../../../context/UserContext';
 
 function Header() {
-    const userName = "";
+    const { user } = useUser();
+    let userName = '';
+    if (user) {
+        userName = user.username;
+    }
 
-    const {
-        handleRegistrationSuccess,
-        closeDialogs,
-        isRegistrationSuccessDialogOpen,
-    } = useContext(DialogContext);
+
 
     return (
         <header className="header-container">
-            <Link to="/public">
+            <Link to="/">
                 <img src={require('../../../assets/mainIcon.png')} alt="Profile" className="mainIcon" />
             </Link>
             <h1><span>Smart</span> <span>Expense</span> <span>Tracker</span></h1>
             <DropdownMenu
-                user={userName}
-                onRegistrationSuccess={handleRegistrationSuccess}
-            />
-
-            <InformationDialog
-                open={isRegistrationSuccessDialogOpen}
-                onClose={closeDialogs}
-                title="Rejestracja zakończona"
-                message="Twoje konto zostało pomyślnie utworzone! Potwierdź je teraz, klikając w link wysłany na adres email."
-                icon={LocalPostOfficeOutlinedIcon}
+                userName={userName}
             />
         </header>
     );

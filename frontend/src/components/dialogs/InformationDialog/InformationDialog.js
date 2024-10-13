@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Fade ref={ref} {...props} timeout={{ enter: 750, exit: 0 }} />;
 });
 
-const InformationDialog = ({ open, onClose, title, message, icon: IconComponent }) => {
+const InformationDialog = ({ open, onClose, title, message, icon: IconComponent = null, iconStyle = {} }) => {
     return (
         <Dialog
             open={open}
@@ -31,11 +31,13 @@ const InformationDialog = ({ open, onClose, title, message, icon: IconComponent 
                 </IconButton>
             </DialogTitle>
             <DialogContent style={{ textAlign: 'center' }}>
-                {IconComponent && <IconComponent style={{ fontSize: '5rem'}} />}
+                {IconComponent && <IconComponent style={{ fontSize: '5rem', ...iconStyle }} />}
                 <p>{message}</p>
             </DialogContent>
         </Dialog>
     );
 };
+
+
 
 export default InformationDialog;

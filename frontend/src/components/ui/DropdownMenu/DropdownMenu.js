@@ -1,25 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import './DropdownMenu.css';
 import Avatar from '../../layout/Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import RegistrationDialog from '../../dialogs/RegistrationDialog/RegistrationDialog';
+import {DialogContext} from "../../../context/DialogContext";
+import InformationDialog from "../../dialogs/InformationDialog/InformationDialog";
+import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutlined";
+import LoginDialog from "../../dialogs/LoginDialog/LoginDialog";
 
-function DropdownMenu({ user }) {
+function DropdownMenu({ userName }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    const {
+        closeDialogs,
+        openRegistrationDialog,
+        isRegistrationDialogOpen,
+        isRegistrationSuccessDialogOpen,
+        isLoginDialogOpen,
+        openLoginDialog,
+    } = useContext(DialogContext);
+
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
-    const openRegistrationDialog = () => {
-        setIsRegistrationOpen(true);
+    const openRegistrationDialogComponent = () => {
         setIsOpen(false);
+        openRegistrationDialog();
     };
 
-    const closeRegistrationDialog = () => {
-        setIsRegistrationOpen(false);
+    const openLoginDialogComponent = () => {
+        setIsOpen(false);
+        openLoginDialog();
     };
 
     useEffect(() => {
@@ -39,8 +53,8 @@ function DropdownMenu({ user }) {
         <div className="dropdown" ref={dropdownRef}>
             <button onClick={toggleMenu} className="dropdown-toggle">
                 <HamburgerMenu />
-                {user ? (
-                    <Avatar name={user} />
+                {userName ? (
+                    <Avatar userName={userName} />
                 ) : (
                     <img src={require('../../../assets/unauthorizedIcon.png')} alt="Profile" className="unauthorizedIcon" />
                 )}
@@ -48,22 +62,35 @@ function DropdownMenu({ user }) {
 
             {isOpen && (
                 <div className="dropdown-menu">
-                    {user ? (
+                    {userName ? (
                         <>
                             <a href="/profile">Profil</a>
                             <a href="/logout">Wyloguj się</a>
                         </>
                     ) : (
                         <>
-                            <button onClick={openRegistrationDialog}>Zarejestruj się</button>
+                            <button onClick={openLoginDialogComponent}>Zaloguj się</button>
+                            <button onClick={openRegistrationDialogComponent}>Zarejestruj się</button>
                         </>
                     )}
                 </div>
             )}
 
             <RegistrationDialog
-                onOpen={isRegistrationOpen}
-                onClose={closeRegistrationDialog}
+                open={isRegistrationDialogOpen}
+                onClose={closeDialogs}
+            />
+
+            <InformationDialog
+                open={isRegistrationSuccessDialogOpen}
+                onClose={closeDialogs}
+                title="Rejestracja zakończona"
+                message="Twoje konto zostało pomyślnie utworzone! Potwierdź je teraz, klikając w link wysłany na adres email."
+                icon={LocalPostOfficeOutlinedIcon}
+            />
+
+            <LoginDialog open={isLoginDialogOpen}
+                         onClose={closeDialogs}
             />
         </div>
     );

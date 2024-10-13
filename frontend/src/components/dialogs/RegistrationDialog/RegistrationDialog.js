@@ -28,8 +28,8 @@ import InputLabel from '../../ui/InputLabel/InputLabel';
 
 import {DialogContext} from '../../../context/DialogContext';
 
-const RegistrationDialog = ({ onOpen, onClose }) => {
-    const { handleRegistrationSuccess } = useContext(DialogContext);
+const RegistrationDialog = ({ open, onClose }) => {
+    const { openRegistrationSuccessDialog } = useContext(DialogContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [conPassword, setConPassword] = useState('');
@@ -102,15 +102,14 @@ const RegistrationDialog = ({ onOpen, onClose }) => {
 
             try {
                 setRegistrationLoading(true);
-                //await registerUser(userData);
+                await registerUser(userData);
                 setFirstName('');
                 setEmail('');
                 setUsername('');
                 setPassword('');
                 setConPassword('');
                 setRegistrationLoading(false);
-                onClose();
-                handleRegistrationSuccess();
+                openRegistrationSuccessDialog();
             } catch (error) {
                 console.error('Registration error:', error);
                 throw error;
@@ -118,10 +117,9 @@ const RegistrationDialog = ({ onOpen, onClose }) => {
         }
     };
 
-
     return (
         <Dialog
-            open={onOpen}
+            open={open}
             onClose={onClose}
             PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}
             >

@@ -6,36 +6,47 @@ export const DialogProvider = ({ children }) => {
     const [isRegistrationDialogOpen, setIsRegistrationDialogOpen] = useState(false);
     const [isRegistrationSuccessDialogOpen, setIsRegistrationSuccessDialogOpen] = useState(false);
     const [isAccountConfirmationDialogOpen, setIsAccountConfirmationDialogOpen] = useState(false);
+    const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
 
     const openRegistrationDialog = () => {
+        closeDialogs();
         setIsRegistrationDialogOpen(true);
     };
 
-    const openAuthorizationDialog = () => {
+    const openRegistrationSuccessDialog = () => {
+        closeDialogs();
+        setIsRegistrationSuccessDialogOpen(true);
+    }
+
+    const openAccountConfirmationDialog = () => {
+        closeDialogs();
         setIsAccountConfirmationDialogOpen(true);
     };
+
+    const openLoginDialog = () => {
+        closeDialogs();
+        setIsLoginDialogOpen(true);
+    }
 
     const closeDialogs = () => {
         setIsRegistrationDialogOpen(false);
         setIsRegistrationSuccessDialogOpen(false);
         setIsAccountConfirmationDialogOpen(false);
-    };
-
-    const handleRegistrationSuccess = () => {
-        setIsRegistrationDialogOpen(false);
-        setIsRegistrationSuccessDialogOpen(true);
+        setIsLoginDialogOpen(false);
     };
 
     return (
         <DialogContext.Provider
             value={{
                 openRegistrationDialog,
-                openAuthorizationDialog,
+                openRegistrationSuccessDialog,
+                openAccountConfirmationDialog,
                 closeDialogs,
-                handleRegistrationSuccess,
+                openLoginDialog,
                 isRegistrationDialogOpen,
                 isRegistrationSuccessDialogOpen,
                 isAccountConfirmationDialogOpen,
+                isLoginDialogOpen
             }}
         >
             {children}

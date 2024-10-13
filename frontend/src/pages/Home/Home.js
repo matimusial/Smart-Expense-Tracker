@@ -15,15 +15,13 @@ const Home = () => {
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Stany dla tytułu, wiadomości i ikony okna dialogowego
-    const [authorizationTitle, setAuthorizationTitle] = useState('');
     const [authorizationMessage, setAuthorizationMessage] = useState('');
     const [authorizationIcon, setAuthorizationIcon] = useState(null);
+    const [authorizationStyle, setAuthorizationStyle] = useState(null);
 
     const navigate = useNavigate();
 
-    // Pobierz funkcje otwierania/zamykania dialogu z kontekstu
-    const { isAuthorizationDialogOpen, openAuthorizationDialog, closeDialogs } = useContext(DialogContext);
+    const { isAccountConfirmationDialogOpen, openAccountConfirmationDialog, closeDialogs } = useContext(DialogContext);
 
     useEffect(() => {
         const performAuthorization = async () => {
@@ -31,16 +29,13 @@ const Home = () => {
                 const params = new URLSearchParams(window.location.search);
                 const pincode = params.get('pincode');
                 const [isAuthorized, message] = await authorizeRegistration(pincode);
-
-                // Ustaw tytuł, wiadomość i ikonę
-                setAuthorizationTitle(isAuthorized ? 'Autoryzacja Sukces' : 'Autoryzacja Błąd');
+                console.log(isAuthorized);
+                console.log(message);
                 setAuthorizationMessage(message);
                 setAuthorizationIcon(isAuthorized ? CheckCircleOutlineOutlinedIcon : CancelOutlinedIcon);
+                setAuthorizationStyle(isAuthorized ? { color: 'green' } : { color: 'red' });
 
-                // Otwórz okno dialogowe
-                openAuthorizationDialog();
-
-                // Zastąp URL, usuwając parametry
+                openAccountConfirmationDialog();
                 window.history.replaceState({}, document.title, '/');
             }
         };
@@ -68,7 +63,7 @@ const Home = () => {
         };
 
         getCurrencyRates();
-    }, [openAuthorizationDialog]);
+    }, []);
 
     const processRates = (data) => {
         const rateList = data.currentRateList;
@@ -113,11 +108,12 @@ const Home = () => {
             </div>
 
             <InformationDialog
-                open={isAuthorizationDialogOpen}
+                open={isAccountConfirmationDialogOpen}
                 onClose={closeAuthorizationDialog}
-                title={authorizationTitle}
+                title=""
                 message={authorizationMessage}
                 icon={authorizationIcon}
+                iconStyle={authorizationStyle}
             />
         </div>
     );
