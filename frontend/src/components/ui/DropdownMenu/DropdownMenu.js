@@ -3,14 +3,17 @@ import './DropdownMenu.css';
 import Avatar from '../../layout/Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import RegistrationDialog from '../../dialogs/RegistrationDialog/RegistrationDialog';
-import {DialogContext} from "../../../context/DialogContext";
+import {DialogContext} from "../../../contexts/DialogContext";
 import InformationDialog from "../../dialogs/InformationDialog/InformationDialog";
 import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutlined";
 import LoginDialog from "../../dialogs/LoginDialog/LoginDialog";
+import SendPasswordEmailDialog from "../../dialogs/SendPasswordEmailDialog/SendPasswordEmailDialog";
+import { useUser } from '../../../contexts/UserContext';
 
-function DropdownMenu({ userName }) {
+function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const { username, logout } = useUser();
 
     const {
         closeDialogs,
@@ -19,6 +22,7 @@ function DropdownMenu({ userName }) {
         isRegistrationSuccessDialogOpen,
         isLoginDialogOpen,
         openLoginDialog,
+        isSendPasswordEmailDialogOpen,
     } = useContext(DialogContext);
 
 
@@ -53,8 +57,8 @@ function DropdownMenu({ userName }) {
         <div className="dropdown" ref={dropdownRef}>
             <button onClick={toggleMenu} className="dropdown-toggle">
                 <HamburgerMenu />
-                {userName ? (
-                    <Avatar userName={userName} />
+                {username ? (
+                    <Avatar userName={username} />
                 ) : (
                     <img src={require('../../../assets/unauthorizedIcon.png')} alt="Profile" className="unauthorizedIcon" />
                 )}
@@ -62,10 +66,10 @@ function DropdownMenu({ userName }) {
 
             {isOpen && (
                 <div className="dropdown-menu">
-                    {userName ? (
+                    {username ? (
                         <>
-                            <a href="/profile">Profil</a>
-                            <a href="/logout">Wyloguj się</a>
+                            <button onClick={logout}>Profil</button>
+                            <button onClick={logout}>Wyloguj się</button>
                         </>
                     ) : (
                         <>
@@ -91,6 +95,11 @@ function DropdownMenu({ userName }) {
 
             <LoginDialog open={isLoginDialogOpen}
                          onClose={closeDialogs}
+            />
+
+            <SendPasswordEmailDialog
+                open={isSendPasswordEmailDialogOpen}
+                onClose={closeDialogs}
             />
         </div>
     );

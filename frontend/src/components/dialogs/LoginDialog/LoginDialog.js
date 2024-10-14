@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Dialog, DialogContent, DialogTitle, IconButton
 } from '@mui/material';
@@ -10,41 +10,42 @@ import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 import InputLabel from '../../ui/InputLabel/InputLabel';
 import './LoginDialog.css';
 
-import { useUser } from '../../../context/UserContext';
+import { useUser } from '../../../contexts/UserContext';
+import {useNavigate} from "react-router-dom";
+import {DialogContext} from '../../../contexts/DialogContext';
 
 
 const LoginDialog = ({ open, onClose }) => {
+    const { openSendPasswordEmailDialog } = useContext(DialogContext);
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loginLoading, setLoginLoading] = useState(false);
     const [errorKey, setErrorKey] = useState(0);
-    const { login, error, setError} = useUser();
+    const { login, error, clearError} = useUser();
+    const navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoginLoading(true);
         setErrorKey(prevKey => prevKey + 1);
-        if (!username || !password) {
-            setError('Nazwa użytkownika i hasło są wymagane');
-            setLoginLoading(false);
-            return;
-        }
         await login(username, password);
         setPassword(``);
         setUsername(``);
         setLoginLoading(false);
+        navigate('/event/add-event');
+        onClose();
     };
 
     useEffect(() => {
         if (!open) {
             setUsername('');
             setPassword('');
-            setError('');
             setErrorKey(0);
+            clearError();
         }
-    }, [open]);
+    }, [clearError, open]);
 
 
     return (
@@ -95,8 +96,9 @@ const LoginDialog = ({ open, onClose }) => {
                         </div> : null}
 
 
-                    <SubmitButton label="Zaloguj" onClick={handleSubmit} isLoading={loginLoading}>
+                    <SubmitButton label="Zaloguj" type="submit" isLoading={loginLoading}>
                     </SubmitButton>
+                    <SubmitButton label="Zapomniales hasla?" type="button" onClick={openSendPasswordEmailDialog}></SubmitButton>
 
                 </form>
             </DialogContent>

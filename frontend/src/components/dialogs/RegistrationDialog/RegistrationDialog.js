@@ -17,16 +17,16 @@ import {
     validatePasswordSign,
     validatePasswordMatch,
     validateEmail
-} from '../../../utils/validation';
+} from '../../../utils/Validation';
 
 import {
     checkEmailAvailability,
     checkUsernameAvailability, registerUser
-} from '../../../utils/api';
+} from '../../../utils/PublicApi';
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
 
-import {DialogContext} from '../../../context/DialogContext';
+import {DialogContext} from '../../../contexts/DialogContext';
 
 const RegistrationDialog = ({ open, onClose }) => {
     const { openRegistrationSuccessDialog } = useContext(DialogContext);

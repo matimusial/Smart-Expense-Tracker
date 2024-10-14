@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import CurrencyList from '../../components/currency/CurrencyList/CurrencyList';
 import Header from '../../components/layout/Header/Header';
 import ConverterForm from '../../components/currency/CurrencyConventer/CurrencyConventer';
 import './Home.css';
-import { authorizeRegistration, fetchCurrencyRates } from "../../utils/api";
-import { DialogContext } from "../../context/DialogContext";
+import { authorizeRegistration, fetchCurrencyRates } from "../../utils/PublicApi";
+import { DialogContext } from "../../contexts/DialogContext";
 import InformationDialog from "../../components/dialogs/InformationDialog/InformationDialog";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -18,6 +18,7 @@ const Home = () => {
     const [authorizationMessage, setAuthorizationMessage] = useState('');
     const [authorizationIcon, setAuthorizationIcon] = useState(null);
     const [authorizationStyle, setAuthorizationStyle] = useState(null);
+    const authorizationPerformed = useRef(false);
 
     const navigate = useNavigate();
 
@@ -25,16 +26,15 @@ const Home = () => {
 
     useEffect(() => {
         const performAuthorization = async () => {
+            if (authorizationPerformed.current) return;
             if (window.location.pathname.includes('/user/registration/authorize-registration')) {
+                authorizationPerformed.current = true;
                 const params = new URLSearchParams(window.location.search);
                 const pincode = params.get('pincode');
                 const [isAuthorized, message] = await authorizeRegistration(pincode);
-                console.log(isAuthorized);
-                console.log(message);
                 setAuthorizationMessage(message);
                 setAuthorizationIcon(isAuthorized ? CheckCircleOutlineOutlinedIcon : CancelOutlinedIcon);
                 setAuthorizationStyle(isAuthorized ? { color: 'green' } : { color: 'red' });
-
                 openAccountConfirmationDialog();
                 window.history.replaceState({}, document.title, '/');
             }
@@ -63,7 +63,7 @@ const Home = () => {
         };
 
         getCurrencyRates();
-    }, []);
+    }, [openAccountConfirmationDialog]);
 
     const processRates = (data) => {
         const rateList = data.currentRateList;

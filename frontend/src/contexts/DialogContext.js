@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 
 export const DialogContext = createContext();
 
@@ -7,33 +7,40 @@ export const DialogProvider = ({ children }) => {
     const [isRegistrationSuccessDialogOpen, setIsRegistrationSuccessDialogOpen] = useState(false);
     const [isAccountConfirmationDialogOpen, setIsAccountConfirmationDialogOpen] = useState(false);
     const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
+    const [isSendPasswordEmailDialogOpen, setIsSendPasswordEmailDialogOpen ] = useState(false);
 
-    const openRegistrationDialog = () => {
-        closeDialogs();
-        setIsRegistrationDialogOpen(true);
-    };
-
-    const openRegistrationSuccessDialog = () => {
-        closeDialogs();
-        setIsRegistrationSuccessDialogOpen(true);
-    }
-
-    const openAccountConfirmationDialog = () => {
-        closeDialogs();
-        setIsAccountConfirmationDialogOpen(true);
-    };
-
-    const openLoginDialog = () => {
-        closeDialogs();
-        setIsLoginDialogOpen(true);
-    }
-
-    const closeDialogs = () => {
+    const closeDialogs = useCallback(() => {
         setIsRegistrationDialogOpen(false);
         setIsRegistrationSuccessDialogOpen(false);
         setIsAccountConfirmationDialogOpen(false);
         setIsLoginDialogOpen(false);
-    };
+        setIsSendPasswordEmailDialogOpen(false);
+    }, []);
+
+    const openRegistrationDialog = useCallback(() => {
+        closeDialogs();
+        setIsRegistrationDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openRegistrationSuccessDialog = useCallback(() => {
+        closeDialogs();
+        setIsRegistrationSuccessDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openSendPasswordEmailDialog = useCallback(()=> {
+        closeDialogs();
+        setIsSendPasswordEmailDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openAccountConfirmationDialog = useCallback(() => {
+        closeDialogs();
+        setIsAccountConfirmationDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openLoginDialog = useCallback(() => {
+        closeDialogs();
+        setIsLoginDialogOpen(true);
+    }, [closeDialogs]);
 
     return (
         <DialogContext.Provider
@@ -41,12 +48,14 @@ export const DialogProvider = ({ children }) => {
                 openRegistrationDialog,
                 openRegistrationSuccessDialog,
                 openAccountConfirmationDialog,
+                openSendPasswordEmailDialog,
                 closeDialogs,
                 openLoginDialog,
                 isRegistrationDialogOpen,
                 isRegistrationSuccessDialogOpen,
                 isAccountConfirmationDialogOpen,
-                isLoginDialogOpen
+                isLoginDialogOpen,
+                isSendPasswordEmailDialogOpen
             }}
         >
             {children}
