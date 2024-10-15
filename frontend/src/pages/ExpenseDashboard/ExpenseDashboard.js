@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from '../../components/layout/Header/Header';
-import './AddEvent.css';
+import './ExpenseDashboard.css';
 
 
-const AddEvent = () => {
+const ExpenseDashboard = () => {
 
 
     return (
@@ -13,4 +13,4 @@ const AddEvent = () => {
     );
 };
 
-export default AddEvent;
+export default ExpenseDashboard;

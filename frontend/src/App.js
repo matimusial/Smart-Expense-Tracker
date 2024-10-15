@@ -3,23 +3,24 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import { DialogProvider } from './contexts/DialogContext';
+import { LoginDialogProvider } from './contexts/LoginDialogContext';
 import { UserProvider } from "./contexts/UserContext";
-import AddEvent from "./pages/AddEvent/AddEvent";
+import ExpenseDashboard from "./pages/ExpenseDashboard/ExpenseDashboard";
 
 function App() {
     return (
-        <DialogProvider>
+        <LoginDialogProvider>
             <UserProvider>
                 <Router>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/user/registration/authorize-registration" element={<Home />} />
-                        <Route path="/event/add-event" element={<AddEvent />} />
+                        <Route path="/user/login/reset-password" element={<Home />} />
+                        <Route path="/event/expense-dashboard" element={<ExpenseDashboard />} />
                     </Routes>
                 </Router>
             </UserProvider>
-        </DialogProvider>
+        </LoginDialogProvider>
 
     );
 }

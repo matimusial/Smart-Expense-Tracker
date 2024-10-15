@@ -183,3 +183,91 @@ export const getCurrentUser = async () => {
         throw error;
     }
 };
+
+export const SendPasswordEmail = async (email) => {
+    const apiUrl = 'http://localhost:8080/spring-api/user/forgot-password';
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email})
+        });
+
+        const data = await response.text();
+
+        if (!response.ok){
+            return [false, data];
+        }
+        else {
+            return [true, data];
+        }
+    }
+    catch (error) {
+        console.error('Error sending password email:', error);
+        throw error;
+    }
+}
+
+
+export const verifyReset = async (pincode, email) => {
+
+    if (!pincode || !email) {
+        return [false, "Błędny adres URL."];
+    }
+
+    const apiUrl = `http://localhost:8080/spring-api/user/verify-reset/${pincode}/${email}`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+        });
+
+        const data = await response.text();
+
+        if (!response.ok) {
+
+            return [false, data];
+        } else {
+            return [true, data];
+        }
+    }
+    catch (error) {
+        console.error('Error veryfying reset password link:', error);
+        throw error;
+    }
+}
+
+
+export const changePassword = async (password, conPassword) => {
+
+    const params = new URLSearchParams(window.location.search);
+    const pincode = params.get('pincode');
+    const email = params.get('email');
+
+    const apiUrl = `http://localhost:8080/spring-api/user/reset-password/${pincode}/${email}`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                password: password,
+                conPassword: conPassword
+            })
+        });
+
+        const data = await response.text();
+
+        if (!response.ok) {
+            return [false, data];
+        } else {
+            return [true, data];
+        }
+    } catch (error) {
+        console.error('Error changing password:', error);
+        throw error;
+    }
+}

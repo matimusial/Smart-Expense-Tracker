@@ -199,33 +199,30 @@ public class UserRegistrationController {
      * Resets the user's password using the provided pincode and email.
      */
     @PutMapping("/reset-password/{pincode}/{email}")
-    public ResponseEntity<Map<String, Object>> resetPassword(
+    public ResponseEntity<String> resetPassword(
             @PathVariable("pincode") String pincode,
             @PathVariable("email") String email,
             @Valid @RequestBody User newUser,
             BindingResult result) {
-        Map<String, Object> response = new HashMap<>();
 
         if (result.hasErrors()) {
-            result.getFieldErrors().forEach(error -> response.put(error.getField(), error.getDefaultMessage()));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            System.out.println("Validation errors: ");
+            result.getAllErrors().forEach(error -> System.out.println(error.toString()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         if (!newUser.getPassword().equals(newUser.getConPassword())) {
-            response.put("conPassword", "Hasła nie pasują do siebie");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         Optional<User> userOpt = userRepository.findByEmailAndConfirmationCode(email, Integer.valueOf(pincode));
         if (userOpt.isEmpty()) {
-            response.put("general", "Błędne dane, prosimy wygenerować link ponownie");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Błędne dane, prosimy wygenerować link ponownie");
         }
 
         User user = userOpt.get();
         if (user.getConfirmationCodeExpiry().isBefore(LocalDateTime.now())) {
-            response.put("general", "Data ważności linku minęła, prosimy wygenerować link ponownie");
-            return ResponseEntity.status(HttpStatus.GONE).body(response);
+            return ResponseEntity.status(HttpStatus.GONE).body("Data ważności linku minęła, prosimy wygenerować link ponownie");
         }
 
         user.setPassword(BcryptUtil.hashPassword(newUser.getPassword()));
@@ -235,8 +232,7 @@ public class UserRegistrationController {
         try {
             userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
-            response.put("general", "Wystąpił błąd w zapisie danych, prosimy spróbować ponownie później");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Wystąpił błąd w zapisie danych, prosimy spróbować ponownie później");
         }
         return ResponseEntity.ok().build();
     }

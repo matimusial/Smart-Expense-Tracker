@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Dialog, DialogContent, DialogTitle, IconButton
 } from '@mui/material';
@@ -8,42 +8,58 @@ import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
 import {validateEmail} from "../../../utils/Validation";
-import {checkEmailAvailability} from "../../../utils/PublicApi";
+import {checkEmailAvailability, SendPasswordEmail} from "../../../utils/PublicApi";
+import {LoginDialogContext} from "../../../contexts/LoginDialogContext";
 
 
 const SendPasswordEmailDialog = ({ open, onClose }) => {
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState(false);
-    const [emailLoading, setEmailLoading] = useState(false);
+    const [emailError, setEmailError] = useState('');
     const [sendingLoading, setSendingLoading] = useState(false);
+    const { openSendPasswordEmailSuccessDialog } = useContext(LoginDialogContext);
+
+
+    useEffect(() => {
+        if (!open) {
+            setEmail('');
+            setEmailError('');
+            setSendingLoading(false);
+        }
+    }, [open]);
+
+
 
 
     const handleSubmit = async (e) => {
+        setEmailError('');
         e.preventDefault();
-        if (!emailLoading) {
-
+        if (!validateEmail(email)) {
+            setEmailError('Adres e-mail jest nieprawidłowy.');
+            return;
+        }
+        const isAvailable = await checkEmailAvailability(email);
+        if (!isAvailable) {
             try {
                 setSendingLoading(true);
-                //await SendPasswordEmail(email);
-                setEmail('');
-                setSendingLoading(false);
-                //openEmailSuccessDialog();
+                let data = await SendPasswordEmail(email);
+                if (data[0] === true) {
+                    setEmail('');
+                    openSendPasswordEmailSuccessDialog();
+                }
+                else{
+                    setSendingLoading(false);
+                    setEmailError(data[1]);
+                }
+                
+                
             } catch (error) {
                 console.error('Registration error:', error);
                 throw error;
             }
         }
-    };
-
-    const handleEmailBlur = async () => {
-        if (!validateEmail(email)) {
-            setEmailError(true);
-            return;
+        else {
+            setEmailError('Adres e-mail jest nieprawidłowy.');
         }
-        setEmailLoading(true);
-        const isAvailable = await checkEmailAvailability(email);
-        setEmailError(!isAvailable);
-        setEmailLoading(false);
     };
 
 
@@ -68,20 +84,19 @@ const SendPasswordEmailDialog = ({ open, onClose }) => {
                     Na podany adres email zostanie wysłany link do zmiany hasła
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form>
 
                     <InputLabel
                         label="Adres e-mail"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                        onBlur={handleEmailBlur}
-                        error={emailError}
-                        helperText={emailError ? 'Adres e-mail jest nieprawidłowy lub już zajęty.' : ''}
+                        error={!!emailError}
+                        helperText={!!emailError ? 'Adres e-mail jest nieprawidłowy.' : ''}
                     />
 
 
-                    <SubmitButton label="Kontynuuj" onClick={handleSubmit} isLoading={sendingLoading}>
+                    <SubmitButton label="Kontynuuj" type="button" onClick={handleSubmit} isLoading={sendingLoading}>
                     </SubmitButton>
 
                 </form>

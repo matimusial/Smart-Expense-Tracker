@@ -3,7 +3,7 @@ import './DropdownMenu.css';
 import Avatar from '../../layout/Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import RegistrationDialog from '../../dialogs/RegistrationDialog/RegistrationDialog';
-import {DialogContext} from "../../../contexts/DialogContext";
+import {LoginDialogContext} from "../../../contexts/LoginDialogContext";
 import InformationDialog from "../../dialogs/InformationDialog/InformationDialog";
 import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutlined";
 import LoginDialog from "../../dialogs/LoginDialog/LoginDialog";
@@ -23,7 +23,8 @@ function DropdownMenu() {
         isLoginDialogOpen,
         openLoginDialog,
         isSendPasswordEmailDialogOpen,
-    } = useContext(DialogContext);
+        isSendPasswordEmailSuccessDialogOpen,
+    } = useContext(LoginDialogContext);
 
 
     const toggleMenu = () => {
@@ -68,8 +69,9 @@ function DropdownMenu() {
                 <div className="dropdown-menu">
                     {username ? (
                         <>
-                            <button onClick={logout}>Profil</button>
+                            <button onClick={logout}>Moje wydatki</button>
                             <button onClick={logout}>Wyloguj się</button>
+                            <button onClick={logout}>Usuń konto</button>
                         </>
                     ) : (
                         <>
@@ -100,6 +102,14 @@ function DropdownMenu() {
             <SendPasswordEmailDialog
                 open={isSendPasswordEmailDialogOpen}
                 onClose={closeDialogs}
+            />
+
+            <InformationDialog
+                open={isSendPasswordEmailSuccessDialogOpen}
+                onClose={closeDialogs}
+                title="Link został wysłany"
+                message="Po kliknięciu na link w wiadomości email zostanie otwarty formularz do zmiany hasła."
+                icon={LocalPostOfficeOutlinedIcon}
             />
         </div>
     );

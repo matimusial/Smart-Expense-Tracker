@@ -5,26 +5,3 @@
     color: #333;
     text-align: center;
 }
-
-.password-checker {
-    margin-top: 16px;
-}
-
-.password-check-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.password-check {
-    margin-left: 8px;
-    font-size: 1rem;
-}
-
-.password-check.ok {
-    color: green;
-}
-
-.password-check.error {
-    color: #c13515;
-}

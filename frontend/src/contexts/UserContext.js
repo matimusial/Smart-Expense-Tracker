@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { loginUser, logoutUser, getCurrentUser } from '../utils/PublicApi';
 import { setOnUnauthorized } from '../utils/ProtectedApi';
-import { DialogContext } from './DialogContext';
+import { LoginDialogContext } from './LoginDialogContext';
 import { motion } from 'framer-motion';
 
 const UserContext = createContext();
@@ -11,7 +11,7 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-    const { openLoginDialog } = useContext(DialogContext);
+    const { openLoginDialog } = useContext(LoginDialogContext);
     const [username, setUsername] = useState(null);
     const [error, setError] = useState(null);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -44,8 +44,10 @@ export const UserProvider = ({ children }) => {
             const result = await loginUser(inputUsername, password);
             if (result === true) {
                 setUsername(inputUsername);
+                return true;
             } else {
                 setError(result);
+                return false;
             }
         } catch (error) {
             setError('Błąd podczas logowania');

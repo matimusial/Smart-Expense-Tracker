@@ -8,15 +8,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
-import './LoginDialog.css';
 
 import { useUser } from '../../../contexts/UserContext';
 import {useNavigate} from "react-router-dom";
-import {DialogContext} from '../../../contexts/DialogContext';
+import {LoginDialogContext} from '../../../contexts/LoginDialogContext';
 
 
 const LoginDialog = ({ open, onClose }) => {
-    const { openSendPasswordEmailDialog } = useContext(DialogContext);
+    const { openSendPasswordEmailDialog } = useContext(LoginDialogContext);
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -30,12 +29,15 @@ const LoginDialog = ({ open, onClose }) => {
         e.preventDefault();
         setLoginLoading(true);
         setErrorKey(prevKey => prevKey + 1);
-        await login(username, password);
-        setPassword(``);
-        setUsername(``);
+        const result = await login(username, password);
+        if (result) {
+            setPassword(``);
+            setUsername(``);
+            setLoginLoading(false);
+            navigate('/event/expense-dashboard');
+            onClose();
+        }
         setLoginLoading(false);
-        navigate('/event/add-event');
-        onClose();
     };
 
     useEffect(() => {

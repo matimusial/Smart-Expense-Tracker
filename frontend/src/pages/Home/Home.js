@@ -3,44 +3,79 @@ import CurrencyList from '../../components/currency/CurrencyList/CurrencyList';
 import Header from '../../components/layout/Header/Header';
 import ConverterForm from '../../components/currency/CurrencyConventer/CurrencyConventer';
 import './Home.css';
-import { authorizeRegistration, fetchCurrencyRates } from "../../utils/PublicApi";
-import { DialogContext } from "../../contexts/DialogContext";
+import {authorizeRegistration, fetchCurrencyRates, verifyReset} from "../../utils/PublicApi";
+import { LoginDialogContext } from "../../contexts/LoginDialogContext";
 import InformationDialog from "../../components/dialogs/InformationDialog/InformationDialog";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { useNavigate } from 'react-router-dom';
+import ResetPasswordDialog from "../../components/dialogs/ResetPasswordDialog/ResetPasswordDialog";
 
 const Home = () => {
     const [currencyRates, setCurrencyRates] = useState([]);
     const [selectedCurrency, setSelectedCurrency] = useState(null);
+
+    const [popupMessage, setPopupMessage] = useState('');
+    const [popupIcon, setPopupIcon] = useState(null);
+    const [popupStyle, setPopupStyle] = useState(null);
+    const authorizationPerformed = useRef(false);
+    const handledResetCredentials = useRef(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    const [authorizationMessage, setAuthorizationMessage] = useState('');
-    const [authorizationIcon, setAuthorizationIcon] = useState(null);
-    const [authorizationStyle, setAuthorizationStyle] = useState(null);
-    const authorizationPerformed = useRef(false);
 
     const navigate = useNavigate();
 
-    const { isAccountConfirmationDialogOpen, openAccountConfirmationDialog, closeDialogs } = useContext(DialogContext);
+    const { isAccountConfirmationDialogOpen, openAccountConfirmationDialog, closeDialogs, openResetPasswordDialog,
+    isResetPasswordDialogOpen, isResetPasswordSuccessDialogOpen, isResetPasswordErrorDialogOpen} = useContext(LoginDialogContext);
+
+    const clearStyles = () => {
+        setPopupMessage("");
+        setPopupStyle(null);
+        setPopupIcon(null);
+    }
+
 
     useEffect(() => {
         const performAuthorization = async () => {
             if (authorizationPerformed.current) return;
+            clearStyles();
             if (window.location.pathname.includes('/user/registration/authorize-registration')) {
                 authorizationPerformed.current = true;
                 const params = new URLSearchParams(window.location.search);
                 const pincode = params.get('pincode');
                 const [isAuthorized, message] = await authorizeRegistration(pincode);
-                setAuthorizationMessage(message);
-                setAuthorizationIcon(isAuthorized ? CheckCircleOutlineOutlinedIcon : CancelOutlinedIcon);
-                setAuthorizationStyle(isAuthorized ? { color: 'green' } : { color: 'red' });
+                setPopupMessage(message);
+                setPopupIcon(isAuthorized ? CheckCircleOutlineOutlinedIcon : CancelOutlinedIcon);
+                setPopupStyle(isAuthorized ? { color: 'green' } : { color: 'red' });
                 openAccountConfirmationDialog();
                 window.history.replaceState({}, document.title, '/');
             }
         };
 
         performAuthorization();
+
+        const handleResetCredentials = async () => {
+            if (handledResetCredentials.current) return;
+            clearStyles();
+            if (window.location.pathname.includes('/user/login/reset-password')) {
+                authorizationPerformed.current = true;
+                const params = new URLSearchParams(window.location.search);
+                const pincode = params.get('pincode');
+                const email = params.get('email');
+                const [isAuthorized, message] = await verifyReset(pincode, email);
+                if (isAuthorized) {
+                    openResetPasswordDialog();
+                }
+                else{
+                    setPopupMessage(message);
+                    setPopupIcon(CancelOutlinedIcon);
+                    setPopupStyle({ color: 'red' });
+                    openAccountConfirmationDialog();
+                }
+            }
+        };
+
+        handleResetCredentials();
 
         const getCurrencyRates = async () => {
             try {
@@ -54,7 +89,6 @@ const Home = () => {
                 if (eurCurrency) {
                     setSelectedCurrency(eurCurrency);
                 }
-
                 setIsLoading(false);
             } catch (err) {
                 console.error('Failed to fetch currency rates:', err);
@@ -63,7 +97,7 @@ const Home = () => {
         };
 
         getCurrencyRates();
-    }, [openAccountConfirmationDialog]);
+    }, [openAccountConfirmationDialog, openResetPasswordDialog]);
 
     const processRates = (data) => {
         const rateList = data.currentRateList;
@@ -111,9 +145,33 @@ const Home = () => {
                 open={isAccountConfirmationDialogOpen}
                 onClose={closeAuthorizationDialog}
                 title=""
-                message={authorizationMessage}
-                icon={authorizationIcon}
-                iconStyle={authorizationStyle}
+                message={popupMessage}
+                icon={popupIcon}
+                iconStyle={popupStyle}
+            />
+
+            <ResetPasswordDialog
+                open={isResetPasswordDialogOpen}
+                onClose={closeDialogs}
+            />
+
+
+            <InformationDialog
+                open={isResetPasswordErrorDialogOpen}
+                onClose={closeDialogs}
+                title=""
+                message={popupMessage}
+                icon={popupIcon}
+                iconStyle={popupStyle}
+            />
+
+            <InformationDialog
+                open={isResetPasswordSuccessDialogOpen}
+                onClose={closeDialogs}
+                title="Hasło zostało pomyślnie zmienione!"
+                message="Możesz teraz się zalogować do serwisu."
+                icon={CheckCircleOutlineOutlinedIcon}
+                iconStyle={{color: 'green'}}
             />
         </div>
     );

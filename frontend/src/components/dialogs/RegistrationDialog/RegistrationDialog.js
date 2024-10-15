@@ -3,8 +3,6 @@ import {
     Dialog, DialogContent, DialogTitle, IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SubmitButton from "../../ui/SubmitButton/SubmitButton";
@@ -26,10 +24,11 @@ import {
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
 
-import {DialogContext} from '../../../contexts/DialogContext';
+import {LoginDialogContext} from '../../../contexts/LoginDialogContext';
+import PasswordChecker from "../../ui/PasswordChecker/PasswordChecker";
 
 const RegistrationDialog = ({ open, onClose }) => {
-    const { openRegistrationSuccessDialog } = useContext(DialogContext);
+    const { openRegistrationSuccessDialog } = useContext(LoginDialogContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [conPassword, setConPassword] = useState('');
@@ -47,11 +46,28 @@ const RegistrationDialog = ({ open, onClose }) => {
     const [registrationLoading, setRegistrationLoading] = useState(false);
 
     useEffect(() => {
+        if (!open) {
+            setEmail('');
+            setPassword('');
+            setConPassword('');
+            setFirstName('');
+            setUsername('');
+            setPasswordLengthValid(false);
+            setPasswordSignValid(false);
+            setPasswordMatchValid(false);
+            setFirstNameError(false);
+            setEmailError(false);
+            setUsernameError(false);
+            setUsernameLoading(false);
+            setEmailLoading(false);
+            setShowPassword(false);
+            setRegistrationLoading(false);
+        }
         setFirstNameError(!validateFirstName(firstName));
         setPasswordLengthValid(validatePasswordLength(password));
         setPasswordSignValid(validatePasswordSign(password));
         setPasswordMatchValid(validatePasswordMatch(password, conPassword));
-    }, [firstName, password, conPassword]);
+    }, [open, firstName, password, conPassword]);
 
 
     const handleEmailBlur = async () => {
@@ -135,7 +151,7 @@ const RegistrationDialog = ({ open, onClose }) => {
             </DialogTitle>
             <DialogContent>
                 <div className="welcome-message">Witaj w Smart Expense Tracker</div>
-                <form onSubmit={handleSubmit}>
+                <form>
 
                     <InputLabel
                         label="Imię"
@@ -185,40 +201,13 @@ const RegistrationDialog = ({ open, onClose }) => {
                         onChange={(e) => setConPassword(e.target.value)}
                     />
 
-                    <div className="password-checker">
-                        <div className="password-check-item">
-                            {passwordSignValid ? (
-                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
-                            ) : (
-                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                            )}
-                            <span className={`password-check ${passwordSignValid ? 'ok' : 'error'}`}>
-                                Zawiera liczbę lub znak specjalny
-                            </span>
-                        </div>
-                        <div className="password-check-item">
-                            {passwordLengthValid ? (
-                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
-                            ) : (
-                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                            )}
-                            <span className={`password-check ${passwordLengthValid ? 'ok' : 'error'}`}>
-                                Minimalna wymagana liczba znaków: 8
-                            </span>
-                        </div>
-                        <div className="password-check-item">
-                            {passwordMatchValid ? (
-                                <CheckCircleIcon style={{ color: 'green', fontSize: 'small' }} />
-                            ) : (
-                                <CancelIcon style={{ color: 'red', fontSize: 'small' }} />
-                            )}
-                            <span className={`password-check ${passwordMatchValid ? 'ok' : 'error'}`}>
-                                Hasła są zgodne
-                            </span>
-                        </div>
-                    </div>
+                    <PasswordChecker
+                        passwordLengthValid={passwordLengthValid}
+                        passwordSignValid={passwordSignValid}
+                        passwordMatchValid={passwordMatchValid}
+                    />
 
-                    <SubmitButton label="Kontynuuj" onClick={handleSubmit} isLoading={registrationLoading}>
+                    <SubmitButton label="Kontynuuj" type="button" onClick={handleSubmit} isLoading={registrationLoading}>
                     </SubmitButton>
 
                 </form>
