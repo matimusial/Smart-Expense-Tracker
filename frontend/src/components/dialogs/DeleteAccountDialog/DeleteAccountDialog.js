@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-    Dialog, DialogContent, DialogTitle, IconButton, Button
+    Dialog, DialogContent, DialogTitle, IconButton
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -11,56 +10,47 @@ import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 import InputLabel from '../../ui/InputLabel/InputLabel';
 
 import { useUser } from '../../../contexts/UserContext';
-import { useNavigate } from "react-router-dom";
-import { LoginDialogContext } from '../../../contexts/LoginDialogContext';
 
-const CustomButton = styled(Button)(({ theme }) => ({
-    marginTop: '10px',
-    color: '#A0C4C4',
-    textTransform: 'none',
-    fontSize: '16px',
-    transition: 'background 0.3s, transform 0.3s',
-    '&:hover': {
-        transform: 'translateY(-2px)',
-        background: 'inherit'
-    },
-}));
-
-const LoginDialog = ({ open, onClose }) => {
-    const { openSendPasswordEmailDialog } = useContext(LoginDialogContext);
+const DeleteAccountDialog = ({ open, onClose }) => {
     const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [loginLoading, setLoginLoading] = useState(false);
+    const [deleteAccountLoading, setDeleteAccountLoading] = useState(false);
+    const [error, setError] = useState("");
     const [errorKey, setErrorKey] = useState(0);
-    const { login, error, clearError } = useUser();
-    const navigate = useNavigate();
+    const { deleteAccountHandler} = useUser();
+
+    useEffect(() => {
+        if (!open) {
+            setPassword('');
+            setShowPassword(false);
+            setErrorKey(0);
+            setDeleteAccountLoading(false);
+        }
+    }, [open]);
+
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoginLoading(true);
+        setError(null);
         setErrorKey(prevKey => prevKey + 1);
-        const result = await login(username, password);
-        if (result) {
-            setPassword(``);
-            setUsername(``);
-            setLoginLoading(false);
-            navigate('/event/expense-dashboard');
-            onClose();
+        setDeleteAccountLoading(true);
+        try {
+            const result = await deleteAccountHandler(password);
+
+            if (result){
+                onClose();
+            }
+            else{
+                setError("Nieprawidłowe hasło");
+                setDeleteAccountLoading(false);
+            }
+
+        } catch (error) {
+            console.error('Change password error:', error);
+            throw error;
         }
-        setLoginLoading(false);
     };
-
-    useEffect(() => {
-        if (!open) {
-            setUsername('');
-            setPassword('');
-            setErrorKey(0);
-            clearError();
-        }
-    }, [clearError, open]);
-
 
     return (
         <Dialog
@@ -69,7 +59,7 @@ const LoginDialog = ({ open, onClose }) => {
             PaperProps={{ style: { borderRadius: '15px', padding: '20px' } }}
         >
             <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                Zaloguj
+                Usuń konto
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
@@ -79,25 +69,16 @@ const LoginDialog = ({ open, onClose }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <div className="welcome-message">Witaj ponownie!</div>
                 <form onSubmit={handleSubmit}>
-
-                    <InputLabel
-                        label="Login"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                        error={!!error}
-                    />
-
                     <InputLabel
                         label="Hasło"
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        error={!!error}
                         endAdornment={
                             <IconButton tabIndex={-1}
                                         onClick={() => setShowPassword(!showPassword)}>
+
                                 {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                         }
@@ -108,12 +89,8 @@ const LoginDialog = ({ open, onClose }) => {
                             {error}
                         </div> : null}
 
-                    <SubmitButton label="Zaloguj" type="submit" isLoading={loginLoading}>
+                    <SubmitButton label="Usuń konto" isLoading={deleteAccountLoading}>
                     </SubmitButton>
-
-                    <CustomButton onClick={openSendPasswordEmailDialog}>
-                        Zapomniałeś hasła?
-                    </CustomButton>
 
                 </form>
             </DialogContent>
@@ -122,4 +99,4 @@ const LoginDialog = ({ open, onClose }) => {
     );
 };
 
-export default LoginDialog;
+export default DeleteAccountDialog;

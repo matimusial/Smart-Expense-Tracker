@@ -17,6 +17,8 @@ export const LoginDialogProvider = ({ children }) => {
     const [isResetPasswordSuccessDialogOpen, setIsResetPasswordSuccessDialogOpen] = useState(false);
     const [isResetPasswordErrorDialogOpen, setIsResetPasswordErrorDialogOpen] = useState(false);
 
+    const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] = useState(false);
+
     const closeDialogs = useCallback(() => {
         setIsRegistrationDialogOpen(false);
         setIsRegistrationSuccessDialogOpen(false);
@@ -27,7 +29,13 @@ export const LoginDialogProvider = ({ children }) => {
         setIsResetPasswordDialogOpen(false);
         setIsResetPasswordSuccessDialogOpen(false);
         setIsResetPasswordErrorDialogOpen(false);
+        setIsDeleteAccountDialogOpen(false);
     }, []);
+
+    const openDeleteAccountDialog = useCallback(() => {
+        closeDialogs();
+        setIsDeleteAccountDialogOpen(true);
+    }, [closeDialogs]);
 
     const openResetPasswordErrorDialog = useCallback(() => {
         closeDialogs();
@@ -95,7 +103,9 @@ export const LoginDialogProvider = ({ children }) => {
                 openResetPasswordSuccessDialog,
                 isResetPasswordSuccessDialogOpen,
                 openResetPasswordErrorDialog,
-                isResetPasswordErrorDialogOpen
+                isResetPasswordErrorDialogOpen,
+                isDeleteAccountDialogOpen,
+                openDeleteAccountDialog
             }}
         >
             {children}

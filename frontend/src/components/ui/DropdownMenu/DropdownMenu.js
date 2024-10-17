@@ -9,6 +9,7 @@ import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutl
 import LoginDialog from "../../dialogs/LoginDialog/LoginDialog";
 import SendPasswordEmailDialog from "../../dialogs/SendPasswordEmailDialog/SendPasswordEmailDialog";
 import { useUser } from '../../../contexts/UserContext';
+import DeleteAccountDialog from "../../dialogs/DeleteAccountDialog/DeleteAccountDialog";
 
 function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,8 @@ function DropdownMenu() {
         openLoginDialog,
         isSendPasswordEmailDialogOpen,
         isSendPasswordEmailSuccessDialogOpen,
+        openDeleteAccountDialog,
+        isDeleteAccountDialogOpen
     } = useContext(LoginDialogContext);
 
 
@@ -69,9 +72,9 @@ function DropdownMenu() {
                 <div className="dropdown-menu">
                     {username ? (
                         <>
-                            <button onClick={logout}>Moje wydatki</button>
+                            <button onClick={null}>Moje wydatki</button>
                             <button onClick={logout}>Wyloguj się</button>
-                            <button onClick={logout}>Usuń konto</button>
+                            <button onClick={openDeleteAccountDialog}>Usuń konto</button>
                         </>
                     ) : (
                         <>
@@ -84,6 +87,11 @@ function DropdownMenu() {
 
             <RegistrationDialog
                 open={isRegistrationDialogOpen}
+                onClose={closeDialogs}
+            />
+
+            <DeleteAccountDialog
+                open={isDeleteAccountDialogOpen}
                 onClose={closeDialogs}
             />
 

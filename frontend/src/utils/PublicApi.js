@@ -152,37 +152,12 @@ export const logoutUser = async () => {
             return true;
         } else {
             console.error('Unexpected logout response status:', response.status);
-
         }
     } catch (error) {
         console.error(`Logout error`, error);
         throw error;
     }
 }
-
-export const getCurrentUser = async () => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/me';
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            const data = await response.text();
-            if (data !== 'anonymousUser') {
-                return data;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        throw error;
-    }
-};
 
 export const SendPasswordEmail = async (email) => {
     const apiUrl = 'http://localhost:8080/spring-api/user/forgot-password';

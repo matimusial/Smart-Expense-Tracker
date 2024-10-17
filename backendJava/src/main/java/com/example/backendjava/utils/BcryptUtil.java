@@ -9,4 +9,8 @@ public class BcryptUtil {
     public static String hashPassword(String plainPassword) {
         return ENCODER.encode(plainPassword);
     }
+
+    public static boolean verifyPassword(String plainPassword, String hashedPassword) {
+        return ENCODER.matches(plainPassword, hashedPassword);
+    }
 }

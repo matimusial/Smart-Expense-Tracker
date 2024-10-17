@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,6 +49,7 @@ public class UserRegistrationController {
      * Authorizes the user registration using the provided pincode.
      */
     @GetMapping("/authorize-registration/{pincode}")
+    @Transactional
     public ResponseEntity<String> authorizeRegistration(@PathVariable String pincode) {
         Optional<User> userOpt = userRepository.findByConfirmationCode(Integer.valueOf(pincode));
 
@@ -73,7 +73,6 @@ public class UserRegistrationController {
     /**
      * Sends a password reset email to the user.
      */
-    @Transactional
     @PostMapping("/forgot-password")
     public ResponseEntity<String> sendPasswordResetEmail(@RequestBody Map<String, String> emailJson) {
         String email = emailJson.get("email");
@@ -102,7 +101,8 @@ public class UserRegistrationController {
      */
     @Transactional
     @DeleteMapping("/delete-account")
-    public ResponseEntity<Void> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<Void> deleteAccount(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, String> passwordJson) {
+
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -112,13 +112,21 @@ public class UserRegistrationController {
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
         User user = userOpt.get();
+
+        String password = passwordJson.get("password");
+
+        if (!BcryptUtil.verifyPassword(password, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
 
         try {
             userRepository.deleteByUsername(user.getUsername());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
         try {
             emailNotificationService.sendAccountDeletionConfirmationEmail(user.getEmail(), user.getFirstName());
         } catch (MessagingException me) {
@@ -129,6 +137,7 @@ public class UserRegistrationController {
     }
 
 
+
     /**
      *
      * @return status 409 or 200
@@ -137,7 +146,9 @@ public class UserRegistrationController {
     public ResponseEntity<Void> checkEmail(@RequestBody Map<String, String> emailJson) {
         String email = emailJson.get("email");
 
-        if (userRepository.findByEmail(email).isPresent()) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+
+        if (userOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.ok().build();
@@ -152,19 +163,20 @@ public class UserRegistrationController {
     public ResponseEntity<Void> checkLogin(@RequestBody Map<String, String> usernameJson) {
         String username = usernameJson.get("username");
 
-        if (userRepository.findByUsername(username).isPresent()) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+
+        if (userOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.ok().build();
     }
 
 
-
     /**
      * Registers a new user.
      */
-    @Transactional
     @PostMapping("/registration")
+    @Transactional
     public ResponseEntity<Void> registerUser(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
             System.out.println("Validation errors: ");
@@ -180,7 +192,15 @@ public class UserRegistrationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        Optional<User> existingUserOpt = userRepository.findByUsername(user.getUsername());
+
+        if (existingUserOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        existingUserOpt = userRepository.findByEmail(user.getEmail());
+
+        if (existingUserOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
@@ -199,6 +219,7 @@ public class UserRegistrationController {
      * Resets the user's password using the provided pincode and email.
      */
     @PutMapping("/reset-password/{pincode}/{email}")
+    @Transactional
     public ResponseEntity<String> resetPassword(
             @PathVariable("pincode") String pincode,
             @PathVariable("email") String email,

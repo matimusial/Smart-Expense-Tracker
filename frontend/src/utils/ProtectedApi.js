@@ -18,9 +18,7 @@ export const fetchWrapper = async (url, options = {}) => {
         });
 
         if (response.status === 401) {
-            if (onUnauthorized) {
-                onUnauthorized();
-            }
+            onUnauthorized();
             return null;
         }
 
@@ -30,4 +28,29 @@ export const fetchWrapper = async (url, options = {}) => {
         throw error;
     }
 };
+
+
+
+export const deleteAccount = async (password) => {
+    const apiUrl = 'http://localhost:8080/spring-api/user/delete-account';
+    try {
+        const response = await fetchWrapper(apiUrl, {
+            method: 'DELETE',
+            credentials: 'include',
+            body: JSON.stringify({ password }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response && response.ok) {
+            return response.status === 204;
+        }
+        return false;
+    } catch (error) {
+        console.error('Error in deleteAccount:', error);
+        throw error;
+    }
+};
+
 
