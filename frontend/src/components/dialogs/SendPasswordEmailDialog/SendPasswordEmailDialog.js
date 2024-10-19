@@ -84,8 +84,7 @@ const SendPasswordEmailDialog = ({ open, onClose }) => {
                     Na podany adres email zostanie wysłany link do zmiany hasła
                 </div>
 
-                <form>
-
+                <form onSubmit={handleSubmit}>
                     <InputLabel
                         label="Adres e-mail"
                         type="email"
@@ -94,12 +93,10 @@ const SendPasswordEmailDialog = ({ open, onClose }) => {
                         error={!!emailError}
                         helperText={!!emailError ? 'Adres e-mail jest nieprawidłowy.' : ''}
                     />
-
-
-                    <SubmitButton label="Kontynuuj" type="button" onClick={handleSubmit} isLoading={sendingLoading}>
+                    <SubmitButton label="Kontynuuj" type="submit" isLoading={sendingLoading}>
                     </SubmitButton>
-
                 </form>
+
             </DialogContent>
         </Dialog>
 

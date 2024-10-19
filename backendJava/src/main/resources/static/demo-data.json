@@ -1,0 +1,3845 @@
+[
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2023-01-02",
+        "description": "Naprawa samochodu po kolizji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-01-03",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-01-05",
+        "description": "Spłata miesięcznej raty kredytu hipotecznego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-01-05",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 196.08,
+        "date": "2023-01-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy smartfon",
+        "category": "elektronika",
+        "amount": 2500.0,
+        "date": "2023-01-11",
+        "description": "Zakup nowego smartfona w promocji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 195.43,
+        "date": "2023-01-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2023-01-14",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1807.81,
+        "date": "2023-01-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus roczny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4490.04,
+        "date": "2023-01-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2023-01-16",
+        "description": "Zakup książek do nauki i rozwoju.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 8985.56,
+        "date": "2023-01-17",
+        "description": "Żona",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 50.00,
+        "date": "2023-01-21",
+        "description": "matematyka",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 111.00,
+        "date": "2023-01-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 250.0,
+        "date": "2023-01-21",
+        "description": "Kolacja w lokalnej restauracji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-01-21",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 716.94,
+        "date": "2023-01-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy smartfon",
+        "category": "elektronika",
+        "amount": 2500.0,
+        "date": "2023-01-22",
+        "description": "Zakup nowego smartfona w promocji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 989.79,
+        "date": "2023-01-23",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2023-01-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 1812.1,
+        "date": "2023-01-26",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 937.68,
+        "date": "2023-01-27",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia świąteczna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 955.07,
+        "date": "2023-01-27",
+        "description": "Prezent na urodziny znajomego.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 1251.04,
+        "date": "2023-01-27",
+        "description": "Naprawa pralki w domu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 471.32,
+        "date": "2023-01-29",
+        "description": "Kupione produkty spożywcze na cały tydzień.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż używanego samochodu",
+        "category": "wynagrodzenia i przychody",
+        "amount": 7036.5,
+        "date": "2023-01-31",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4260.96,
+        "date": "2023-02-03",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-02-10",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty świąteczne",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-02-12",
+        "description": "Prezenty zakupione z okazji Świąt.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 250.0,
+        "date": "2023-02-12",
+        "description": "Kolacja w lokalnej restauracji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2023-02-13",
+        "description": "Zakup leków na receptę w aptece.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy zegarek",
+        "category": "elektronika",
+        "amount": 2500.0,
+        "date": "2023-02-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 9514.62,
+        "date": "2023-02-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na teatr",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-02-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na kino",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-02-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2023-02-18",
+        "description": "Zakup leków na receptę w aptece.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-02-19",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 1657.24,
+        "date": "2023-02-19",
+        "description": "Bilet na podróż do pracy.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2023-02-19",
+        "description": "Zakup książek do nauki i rozwoju.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-02-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-02-20",
+        "description": "Spłata miesięcznej raty kredytu hipotecznego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2023-02-25",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2023-02-27",
+        "description": "Zakup książek do nauki i rozwoju.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-03-03",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2023-03-03",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 687.37,
+        "date": "2023-03-03",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2023-03-04",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot za bilety lotnicze",
+        "category": "wynagrodzenia i przychody",
+        "amount": 6782.89,
+        "date": "2023-03-05",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-03-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 4781.75,
+        "date": "2023-03-08",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-03-08",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-03-10",
+        "description": "Opłata za ostatni miesiąc korzystania z energii elektrycznej.",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2228.82,
+        "date": "2023-03-11",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na kino",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-03-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4931.88,
+        "date": "2023-03-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-03-17",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 331.27,
+        "date": "2023-03-18",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2023-03-22",
+        "description": "Zakup leków na receptę w aptece.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-03-22",
+        "description": "Prezent na urodziny znajomego.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-03-24",
+        "description": "Polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 64.38,
+        "date": "2023-03-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4166.17,
+        "date": "2023-03-28",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 1235.34,
+        "date": "2023-03-31",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-03-31",
+        "description": "Zjedzona pyszna kolacja z rodziną.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Zwrot",
+        "category": "wynagrodzenia i przychody",
+        "amount": 7974.05,
+        "date": "2023-04-01",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-04-03",
+        "description": "Roczna polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-04-05",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 1466.83,
+        "date": "2023-04-10",
+        "description": "Nowy smartfon kupiony w promocji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 450.73,
+        "date": "2023-04-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy zegarek",
+        "category": "elektronika",
+        "amount": 2500.0,
+        "date": "2023-04-14",
+        "description": "Zakup nowego smartfona.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty świąteczne",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-04-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-04-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-04-15",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 313.36,
+        "date": "2023-04-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-04-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-04-17",
+        "description": "Spłata miesięcznej raty kredytu hipotecznego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 250.0,
+        "date": "2023-04-21",
+        "description": "Kolacja w lokalnej restauracji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 50.0,
+        "date": "2023-04-21",
+        "description": "Kolacja w lokalnej restauracji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus",
+        "category": "wynagrodzenia i przychody",
+        "amount": 5571.51,
+        "date": "2023-04-22",
+        "description": "Na podróż do pracy.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-04-22",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 791.01,
+        "date": "2023-04-23",
+        "description": "Rachunek za dom.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-04-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1946.05,
+        "date": "2023-04-24",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 688.12,
+        "date": "2023-04-25",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1229.46,
+        "date": "2023-04-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż roweru",
+        "category": "wynagrodzenia i przychody",
+        "amount": 967.48,
+        "date": "2023-05-03",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2023-05-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-05-08",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 454.0,
+        "date": "2023-05-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1000.25,
+        "date": "2023-05-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2023-05-20",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2023-05-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na sztuke",
+        "category": "kultura i edukacja",
+        "amount": 555.69,
+        "date": "2023-05-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 231.0,
+        "date": "2023-05-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż używanego telefonu",
+        "category": "wynagrodzenia i przychody",
+        "amount": 3052.44,
+        "date": "2023-05-26",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie mieszkania",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-05-31",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus kwartalny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 6874.99,
+        "date": "2023-05-31",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty dla syna",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-06-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-06-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 373.57,
+        "date": "2023-06-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 188.03,
+        "date": "2023-06-09",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z AC",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4530.58,
+        "date": "2023-06-10",
+        "description": ".",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-06-11",
+        "description": "Rachunek za internet w domu.",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Bonus kwartalny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2429.47,
+        "date": "2023-06-13",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 51.32,
+        "date": "2023-06-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-06-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 287.81,
+        "date": "2023-06-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2023-06-19",
+        "description": "Zakup leków na receptę w aptece.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2023-06-21",
+        "description": "Naprawa samochodu po kolizji.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-06-21",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód praca",
+        "category": "wynagrodzenia i przychody",
+        "amount": 8772.54,
+        "date": "2023-06-23",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż działki",
+        "category": "inwestycje i lokaty",
+        "amount": 5065.22,
+        "date": "2023-06-24",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-07-01",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 217.69,
+        "date": "2023-07-04",
+        "description": "Zjedzona pyszna kolacja z rodziną.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje",
+        "category": "rozrywka i wypoczynek",
+        "amount": 2326.63,
+        "date": "2023-07-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus",
+        "category": "wynagrodzenia i przychody",
+        "amount": 689.9,
+        "date": "2023-07-07",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-07-07",
+        "description": "Spłata miesięcznej raty kredytu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-07-07",
+        "description": "Prezenty.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2023-07-09",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty imieninowe",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2023-07-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot ",
+        "category": "finanse i płatności",
+        "amount": 904.69,
+        "date": "2023-07-13",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-07-14",
+        "description": "Rachunek za internet w domu.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Zwrot",
+        "category": "finanse i płatności",
+        "amount": 220.43,
+        "date": "2023-07-15",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż lokaty",
+        "category": "inwestycje i lokaty",
+        "amount": 1627.16,
+        "date": "2023-07-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1986.47,
+        "date": "2023-07-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie domu",
+        "category": "finanse i płatności",
+        "amount": 100.0,
+        "date": "2023-07-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2023-07-18",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus",
+        "category": "wynagrodzenia i przychody",
+        "amount": 171.5,
+        "date": "2023-07-23",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-07-24",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-07-24",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 100.0,
+        "date": "2023-07-25",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty",
+        "category": "prezenty i rodzina",
+        "amount": 420.0,
+        "date": "2023-07-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot za bilety",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4823.64,
+        "date": "2023-07-29",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 200.0,
+        "date": "2023-07-31",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 116.05,
+        "date": "2023-07-31",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za śmieci",
+        "category": "opłaty domowe",
+        "amount": 18.0,
+        "date": "2023-08-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa lodowki",
+        "category": "usługi i serwis",
+        "amount": 500.0,
+        "date": "2023-08-03",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 500.0,
+        "date": "2023-08-03",
+        "description": "Rocznica",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-08-05",
+        "description": "Auto naprawione po kolizji.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "kebab",
+        "category": "rozrywka i wypoczynek",
+        "amount": 23.0,
+        "date": "2023-08-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-08-07",
+        "description": "Bilet na podróż do pracy.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 500.0,
+        "date": "2023-08-11",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 150.64,
+        "date": "2023-08-11",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy smartfon dla babci",
+        "category": "elektronika",
+        "amount": 500.0,
+        "date": "2023-08-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty na urodziny babci",
+        "category": "prezenty i rodzina",
+        "amount": 600.0,
+        "date": "2023-08-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie męża",
+        "category": "wynagrodzenia i przychody",
+        "amount": 8736.47,
+        "date": "2023-08-21",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 911.77,
+        "date": "2023-08-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 120.0,
+        "date": "2023-08-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 250.0,
+        "date": "2023-08-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 313.97,
+        "date": "2023-08-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot",
+        "category": "finanse i płatności",
+        "amount": 387.32,
+        "date": "2023-08-24",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 100.0,
+        "date": "2023-08-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 142.37,
+        "date": "2023-09-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dla kamila urodziny",
+        "category": "prezenty i rodzina",
+        "amount": 100.0,
+        "date": "2023-09-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "kebab",
+        "category": "rozrywka i wypoczynek",
+        "amount": 50.0,
+        "date": "2023-09-08",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 500.8,
+        "date": "2023-09-08",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 70.65,
+        "date": "2023-09-09",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 30.0,
+        "date": "2023-09-10",
+        "description": "Zakup książek do nauki i",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 6438.85,
+        "date": "2023-09-12",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2023-09-14",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-09-15",
+        "description": "Spłata miesięcznej raty kredytu hipotecznego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1398.61,
+        "date": "2023-09-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 1341.53,
+        "date": "2023-09-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2023-09-23",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2023-09-23",
+        "description": "Polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 58.03,
+        "date": "2023-09-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 477.67,
+        "date": "2023-09-30",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2023-09-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-10-02",
+        "description": "Bilet na podróż do pracy.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Bilet miesięczny",
+        "category": "transport",
+        "amount": 120.0,
+        "date": "2023-10-05",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 199.0,
+        "date": "2023-10-06",
+        "description": "Zakup książek muzycznych",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wyjazd",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1323.6,
+        "date": "2023-10-08",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4253.65,
+        "date": "2023-10-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wypłata",
+        "category": "wynagrodzenia i przychody",
+        "amount": 5607.81,
+        "date": "2023-10-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-10-14",
+        "description": "Zakupione książki dla dzieci.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-10-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Zwrot za bilety",
+        "category": "wynagrodzenia i przychody",
+        "amount": 500.04,
+        "date": "2023-10-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 1589.58,
+        "date": "2023-10-17",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2000.57,
+        "date": "2023-10-19",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 109.81,
+        "date": "2023-10-19",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 1601.49,
+        "date": "2023-10-19",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-10-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 750.0,
+        "date": "2023-10-20",
+        "description": "Bilet na koncert ulubionego zespołu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 125.99,
+        "date": "2023-10-22",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Na nowe mieszkanie dla kaludii",
+        "category": "prezenty i rodzina",
+        "amount": 510.0,
+        "date": "2023-10-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Pociąg do koszalina",
+        "category": "transport",
+        "amount": 130.0,
+        "date": "2023-10-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Pozyczka",
+        "category": "finanse i płatności",
+        "amount": 5000.81,
+        "date": "2023-11-01",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 297.47,
+        "date": "2023-11-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 60.0,
+        "date": "2023-11-11",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-11-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2763.65,
+        "date": "2023-11-13",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 1842.42,
+        "date": "2023-11-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy głośnik",
+        "category": "elektronika",
+        "amount": 210.0,
+        "date": "2023-11-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilety na metro",
+        "category": "transport",
+        "amount": 150.0,
+        "date": "2023-11-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-11-16",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 3467.89,
+        "date": "2023-11-17",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 808.3,
+        "date": "2023-11-18",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 410.33,
+        "date": "2023-11-18",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 600.0,
+        "date": "2023-11-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 160.0,
+        "date": "2023-11-24",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 156.0,
+        "date": "2023-11-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-11-26",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje mediolan",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1500.71,
+        "date": "2023-11-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Witaminy",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2023-11-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Skok na bungee",
+        "category": "rozrywka i wypoczynek",
+        "amount": 300.00,
+        "date": "2023-12-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 6601.03,
+        "date": "2023-12-02",
+        "description": "Kupione produkty spożywcze na cały tydzień.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot za bilety",
+        "category": "wynagrodzenia i przychody",
+        "amount": 44.92,
+        "date": "2023-12-03",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2023-12-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 120.0,
+        "date": "2023-12-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2023-12-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Jezioro",
+        "category": "rozrywka i wypoczynek",
+        "amount": 300.00,
+        "date": "2023-12-14",
+        "description": "mazury",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dodatkowe lekcje",
+        "category": "kultura i edukacja",
+        "amount": 400.0,
+        "date": "2023-12-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy smartfon",
+        "category": "elektronika",
+        "amount": 2500.0,
+        "date": "2023-12-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 190.95,
+        "date": "2023-12-18",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-12-18",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 453.39,
+        "date": "2023-12-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż olx",
+        "category": "wynagrodzenia i przychody",
+        "amount": 15.82,
+        "date": "2023-12-19",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 135.39,
+        "date": "2023-12-20",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kwiaty",
+        "category": "prezenty i rodzina",
+        "amount": 80.0,
+        "date": "2023-12-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2023-12-23",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 135.72,
+        "date": "2023-12-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Akcesoria do telefonu",
+        "category": "elektronika",
+        "amount": 630.0,
+        "date": "2023-12-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 156.11,
+        "date": "2023-12-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2023-12-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2024-01-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-01-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 6002.36,
+        "date": "2024-01-07",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-01-08",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Urodziny mamy",
+        "category": "prezenty i rodzina",
+        "amount": 100.0,
+        "date": "2024-01-10",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4650.28,
+        "date": "2024-01-12",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-01-13",
+        "description": "Polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 5046.61,
+        "date": "2024-01-13",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 256.16,
+        "date": "2024-01-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 4773.58,
+        "date": "2024-01-15",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Na domówke",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2024-01-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 3501.13,
+        "date": "2024-01-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Pożyczka",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-01-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kredyt",
+        "category": "finanse i płatności",
+        "amount": 4584.85,
+        "date": "2024-01-18",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Impreza rodzinna",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2024-01-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Narty wyjazd",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1573.39,
+        "date": "2024-01-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 290.0,
+        "date": "2024-01-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Mc donalds",
+        "category": "rozrywka i wypoczynek",
+        "amount": 85.0,
+        "date": "2024-01-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-01-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa lodowki",
+        "category": "usługi i serwis",
+        "amount": 300.0,
+        "date": "2024-01-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-02-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 229.8,
+        "date": "2024-02-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1418.09,
+        "date": "2024-02-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-02-11",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 4717.81,
+        "date": "2024-02-11",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 85.86,
+        "date": "2024-02-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-02-15",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-02-19",
+        "description": "Auto naprawione po kolizji.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 123.02,
+        "date": "2024-02-20",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot za bilety",
+        "category": "wynagrodzenia i przychody",
+        "amount": 687.69,
+        "date": "2024-02-20",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia świąteczna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 862.88,
+        "date": "2024-02-21",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 514.48,
+        "date": "2024-02-22",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-02-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-02-25",
+        "description": "Roczna polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 1217.2,
+        "date": "2024-02-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2024-03-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-03-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 950.63,
+        "date": "2024-03-03",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 250.0,
+        "date": "2024-03-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zeszyty",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2024-03-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "kultura i edukacja",
+        "amount": 50.0,
+        "date": "2024-03-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty świąteczne wielkanoc",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2024-03-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 4932.41,
+        "date": "2024-03-09",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-03-11",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty świąteczne",
+        "category": "prezenty i rodzina",
+        "amount": 420.0,
+        "date": "2024-03-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Szkola angielskiego",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2024-03-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Szkoła niemieckiego",
+        "category": "kultura i edukacja",
+        "amount": 300.0,
+        "date": "2024-03-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "",
+        "amount": 2074.99,
+        "date": "2024-03-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-03-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wyjazd Gdańsk",
+        "category": "rozrywka i wypoczynek",
+        "amount": 880.14,
+        "date": "2024-03-20",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2024-03-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-03-26",
+        "description": "Auto naprawione po kolizji.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-03-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot za bilety",
+        "category": "wynagrodzenia i przychody",
+        "amount": 5137.35,
+        "date": "2024-03-27",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 197.71,
+        "date": "2024-03-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2024-03-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2024-03-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2024-03-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2024-03-31",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 250.0,
+        "date": "2024-04-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2024-04-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 1797.13,
+        "date": "2024-04-03",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2024-04-04",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 968.48,
+        "date": "2024-04-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 997.16,
+        "date": "2024-04-07",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 413.06,
+        "date": "2024-04-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2024-04-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Teatr",
+        "category": "kultura i edukacja",
+        "amount": 250.0,
+        "date": "2024-04-07",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 624.5,
+        "date": "2024-04-10",
+        "description": "Prezent na urodziny znajomego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia świąteczna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 37.6,
+        "date": "2024-04-12",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-04-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-04-14",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 200.0,
+        "date": "2024-04-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wakacje nad morzem",
+        "category": "rozrywka i wypoczynek",
+        "amount": 1527.7,
+        "date": "2024-04-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 660.1,
+        "date": "2024-04-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Pleciuga",
+        "category": "kultura i edukacja",
+        "amount": 200.0,
+        "date": "2024-04-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Energylandia",
+        "category": "rozrywka i wypoczynek",
+        "amount": 300.0,
+        "date": "2024-04-20",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Prezenty na urodziny",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2024-04-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa łodzi",
+        "category": "usługi i serwis",
+        "amount": 1500.0,
+        "date": "2024-04-24",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "kfc",
+        "category": "rozrywka i wypoczynek",
+        "amount": 40.0,
+        "date": "2024-04-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2024-04-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Hostel",
+        "category": "rozrywka i wypoczynek",
+        "amount": 200.0,
+        "date": "2024-04-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-04-29",
+        "description": "zditm",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 183.53,
+        "date": "2024-05-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja w restauracji",
+        "category": "rozrywka i wypoczynek",
+        "amount": 100.0,
+        "date": "2024-05-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-05-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wypłata",
+        "category": "wynagrodzenia i przychody",
+        "amount": 600.43,
+        "date": "2024-05-02",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-05-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2024-05-07",
+        "description": "Spłata miesięcznej raty kredytu hipotecznego.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nagroda",
+        "category": "wynagrodzenia i przychody",
+        "amount": 946.53,
+        "date": "2024-05-07",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-05-07",
+        "description": "Naprawa pralki w domu.",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Wyjazd",
+        "category": "rozrywka i wypoczynek",
+        "amount": 597.68,
+        "date": "2024-05-09",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2024-05-12",
+        "description": "Zakup książek do nauki i rozwoju.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus roczny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 476.64,
+        "date": "2024-05-13",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2737.59,
+        "date": "2024-05-14",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-05-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 1675.65,
+        "date": "2024-05-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 300.0,
+        "date": "2024-05-17",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 481.86,
+        "date": "2024-05-19",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1217.14,
+        "date": "2024-05-20",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Randka",
+        "category": "rozrywka i wypoczynek",
+        "amount": 280.0,
+        "date": "2024-05-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 120.2,
+        "date": "2024-05-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 50.0,
+        "date": "2024-05-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Czynsz",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-05-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-05-30",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-06-01",
+        "description": "Prezent na urodziny znajomego.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Dochód z inwestycji",
+        "category": "wynagrodzenia i przychody",
+        "amount": 356.37,
+        "date": "2024-06-04",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 935.37,
+        "date": "2024-06-04",
+        "description": "Zakupy na czerwiec",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-06-04",
+        "description": "Prezent na urodziny znajomego.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 145.87,
+        "date": "2024-06-05",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Auto tuning",
+        "category": "usługi i serwis",
+        "amount": 1250.0,
+        "date": "2024-06-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kolacja",
+        "category": "rozrywka i wypoczynek",
+        "amount": 100.0,
+        "date": "2024-06-08",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowy pies",
+        "category": "zwierzęta domowe",
+        "amount": 5275.74,
+        "date": "2024-06-09",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Buda dla psa",
+        "category": "zwierzęta domowe",
+        "amount": 405.73,
+        "date": "2024-06-10",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Przelew od kamila",
+        "category": "przelewy i transakcje",
+        "amount": 2500.0,
+        "date": "2024-06-11",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 102.38,
+        "date": "2024-06-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-06-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 7463.86,
+        "date": "2024-06-16",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Dochód z wynajmu mieszkania",
+        "category": "wynagrodzenia i przychody",
+        "amount": 1230.67,
+        "date": "2024-06-18",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Karma dla psa",
+        "category": "zwierzęta domowe",
+        "amount": 70.0,
+        "date": "2024-06-22",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-06-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-06-23",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Prezenty na rozpoczęcie roku dla syna",
+        "category": "prezenty i rodzina",
+        "amount": 400.0,
+        "date": "2024-06-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2024-06-26",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje za czerwiec",
+        "category": "usługi i serwis",
+        "amount": 825.42,
+        "date": "2024-06-27",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 44.00,
+        "date": "2024-06-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 866.59,
+        "date": "2024-06-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-06-29",
+        "description": "Nowy smartfon kupiony w promocji.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-06-29",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-06-30",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Kurs jezykoy",
+        "category": "kultura i edukacja",
+        "amount": 2600.0,
+        "date": "2024-06-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakup książek",
+        "category": "kultura i edukacja",
+        "amount": 150.0,
+        "date": "2024-07-01",
+        "description": "Na kurs jezykowy.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2024-07-04",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za gaz",
+        "category": "opłaty domowe",
+        "amount": 180.0,
+        "date": "2024-07-04",
+        "description": "Opłata za zużycie gazu w gospodarstwie domowym.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-07-05",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Ubezpieczenie samochodu",
+        "category": "finanse i płatności",
+        "amount": 800.0,
+        "date": "2024-07-07",
+        "description": "Roczna polisa ubezpieczeniowa na samochód.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus roczny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2622.37,
+        "date": "2024-07-09",
+        "description": "Bilet na podróż do pracy.",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem działki działki",
+        "category": "inwestycje i lokaty",
+        "amount": 5355.04,
+        "date": "2024-07-10",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 224.31,
+        "date": "2024-07-12",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-07-12",
+        "description": "Nowy smartfon kupiony w promocji.",
+        "type": "INCOME",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 653.11,
+        "date": "2024-07-14",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Koszenie trawnika",
+        "category": "usługi i serwis",
+        "amount": 1900.0,
+        "date": "2024-07-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-07-16",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-07-18",
+        "description": "Zakup biletu miesięcznego na komunikację miejską.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 826.25,
+        "date": "2024-07-18",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 151.28,
+        "date": "2024-07-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 193.01,
+        "date": "2024-07-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-07-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowa drukarka",
+        "category": "elektronika",
+        "amount": 2000.0,
+        "date": "2024-07-21",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia wakacyjna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 778.99,
+        "date": "2024-07-25",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy odzieżowe",
+        "category": "moda i dodatki",
+        "amount": 532.83,
+        "date": "2024-07-25",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 324.26,
+        "date": "2024-07-26",
+        "description": "Zakupione książki dla dzieci.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na koncert",
+        "category": "kultura i edukacja",
+        "amount": 220.0,
+        "date": "2024-07-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 4838.58,
+        "date": "2024-07-28",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-07-29",
+        "description": "Opłata za zużycie energii elektrycznej w mieszkaniu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż złota",
+        "category": "inwestycje i lokaty",
+        "amount": 100.9,
+        "date": "2024-07-30",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Naprawa samochodu",
+        "category": "usługi i serwis",
+        "amount": 200.0,
+        "date": "2024-07-31",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Lakiernik",
+        "category": "usługi i serwis",
+        "amount": 3000.0,
+        "date": "2024-08-01",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet na kabaret",
+        "category": "kultura i edukacja",
+        "amount": 139.82,
+        "date": "2024-08-02",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 176.16,
+        "date": "2024-08-06",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynagrodzenie za pracę",
+        "category": "wynagrodzenia i przychody",
+        "amount": 2004.61,
+        "date": "2024-08-06",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-08-10",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1464.03,
+        "date": "2024-08-11",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 7344.93,
+        "date": "2024-08-15",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Folia auto",
+        "category": "usługi i serwis",
+        "amount": 10000.0,
+        "date": "2024-08-15",
+        "description": "oklejanie folią",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za internet",
+        "category": "opłaty domowe",
+        "amount": 70.0,
+        "date": "2024-08-16",
+        "description": "Opłata za miesięczny dostęp do internetu.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 9615.89,
+        "date": "2024-08-17",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot podatku",
+        "category": "finanse i płatności",
+        "amount": 9990.99,
+        "date": "2024-08-20",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Bonus roczny",
+        "category": "wynagrodzenia i przychody",
+        "amount": 8334.03,
+        "date": "2024-08-21",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Lekarstwa w aptece",
+        "category": "zdrowie i uroda",
+        "amount": 150.0,
+        "date": "2024-08-21",
+        "description": "Zakup leków na receptę w aptece.",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 1744.06,
+        "date": "2024-08-22",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zwrot od kolegi",
+        "category": "wynagrodzenia i przychody",
+        "amount": 77.04,
+        "date": "2024-08-23",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1853.77,
+        "date": "2024-08-24",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 808.61,
+        "date": "2024-08-25",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Wizyta u fryzjera",
+        "category": "zdrowie i uroda",
+        "amount": 954.83,
+        "date": "2024-08-28",
+        "description": "full serwis",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "kebab",
+        "category": "rozrywka i wypoczynek",
+        "amount": 100.0,
+        "date": "2024-08-28",
+        "description": "cala rodzina",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Opłata za prąd",
+        "category": "opłaty domowe",
+        "amount": 300.0,
+        "date": "2024-08-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Wynajem mieszkania",
+        "category": "nieruchomości",
+        "amount": 1333.3,
+        "date": "2024-08-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 435.31,
+        "date": "2024-09-03",
+        "description": "matematyka dla syna",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Od kolegi blik",
+        "category": "wynagrodzenia i przychody",
+        "amount": 15.17,
+        "date": "2024-09-08",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 642.55,
+        "date": "2024-09-12",
+        "description": "Biedra",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet do kina",
+        "category": "kultura i edukacja",
+        "amount": 246.08,
+        "date": "2024-09-13",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Zakupy w supermarkecie",
+        "category": "zakupy codzienne",
+        "amount": 281.51,
+        "date": "2024-09-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Mikrofalówka",
+        "category": "elektronika",
+        "amount": 500.0,
+        "date": "2024-09-15",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Weekend z rodziną",
+        "category": "rozrywka i wypoczynek",
+        "amount": 472.85,
+        "date": "2024-09-16",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Nowe buty",
+        "category": "moda i dodatki",
+        "amount": 824.36,
+        "date": "2024-09-23",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Miesięczna rata kredytu",
+        "category": "pozyczki i kredyty",
+        "amount": 1200.0,
+        "date": "2024-09-28",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Bilet miesięczny na komunikację",
+        "category": "transport",
+        "amount": 100.0,
+        "date": "2024-09-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "Sprzedaż akcji",
+        "category": "inwestycje i lokaty",
+        "amount": 702.33,
+        "date": "2024-09-29",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Premia kwartalna",
+        "category": "wynagrodzenia i przychody",
+        "amount": 357.11,
+        "date": "2024-09-29",
+        "description": "",
+        "type": "INCOME",
+        "receipt_image": null
+    },
+    {
+        "title": "Korepetycje",
+        "category": "usługi i serwis",
+        "amount": 387.56,
+        "date": "2024-09-29",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null
+    },
+    {
+        "title": "zakupy lidl",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-09-30",
+        "description": "Zakupione książki dla dzieci.",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    },
+    {
+        "title": "zakupy biedronka",
+        "category": "zakupy codzienne",
+        "amount": null,
+        "date": "2024-09-30",
+        "description": "",
+        "type": "EXPENSE",
+        "receipt_image": null,
+        "invoiceNumber": null,
+        "paymentType": null,
+        "nip": null
+    }
+]
