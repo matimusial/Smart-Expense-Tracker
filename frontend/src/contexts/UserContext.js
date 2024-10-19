@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { loginUser, logoutUser } from '../utils/PublicApi';
+import {getCurrentUser, loginUser, logoutUser} from '../utils/PublicApi';
 import {deleteAccount, setOnUnauthorized} from '../utils/ProtectedApi';
 import { LoginDialogContext } from './LoginDialogContext';
 import { motion } from 'framer-motion';
@@ -36,6 +36,20 @@ export const UserProvider = ({ children }) => {
         } catch (error) {
             setError('Błąd podczas logowania');
             console.error('Error login:', error);
+        }
+    }, []);
+
+    const checkUser = useCallback(async () => {
+        try {
+            const result = await getCurrentUser();
+            if (result) {
+                setUsername(result);
+            } else {
+                setUsername("");
+            }
+        } catch (error) {
+            console.error('Error checking user:', error);
+            setUsername("");
         }
     }, []);
 
@@ -88,12 +102,13 @@ export const UserProvider = ({ children }) => {
 
 
     useEffect(() => {
+        checkUser();
         setOnUnauthorized(() => {
             setUsername('');
             window.location.href = '/';
             openLoginDialog();
         });
-    }, [openLoginDialog]);
+    }, [checkUser, openLoginDialog]);
 
 
     return (
