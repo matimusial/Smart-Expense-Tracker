@@ -54,3 +54,29 @@ export const deleteAccount = async (password) => {
 };
 
 
+export const getEvents = async (startDate, endDate) => {
+    console.log(startDate);
+    const apiUrl = `http://localhost:8080/spring-api/event/get-events?startDate=${startDate}&endDate=${endDate}`;
+
+    try {
+        const response = await fetchWrapper(apiUrl, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok){
+            return null;
+        }
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.error('Error in getEvents:', error);
+        throw error;
+    }
+};
+
+

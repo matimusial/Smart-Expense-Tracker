@@ -14,9 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -67,13 +65,22 @@ public class EventService {
         return authentication instanceof AnonymousAuthenticationToken || ANONYMOUS_USER.equals(authentication.getName());
     }
 
-    public List<Event> findWithDate(YearMonth data) {
+    public Map<String, Object> findWithDate(LocalDate startDate, LocalDate endDate) {
         User currentUser = getCurrentUser();
         if (currentUser == null) {
             return null;
         }
-        LocalDate startDate = data.atDay(1);
-        LocalDate endDate = data.atEndOfMonth();
-        return eventRepository.findByUserAndDateBetween(currentUser, startDate.atStartOfDay(), endDate.atTime(23, 59, 59));
+        System.out.println("chuj3");
+        Optional<Event> userOpt = eventRepository.findTopByUserOrderByDateAsc(currentUser);
+        LocalDate firstEventDate = null;
+
+        if (userOpt.isPresent()) {
+            firstEventDate = userOpt.get().getDate();
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("firstEventDate", firstEventDate);
+        response.put("events", eventRepository.findByUserAndDateBetween(currentUser, startDate, endDate));
+        return response;
+
     }
 }

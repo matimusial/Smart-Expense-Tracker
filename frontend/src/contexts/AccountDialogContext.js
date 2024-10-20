@@ -1,8 +1,8 @@
 import React, { createContext, useState, useCallback } from 'react';
 
-export const LoginDialogContext = createContext();
+export const AccountDialogContext = createContext();
 
-export const LoginDialogProvider = ({ children }) => {
+export const AccountDialogProvider = ({ children }) => {
     const [isRegistrationDialogOpen, setIsRegistrationDialogOpen] = useState(false);
     const [isRegistrationSuccessDialogOpen, setIsRegistrationSuccessDialogOpen] = useState(false);
 
@@ -83,7 +83,7 @@ export const LoginDialogProvider = ({ children }) => {
     }, [closeDialogs]);
 
     return (
-        <LoginDialogContext.Provider
+        <AccountDialogContext.Provider
             value={{
                 openRegistrationDialog,
                 openRegistrationSuccessDialog,
@@ -109,6 +109,6 @@ export const LoginDialogProvider = ({ children }) => {
             }}
         >
             {children}
-        </LoginDialogContext.Provider>
+        </AccountDialogContext.Provider>
     );
 };

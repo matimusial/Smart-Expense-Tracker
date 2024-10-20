@@ -3,13 +3,13 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import { LoginDialogProvider } from './contexts/LoginDialogContext';
+import { AccountDialogProvider } from './contexts/AccountDialogContext';
 import { UserProvider } from "./contexts/UserContext";
 import ExpenseDashboard from "./pages/ExpenseDashboard/ExpenseDashboard";
 
 function App() {
     return (
-        <LoginDialogProvider>
+        <AccountDialogProvider>
             <UserProvider>
                 <Router>
                     <Routes>
@@ -20,7 +20,7 @@ function App() {
                     </Routes>
                 </Router>
             </UserProvider>
-        </LoginDialogProvider>
+        </AccountDialogProvider>
 
     );
 }

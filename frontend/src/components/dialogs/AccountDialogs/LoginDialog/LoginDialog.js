@@ -6,13 +6,13 @@ import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import SubmitButton from "../../ui/SubmitButton/SubmitButton";
+import SubmitButton from "../../../ui/SubmitButton/SubmitButton";
 
-import InputLabel from '../../ui/InputLabel/InputLabel';
+import InputLabel from '../../../ui/InputLabel/InputLabel';
 
-import { useUser } from '../../../contexts/UserContext';
+import { useUser } from '../../../../contexts/UserContext';
 import { useNavigate } from "react-router-dom";
-import { LoginDialogContext } from '../../../contexts/LoginDialogContext';
+import { AccountDialogContext } from '../../../../contexts/AccountDialogContext';
 
 const CustomButton = styled(Button)(({ theme }) => ({
     marginTop: '10px',
@@ -27,7 +27,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 
 const LoginDialog = ({ open, onClose }) => {
-    const { openSendPasswordEmailDialog } = useContext(LoginDialogContext);
+    const { openSendPasswordEmailDialog } = useContext(AccountDialogContext);
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [showPassword, setShowPassword] = useState(false);

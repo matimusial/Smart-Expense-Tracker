@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import {getCurrentUser, loginUser, logoutUser} from '../utils/PublicApi';
 import {deleteAccount, setOnUnauthorized} from '../utils/ProtectedApi';
-import { LoginDialogContext } from './LoginDialogContext';
+import { AccountDialogContext } from './AccountDialogContext';
 import { motion } from 'framer-motion';
 
 const UserContext = createContext();
@@ -11,7 +11,7 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-    const { openLoginDialog } = useContext(LoginDialogContext);
+    const { openLoginDialog } = useContext(AccountDialogContext);
     const [username, setUsername] = useState(null);
     const [error, setError] = useState(null);
     const [isLoggingOut, setIsLoggingOut] = useState(false);

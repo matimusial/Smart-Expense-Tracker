@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,18 +29,17 @@ public class EventController {
     }
 
     @GetMapping("/get-events")
-    public ResponseEntity<Map<String, Object>> getEventsByMonth(@RequestParam("date") String data) {
+    public ResponseEntity<Map<String, Object>> getEventsByMonth(@RequestParam("startDate") String startDate,
+                                                                @RequestParam("endDate") String endDate) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
-            YearMonth yearMonth = YearMonth.parse(data, formatter);
-            List<Event> events = eventService.findWithDate(yearMonth);
-            Map<String, Object> response = new HashMap<>();
-
-            if (events == null) {
-                response.put("unauthorized", "Brak zalogowanego użytkownika");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate parsedStartDate = LocalDate.parse(startDate, formatter);
+            LocalDate parsedEndDate = LocalDate.parse(endDate, formatter);
+            Map<String, Object> response = eventService.findWithDate(parsedStartDate, parsedEndDate);
+            LocalDate firstEventDate =  (LocalDate) response.get("firstEventDate");
+            if (firstEventDate == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            response.put("events", events);
             return ResponseEntity.ok(response);
         } catch (DateTimeParseException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

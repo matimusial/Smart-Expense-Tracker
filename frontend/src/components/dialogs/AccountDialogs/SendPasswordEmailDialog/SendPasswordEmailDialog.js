@@ -4,19 +4,19 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-import SubmitButton from "../../ui/SubmitButton/SubmitButton";
+import SubmitButton from "../../../ui/SubmitButton/SubmitButton";
 
-import InputLabel from '../../ui/InputLabel/InputLabel';
-import {validateEmail} from "../../../utils/Validation";
-import {checkEmailAvailability, SendPasswordEmail} from "../../../utils/PublicApi";
-import {LoginDialogContext} from "../../../contexts/LoginDialogContext";
+import InputLabel from '../../../ui/InputLabel/InputLabel';
+import {validateEmail} from "../../../../utils/Validation";
+import {checkEmailAvailability, SendPasswordEmail} from "../../../../utils/PublicApi";
+import {AccountDialogContext} from "../../../../contexts/AccountDialogContext";
 
 
 const SendPasswordEmailDialog = ({ open, onClose }) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [sendingLoading, setSendingLoading] = useState(false);
-    const { openSendPasswordEmailSuccessDialog } = useContext(LoginDialogContext);
+    const { openSendPasswordEmailSuccessDialog } = useContext(AccountDialogContext);
 
 
     useEffect(() => {

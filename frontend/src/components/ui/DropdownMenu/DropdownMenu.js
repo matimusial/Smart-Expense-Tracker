@@ -2,19 +2,21 @@ import React, {useState, useEffect, useRef, useContext} from 'react';
 import './DropdownMenu.css';
 import Avatar from '../../layout/Avatar/Avatar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
-import RegistrationDialog from '../../dialogs/RegistrationDialog/RegistrationDialog';
-import {LoginDialogContext} from "../../../contexts/LoginDialogContext";
+import RegistrationDialog from '../../dialogs/AccountDialogs/RegistrationDialog/RegistrationDialog';
+import {AccountDialogContext} from "../../../contexts/AccountDialogContext";
 import InformationDialog from "../../dialogs/InformationDialog/InformationDialog";
 import LocalPostOfficeOutlinedIcon from "@mui/icons-material/LocalPostOfficeOutlined";
-import LoginDialog from "../../dialogs/LoginDialog/LoginDialog";
-import SendPasswordEmailDialog from "../../dialogs/SendPasswordEmailDialog/SendPasswordEmailDialog";
+import LoginDialog from "../../dialogs/AccountDialogs/LoginDialog/LoginDialog";
+import SendPasswordEmailDialog from "../../dialogs/AccountDialogs/SendPasswordEmailDialog/SendPasswordEmailDialog";
 import { useUser } from '../../../contexts/UserContext';
-import DeleteAccountDialog from "../../dialogs/DeleteAccountDialog/DeleteAccountDialog";
+import { useNavigate } from 'react-router-dom';
+import DeleteAccountDialog from "../../dialogs/AccountDialogs/DeleteAccountDialog/DeleteAccountDialog";
 
 function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const { username, logout } = useUser();
+    const navigate = useNavigate();
 
     const {
         closeDialogs,
@@ -27,7 +29,7 @@ function DropdownMenu() {
         isSendPasswordEmailSuccessDialogOpen,
         openDeleteAccountDialog,
         isDeleteAccountDialogOpen
-    } = useContext(LoginDialogContext);
+    } = useContext(AccountDialogContext);
 
 
     const toggleMenu = () => {
@@ -42,6 +44,10 @@ function DropdownMenu() {
     const openLoginDialogComponent = () => {
         setIsOpen(false);
         openLoginDialog();
+    };
+
+    const handleMyExpenseClick = () => {
+        navigate('/event/expense-dashboard');
     };
 
     useEffect(() => {
@@ -72,7 +78,7 @@ function DropdownMenu() {
                 <div className="dropdown-menu">
                     {username ? (
                         <>
-                            <button onClick={null}>Moje wydatki</button>
+                            <button onClick={handleMyExpenseClick}>Moje wydatki</button>
                             <button onClick={logout}>Wyloguj się</button>
                             <button onClick={openDeleteAccountDialog}>Usuń konto</button>
                         </>

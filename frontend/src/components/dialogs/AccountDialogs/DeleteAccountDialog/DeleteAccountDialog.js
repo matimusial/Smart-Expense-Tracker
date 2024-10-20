@@ -5,11 +5,11 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import SubmitButton from "../../ui/SubmitButton/SubmitButton";
+import SubmitButton from "../../../ui/SubmitButton/SubmitButton";
 
-import InputLabel from '../../ui/InputLabel/InputLabel';
+import InputLabel from '../../../ui/InputLabel/InputLabel';
 
-import { useUser } from '../../../contexts/UserContext';
+import { useUser } from '../../../../contexts/UserContext';
 
 const DeleteAccountDialog = ({ open, onClose }) => {
     const [password, setPassword] = useState('');

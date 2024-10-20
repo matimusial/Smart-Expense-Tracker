@@ -5,24 +5,24 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import SubmitButton from "../../ui/SubmitButton/SubmitButton";
+import SubmitButton from "../../../ui/SubmitButton/SubmitButton";
 
 import {
     validatePasswordLength,
     validatePasswordSign,
     validatePasswordMatch,
-} from '../../../utils/Validation';
+} from '../../../../utils/Validation';
 
 import { changePassword
-} from '../../../utils/PublicApi';
+} from '../../../../utils/PublicApi';
 
-import InputLabel from '../../ui/InputLabel/InputLabel';
+import InputLabel from '../../../ui/InputLabel/InputLabel';
 
-import {LoginDialogContext} from '../../../contexts/LoginDialogContext';
-import PasswordChecker from "../../ui/PasswordChecker/PasswordChecker";
+import {AccountDialogContext} from '../../../../contexts/AccountDialogContext';
+import PasswordChecker from "../../../ui/PasswordChecker/PasswordChecker";
 
 const ResetPasswordDialog = ({ open, onClose }) => {
-    const { openResetPasswordSuccessDialog } = useContext(LoginDialogContext);
+    const { openResetPasswordSuccessDialog } = useContext(AccountDialogContext);
     const [password, setPassword] = useState('');
     const [conPassword, setConPassword] = useState('');
     const [passwordLengthValid, setPasswordLengthValid] = useState(false);

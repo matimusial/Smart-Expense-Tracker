@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 import './CurrencyConventer.css';
 import InputLabel from '../../ui/InputLabel/InputLabel';
@@ -21,6 +21,12 @@ const ConverterForm = ({ selectedCurrency }) => {
             setAmountPLN(value);
         }
     };
+    
+    useEffect(() => {
+        setShowResult(false);
+        setResult("");
+        setAmountPLN(100);
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();

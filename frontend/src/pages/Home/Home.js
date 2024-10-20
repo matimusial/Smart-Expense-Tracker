@@ -4,12 +4,12 @@ import Header from '../../components/layout/Header/Header';
 import ConverterForm from '../../components/currency/CurrencyConventer/CurrencyConventer';
 import './Home.css';
 import {authorizeRegistration, fetchCurrencyRates, verifyReset} from "../../utils/PublicApi";
-import { LoginDialogContext } from "../../contexts/LoginDialogContext";
+import { AccountDialogContext } from "../../contexts/AccountDialogContext";
 import InformationDialog from "../../components/dialogs/InformationDialog/InformationDialog";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { useNavigate } from 'react-router-dom';
-import ResetPasswordDialog from "../../components/dialogs/ResetPasswordDialog/ResetPasswordDialog";
+import ResetPasswordDialog from "../../components/dialogs/AccountDialogs/ResetPasswordDialog/ResetPasswordDialog";
 
 const Home = () => {
     const [currencyRates, setCurrencyRates] = useState([]);
@@ -26,7 +26,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const { isAccountConfirmationDialogOpen, openAccountConfirmationDialog, closeDialogs, openResetPasswordDialog,
-    isResetPasswordDialogOpen, isResetPasswordSuccessDialogOpen, isResetPasswordErrorDialogOpen} = useContext(LoginDialogContext);
+    isResetPasswordDialogOpen, isResetPasswordSuccessDialogOpen, isResetPasswordErrorDialogOpen} = useContext(AccountDialogContext);
 
     const clearStyles = () => {
         setPopupMessage("");
