@@ -10,7 +10,7 @@ const ConverterForm = ({ selectedCurrency }) => {
     const [showResult, setShowResult] = useState(false);
 
     const calculateExchangeRate = useCallback(() => {
-        const rate = (selectedCurrency.rate * amountPLN).toFixed(3);
+        const rate = (amountPLN / selectedCurrency.rate).toFixed(2);
         setResult(`${amountPLN} ${fromCurrency} = ${rate} ${selectedCurrency.currencyCode}`);
         setShowResult(true);
     }, [amountPLN, selectedCurrency, fromCurrency]);

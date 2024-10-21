@@ -116,4 +116,3 @@ const determinePeriodType = (dateFrom, dateTo) => {
 //     <Bar dataKey="income" fill="#82ca9d" />
 //     <Bar dataKey="expense" fill="#8884d8" />
 // </BarChart>
-

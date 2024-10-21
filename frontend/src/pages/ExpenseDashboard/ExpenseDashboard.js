@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Header from '../../components/layout/Header/Header';
-import { Box, Paper, Typography } from '@mui/material';
+import {Box, Paper, Typography} from '@mui/material';
 import './ExpenseDashboard.css';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -8,6 +8,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import {getEvents} from '../../utils/ProtectedApi';
 import { calculateBalance } from './functions';
+import WelcomeDialog from "../../components/dialogs/WelcomeDialog/WelcomeDialog";
+import Confetti from "react-confetti";
+import AddEventDialog from "../../components/dialogs/AddEventsDialogs/AddEventDialog";
+import SubmitButton from "../../components/ui/SubmitButton/SubmitButton";
 
 const ExpenseDashboard = () => {
     const [dateFrom, setDateFrom] = useState(dayjs().startOf('month'));
@@ -18,6 +22,24 @@ const ExpenseDashboard = () => {
     const [balance, setBalance] = useState(0);
     const [incomes, setIncomes] = useState(0);
     const [expenses, setExpenses] = useState(0);
+    const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
+    const [isEventAddDialogOpen, setIsEventAddDialogOpen] = useState(false);
+
+    const closeDialogs = useCallback(() => {
+        setIsWelcomeDialogOpen(false);
+        setIsEventAddDialogOpen(false);
+    }, []);
+
+    const openEventAddDialog = useCallback(()=> {
+        closeDialogs();
+        setIsEventAddDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openWelcomeDialog = useCallback (()=> {
+        closeDialogs();
+        setIsWelcomeDialogOpen(true);
+    }, [closeDialogs]);
+
 
 
     useEffect(() => {
@@ -27,7 +49,7 @@ const ExpenseDashboard = () => {
             fetchingPerformed.current = true;
             const data = await getEvents(dateFrom.format('YYYY-MM-DD'), dateTo.format('YYYY-MM-DD'));
             if (data == null) {
-
+                openWelcomeDialog();
             } else {
                 setEventList(data.events);
                 setPossibleDateFrom(data.firstEventDate);
@@ -44,8 +66,8 @@ const ExpenseDashboard = () => {
     return (
         <div>
             <Header />
-            <div className="container">
 
+            <div className="container">
                     <Box
                         sx={{
                             display: 'grid',
@@ -148,13 +170,26 @@ const ExpenseDashboard = () => {
                             <Typography variant="h6">Wykres kołowy</Typography>
                         </Paper>
                         <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant="h6">Dodaj wydatek</Typography>
+                            <SubmitButton
+                                label="Dodaj wydatek"
+                                type="button"
+                                onClick={openEventAddDialog}
+                                />
                         </Paper>
                         <Paper elevation={3} sx={{ padding: 2 }}>
                             <Typography variant="h6">Dodaj lidl/biedronka</Typography>
                         </Paper>
                     </Box>
+                {isWelcomeDialogOpen && <Confetti />}
+                <WelcomeDialog
+                    open={isWelcomeDialogOpen}
+                    onClose={closeDialogs}
+                />
 
+                <AddEventDialog
+                    open={isEventAddDialogOpen}
+                    onClose={closeDialogs}
+                />
             </div>
         </div>
     );

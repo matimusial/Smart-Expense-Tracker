@@ -70,7 +70,6 @@ public class EventService {
         if (currentUser == null) {
             return null;
         }
-        System.out.println("chuj3");
         Optional<Event> userOpt = eventRepository.findTopByUserOrderByDateAsc(currentUser);
         LocalDate firstEventDate = null;
 
