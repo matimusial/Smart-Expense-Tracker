@@ -3,12 +3,27 @@ import os
 
 from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
+
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
 from config import TEMP_PATH, BERT_MODEL_NAME
 from services.image_ocr import image_ocr
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model = None
 tokenizer = None

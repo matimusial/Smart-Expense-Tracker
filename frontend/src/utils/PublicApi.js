@@ -270,3 +270,29 @@ export const getCurrentUser = async () => {
         throw error;
     }
 };
+
+export const getCategory = async (title, k) => {
+    const apiUrl = 'http://localhost:8000/fastapi/getcategory';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify({title, k}),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+        else {
+            return null;
+        }
+    }
+    catch (error) {
+        console.error('Error getting category:', error);
+        throw error;
+    }
+}

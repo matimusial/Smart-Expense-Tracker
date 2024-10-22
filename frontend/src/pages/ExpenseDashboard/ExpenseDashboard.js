@@ -12,7 +12,8 @@ import WelcomeDialog from "../../components/dialogs/WelcomeDialog/WelcomeDialog"
 import Confetti from "react-confetti";
 import AddEventDialog from "../../components/dialogs/AddEventsDialogs/AddEventDialog";
 import SubmitButton from "../../components/ui/SubmitButton/SubmitButton";
-
+import 'dayjs/locale/pl';
+dayjs.locale('pl');
 const ExpenseDashboard = () => {
     const [dateFrom, setDateFrom] = useState(dayjs().startOf('month'));
     const [dateTo, setDateTo] = useState(dayjs().endOf('month'));
@@ -80,8 +81,9 @@ const ExpenseDashboard = () => {
                         }}
                     >
                         <Paper elevation={3} sx={{ gridColumn: '4 / 5', padding: 2 }}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <Box
+                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pl">
+
+                            <Box
                                     sx={{
                                         display: 'flex',
                                         justifyContent: 'space-between',
@@ -95,7 +97,7 @@ const ExpenseDashboard = () => {
                                         disableFuture
                                         minDate={dayjs(possibleDateFrom)}
                                         maxDate={dateTo}
-                                        disabled={!!!possibleDateFrom}
+                                        disabled={!!possibleDateFrom}
                                         slotProps={{
                                             textField: {
                                                 sx: {
@@ -107,12 +109,12 @@ const ExpenseDashboard = () => {
                                                     },
                                                     '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
                                                         borderWidth: '1px',
-                                                        borderColor: 'inherit',
+                                                        borderColor: '#333',
                                                     },
                                                     '& .Mui-focused': {
                                                         color: '#333',
                                                         borderWidth: '1px',
-                                                        borderColor: 'inherit',
+                                                        borderColor: '#333',
                                                     },
                                                 },
                                             },

@@ -1,7 +1,7 @@
 # Test your FastAPI endpoints
 
 ### Test getcategory endpoint
-POST http://127.0.0.1:8000/getcategory
+POST http://127.0.0.1:8000/fastapi/getcategory
 Content-Type: application/json
 Accept: application/json
 

@@ -24,6 +24,7 @@ const InputLabel = ({
             error={error}
             helperText={helperText}
             onBlur={onBlur}
+            tabIndex={0}
             InputLabelProps={{
                 style: { color: error ? 'red' : '#333' },
             }}

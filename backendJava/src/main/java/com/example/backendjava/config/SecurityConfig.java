@@ -30,6 +30,9 @@ public class SecurityConfig {
     @Value("${frontend.base-url}")
     private String frontendBaseUrl;
 
+    @Value("${fastapi.base-url}")
+    private String fastapiBaseUrl;
+
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
@@ -88,7 +91,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(frontendBaseUrl));
+        configuration.setAllowedOrigins(Arrays.asList(frontendBaseUrl, fastapiBaseUrl));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
