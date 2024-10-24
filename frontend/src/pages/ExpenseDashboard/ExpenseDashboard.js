@@ -97,7 +97,7 @@ const ExpenseDashboard = () => {
                                         disableFuture
                                         minDate={dayjs(possibleDateFrom)}
                                         maxDate={dateTo}
-                                        disabled={!!possibleDateFrom}
+                                        disabled={!!!possibleDateFrom}
                                         slotProps={{
                                             textField: {
                                                 sx: {

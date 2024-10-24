@@ -296,3 +296,26 @@ export const getCategory = async (title, k) => {
         throw error;
     }
 }
+
+export const uploadAndProcessImage = async (imageFile) => {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    try {
+        const response = await fetch('http://localhost:8000/fastapi/trim-receipt', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const imageBlob = await response.blob();
+        return URL.createObjectURL(imageBlob);
+
+    } catch (error) {
+        console.error('Error uploading and processing the image:', error);
+        throw error;
+    }
+}

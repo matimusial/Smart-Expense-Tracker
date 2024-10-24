@@ -55,7 +55,6 @@ export const deleteAccount = async (password) => {
 
 
 export const getEvents = async (startDate, endDate) => {
-    console.log(startDate);
     const apiUrl = `http://localhost:8080/spring-api/event/get-events?startDate=${startDate}&endDate=${endDate}`;
 
     try {
@@ -80,3 +79,36 @@ export const getEvents = async (startDate, endDate) => {
 };
 
 
+export const addEventUser = async (userData) => {
+    const apiUrl = 'http://localhost:8080/spring-api/user/registration';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (!response.ok) {
+            let errorMessage = 'Registration failed';
+            if (response.status === 400) {
+                errorMessage = 'Invalid input data.';
+            } else if (response.status === 409) {
+                errorMessage = 'Username or email already exists.';
+            } else if (response.status === 500) {
+                errorMessage = 'Server error. Please try again later.';
+            }
+            console.error(errorMessage);
+        }
+        else {
+            console.log("registered User");
+        }
+
+
+
+    } catch (error) {
+        console.error('Error registering user:', error);
+        throw error;
+    }
+};

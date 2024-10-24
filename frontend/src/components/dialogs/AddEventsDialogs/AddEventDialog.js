@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Card,
@@ -11,73 +11,112 @@ import {
     LinearProgress,
     Radio,
     RadioGroup,
-    Typography
+    Tooltip, // Dodany import
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'dayjs/locale/pl';
-
+import './loader.css';
 
 import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 
 import InputLabel from '../../ui/InputLabel/InputLabel';
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DesktopDatePicker} from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import {getCategory} from "../../../utils/PublicApi";
+import {getCategory, registerUser, uploadAndProcessImage} from "../../../utils/PublicApi";
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
-import { motion } from 'framer-motion'; // Framer Motion do animacji
-
+import { motion } from 'framer-motion';
+import ShowPictureDialog from "../ShowPictureDialog/ShowPictureDialog";
+import {mapPolishToEnglish} from "../../../mappers/CategoryMapper";
 
 dayjs.locale('pl');
+
 const AddEventDialog = ({ open, onClose }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
-    const [imageName, setImageName] = useState("");
+    const [imageName, setImageName] = useState("Dodaj paragon / fakturę");
     const [date, setDate] = useState(dayjs());
     const [insertLoading, setInsertLoading] = useState(false);
-    const [isCategoryLoading ,setIsCategoryLoading] = useState(false);
+    const [isCategoryLoading, setIsCategoryLoading] = useState(false);
     const [categories, setCategories] = useState("");
     const [selectedCategory, setSelectedCategory] = useState('');
     const [isExpenseChecked, setIsExpenseChecked] = useState(true);
+    const [isImageTrimming, setIsImageTrimming] = useState(false);
+    const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
 
     useEffect(() => {
         if (!open) {
-            setCategories('');
             setTitle('');
             setDescription('');
             setImage(null);
+            setImageName("Dodaj paragon / fakturę");
             setDate(dayjs());
             setInsertLoading(false);
+            setIsCategoryLoading(false);
+            setCategories("");
+            setSelectedCategory('');
+            setIsExpenseChecked(true);
+            setIsImageTrimming(false);
+            setIsImageDialogOpen(false);
         }
-    }, [open, categories]);
+    }, [open]);
 
     const handleTitleBlur = async () => {
-        setIsCategoryLoading(true);
-        setCategories('');
-        const data = await getCategory(title.toLowerCase(), 3);
-        let updatedCategories;
-        if (Object.values(data)[0].score <= 0.5) {
-            updatedCategories = {
-                category_others: { category: 'inne', score: 0 },
-                ...data,
-            };
-        } else {
-            updatedCategories = {
-                ...data,
-                category_others: { category: 'inne', score: 0 },
-            };
+        if (title !== '') {
+            setIsCategoryLoading(true);
+            setCategories('');
+            const data = await getCategory(title.toLowerCase(), 3);
+            let updatedCategories;
+            if (Object.values(data)[0].score <= 0.5) {
+                updatedCategories = {
+                    category_others: { category: 'inne', score: 0 },
+                    ...data,
+                };
+            } else {
+                updatedCategories = {
+                    ...data,
+                    category_others: { category: 'inne', score: 0 },
+                };
+            }
+            setCategories(updatedCategories);
+            setSelectedCategory(Object.values(updatedCategories)[0].category);
+            setIsCategoryLoading(false);
         }
-        setCategories(updatedCategories);
-        setSelectedCategory(Object.values(updatedCategories)[0].category);
-        setIsCategoryLoading(false);
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setInsertLoading(true);
+        const category = mapPolishToEnglish(selectedCategory);
+        if (isFormValid()) {
+            const userData = {
+                firstName,
+                email,
+                username,
+                password,
+                conPassword
+            };
+
+            try {
+                setRegistrationLoading(true);
+                await registerUser(userData);
+                setFirstName('');
+                setEmail('');
+                setUsername('');
+                setPassword('');
+                setConPassword('');
+                setRegistrationLoading(false);
+                openRegistrationSuccessDialog();
+            } catch (error) {
+                console.error('Registration error:', error);
+                throw error;
+            }
+        }
+
+
     };
 
     const handleRemoveImage = () => {
@@ -85,14 +124,26 @@ const AddEventDialog = ({ open, onClose }) => {
         setImageName('Dodaj paragon / fakturę');
     };
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
+        setIsImageTrimming(true);
         const file = event.target.files[0];
         if (file) {
-            const trimmedName = file.name.length > 47 ? `...${file.name.slice(-47)}` : file.name;
+            const trimmedName = file.name.length > 40 ? `...${file.name.slice(-40)}` : file.name;
+            const imageUrl = await uploadAndProcessImage(file);
             setImageName(trimmedName);
-            setImage(file);
+            setImage(imageUrl);
         }
+        setIsImageTrimming(false);
+    };
 
+    useEffect(() => {
+        if (image) {
+            setIsImageDialogOpen(true);
+        }
+    }, [image]);
+
+    const handleImageDialogClose = () => {
+        setIsImageDialogOpen(false);
     };
 
     const handleCardClick = (event) => {
@@ -101,12 +152,35 @@ const AddEventDialog = ({ open, onClose }) => {
         }
     };
 
+
+    const ConditionalTooltip = ({ children }) => {
+        if (!image) {
+            return (
+                <Tooltip
+                    title="Dokument powinien być równomiernie oświetlony, umieszczony na kontrastującym (najlepiej czarnym) tle oraz nie zawierać żadnych dodatkowych elementów poza tłem. Subtelne korekty perspektywy są dozwolone."
+                    arrow
+                >
+                    {children}
+                </Tooltip>
+            );
+        }
+        return children;
+    };
+
+
+
     return (
         <Dialog
             open={open}
             onClose={onClose}
             PaperProps={{ style: { borderRadius: '15px', padding: '20px', width: '100%' } }}
         >
+            <ShowPictureDialog
+                open={isImageDialogOpen}
+                onClose={handleImageDialogClose}
+                image={image}
+            />
+
             <DialogTitle style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 Dodaj transakcję
                 <IconButton
@@ -118,7 +192,7 @@ const AddEventDialog = ({ open, onClose }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <InputLabel
                         label="Tytuł"
                         value={title}
@@ -164,10 +238,15 @@ const AddEventDialog = ({ open, onClose }) => {
 
                     {isCategoryLoading && (
                         <LinearProgress
-                            sx={{ marginLeft: '6%', marginRight: '2%', height: 2, backgroundColor: '#A0C4C4',
+                            sx={{
+                                marginLeft: '6%',
+                                marginRight: '2%',
+                                height: 2,
+                                backgroundColor: '#A0C4C4',
                                 '& .MuiLinearProgress-bar': {
                                     backgroundColor: '#e7f6f6',
-                                }}}
+                                }
+                            }}
                         />
                     )}
 
@@ -176,8 +255,8 @@ const AddEventDialog = ({ open, onClose }) => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         tabIndex={0}
+                        required={false}
                     />
-
 
                     <Box
                         sx={{
@@ -189,66 +268,79 @@ const AddEventDialog = ({ open, onClose }) => {
                         }}
                     >
                         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                            <Card
-                                onClick={handleCardClick}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '8px 16px',
-                                    width: '100%',
-                                    marginLeft: '20px',
-                                    marginRight: '20px',
-                                    boxShadow: 0,
-                                    borderRadius: '8px',
-                                    backgroundColor: '#f5f5f5',
-                                    border: '1px solid #bcbcbc',
-                                    borderColor: image ? '#333' : '#bcbcbc',
-                                    cursor: 'pointer',
-                                    height: '30px',
-                                    borderWidth: image ? '1px' : '1px',
-                                    transition: 'background-color 0.3s, box-shadow 0.3s, transform 0.3s',
-                                    "&:hover": {
+                            <ConditionalTooltip>
+                                <Card
+                                    onClick={handleCardClick}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '8px 16px',
+                                        width: '100%',
+                                        marginLeft: '20px',
+                                        marginRight: '20px',
+                                        boxShadow: 0,
+                                        borderRadius: '8px',
+                                        backgroundColor: '#f5f5f5',
+                                        border: '1px solid #bcbcbc',
+                                        borderColor: image ? '#333' : '#bcbcbc',
+                                        cursor: 'pointer',
+                                        height: '30px',
                                         borderWidth: image ? '1px' : '1px',
-                                        borderColor: image ? 'inherit' : '#333',
-                                    },
-                                }}
-                            >
-                                <label
-                                    htmlFor="file-upload"
-                                    style={{ display: 'flex', alignItems: 'center', flexGrow: 1, cursor: 'pointer' }}
+                                        transition: 'background-color 0.3s, box-shadow 0.3s, transform 0.3s',
+                                        "&:hover": {
+                                            borderWidth: image ? '1px' : '1px',
+                                            borderColor: image ? 'inherit' : '#333',
+                                        },
+                                        position: 'relative',
+                                    }}
                                 >
-                                    <InsertPhotoOutlinedIcon sx={{ marginRight: 2 }} />
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            textAlign: 'center',
-                                            flexGrow: 1,
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                        }}
+                                    <label
+                                        htmlFor="file-upload"
+                                        style={{ display: 'flex', alignItems: 'center', flexGrow: 1, cursor: 'pointer' }}
                                     >
-                                        {imageName || "Dodaj paragon / fakturę"}
-                                    </Typography>
-                                </label>
-                                {image && (
-                                    <IconButton size="small" onClick={handleRemoveImage} >
-                                        <CloseIcon fontSize="small" />
-                                    </IconButton>
-                                )}
+                                        <InsertPhotoOutlinedIcon sx={{ marginRight: 2 }} />
+                                        <Box
+                                            sx={{
+                                                textAlign: 'center',
+                                                flexGrow: 1,
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            {isImageTrimming ? (
+                                                <Box
+                                                    className="loader"
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        top: '50%',
+                                                        left: '50%',
+                                                        transform: 'translate(-50%, -50%)',
+                                                    }}
+                                                ></Box>
+                                            ) : (
+                                                <span>{imageName}</span>
+                                            )}
+                                        </Box>
+                                    </label>
+                                    {image && (
+                                        <IconButton size="small" onClick={handleRemoveImage}>
+                                            <CloseIcon fontSize="small" />
+                                        </IconButton>
+                                    )}
 
-                                <input
-                                    id="file-upload"
-                                    type="file"
-                                    accept="image/png, image/jpeg"
-                                    capture="environment"
-                                    onChange={handleFileChange}
-                                    style={{ display: 'none' }}
-                                />
-                            </Card>
-
-
+                                    <input
+                                        id="file-upload"
+                                        type="file"
+                                        accept="image/png, image/jpeg"
+                                        capture="environment"
+                                        onChange={handleFileChange}
+                                        style={{ display: 'none' }}
+                                    />
+                                </Card>
+                            </ConditionalTooltip>
                         </Box>
+
                     </Box>
 
                     <Box
@@ -295,7 +387,6 @@ const AddEventDialog = ({ open, onClose }) => {
                             />
                         </RadioGroup>
 
-
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pl">
                             <DesktopDatePicker
                                 label="Data transakcji"
@@ -325,22 +416,17 @@ const AddEventDialog = ({ open, onClose }) => {
                                 }}
                             />
                         </LocalizationProvider>
-
-
-
                     </Box>
 
                     <SubmitButton
                         label="Dodaj"
-                        type="button"
-                        onClick={handleSubmit}
+                        type="sumbit"
                         isLoading={insertLoading}
                     />
                 </form>
             </DialogContent>
         </Dialog>
     );
-
 };
 
 export default AddEventDialog;

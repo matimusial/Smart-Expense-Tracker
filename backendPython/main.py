@@ -1,14 +1,19 @@
 import shutil
 import os
 
-from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.responses import StreamingResponse
+import cv2
+import numpy as np
+from io import BytesIO
 
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
 from config import TEMP_PATH, BERT_MODEL_NAME
 from services.image_ocr import image_ocr
+from services.receipt_trimmer import trim_receipt
 
 app = FastAPI()
 
@@ -100,3 +105,26 @@ async def get_image_text(file: UploadFile = File(...)):
     os.remove(file_location)
 
     return response
+
+
+@app.post("/fastapi/trim-receipt")
+async def process_receipt(file: UploadFile = File(...)):
+    try:
+        image_stream = await file.read()
+        np_arr = np.frombuffer(image_stream, np.uint8)
+        image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        if image is None:
+            raise HTTPException(status_code=400, detail="Invalid image format")
+
+        # Wywołanie funkcji trim_receipt
+        trimmed_image = trim_receipt(image)
+
+        # Kodowanie przetworzonego obrazu z powrotem do formatu .jpg (lub innego)
+        _, buffer = cv2.imencode('.jpg', trimmed_image)
+
+        # Przygotowanie obrazu do odpowiedzi HTTP w formie strumienia
+        return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")

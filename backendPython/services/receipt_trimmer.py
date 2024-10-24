@@ -2,6 +2,9 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+from config import BLUR_KERNEL_SIZE, CANNY_HIGH, MORPH_KERNEL_SIZE, MORPH_ITERATIONS, DILATION_ITERATIONS, CANNY_LOW, \
+    EROSION_ITERATIONS, EPSILON_FACTOR
+
 
 def load_image(image_path):
     """
@@ -115,7 +118,6 @@ def prepare_for_ocr(image):
     # Zastosowanie filtra konwolucyjnego do wyostrzenia
     sharpened_image = cv2.filter2D(gray, -1, kernel)
 
-
     return sharpened_image
 
 
@@ -159,44 +161,22 @@ def draw_pics(edged, processed, output, warped, prepared_image):
     plt.show()
 
 
-def main():
-    # Lista zdjęć
-    pics = [
-        '20241023_233318.jpg',
-        '20241023_233326.jpg',
-        '20241023_233338.jpg',
-        '20241023_233353.jpg',
-        '20241023_233356.jpg'
-    ]
-
-    # Wybór zdjęcia do przetworzenia
-    selected_image = pics[4]
-
-    # Parametry
-    blur_kernel_size = (5, 5)
-    canny_low = 100
-    canny_high = 200
-    morph_kernel_size = (5, 5)
-    morph_iterations = 2
-    epsilon_factor = 0.03
-    dilation_iterations = 2
-    erosion_iterations = 2
+def trim_receipt(image):
 
     # Przetwarzanie obrazu
-    image = load_image(selected_image)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     gray = convert_to_grayscale(image)
-    blurred = apply_gaussian_blur(gray, blur_kernel_size)
-    edged = detect_edges(blurred, canny_low, canny_high)
+    blurred = apply_gaussian_blur(gray, BLUR_KERNEL_SIZE)
+    edged = detect_edges(blurred, CANNY_LOW, CANNY_HIGH)
 
     # Operacje morfologiczne
-    closed = morph_operations(edged, morph_kernel_size, morph_type=cv2.MORPH_CLOSE, iterations=morph_iterations)
-    dilated = morph_operations(closed, morph_kernel_size, morph_type=cv2.MORPH_DILATE, iterations=dilation_iterations)
-    eroded = morph_operations(dilated, morph_kernel_size, morph_type=cv2.MORPH_ERODE, iterations=erosion_iterations)
+    closed = morph_operations(edged, MORPH_KERNEL_SIZE, morph_type=cv2.MORPH_CLOSE, iterations=MORPH_ITERATIONS)
+    dilated = morph_operations(closed, MORPH_KERNEL_SIZE, morph_type=cv2.MORPH_DILATE, iterations=DILATION_ITERATIONS)
+    eroded = morph_operations(dilated, MORPH_KERNEL_SIZE, morph_type=cv2.MORPH_ERODE, iterations=EROSION_ITERATIONS)
     processed = eroded
 
     # Znajdowanie konturu paragonu
-    receipt_contour = find_receipt_contour(processed, epsilon_factor)
+    receipt_contour = find_receipt_contour(processed, EPSILON_FACTOR)
     if receipt_contour is None:
         print("Nie znaleziono konturu paragonu.")
         return
@@ -211,10 +191,9 @@ def main():
     # Przygotowanie obrazu do OCR
     prepared_image = prepare_for_ocr(warped)
 
+    #draw_pics(edged, processed, output, warped, prepared_image)
 
-    # Wyświetlanie wyników
-    draw_pics(edged, processed, output, warped, prepared_image)
+    return prepared_image
 
-
-if __name__ == "__main__":
-    main()
+img = load_image(r"C:\Users\matim\Desktop\drive-download-20241004T220528Z-001\20241005_000104.jpg")
+print(type(trim_receipt(img)))
