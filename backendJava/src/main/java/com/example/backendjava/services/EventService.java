@@ -4,6 +4,7 @@ import com.example.backendjava.entities.Event;
 import com.example.backendjava.entities.User;
 import com.example.backendjava.repositories.EventRepository;
 import com.example.backendjava.repositories.UserRepository;
+import com.example.backendjava.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -30,22 +32,34 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<Map<String, String>> getIdAndSave(Event event) {
+    @Transactional
+    public ResponseEntity<Void> getIdAndSave(Event event) {
         User user = getCurrentUser();
-        Map<String, String> response = new HashMap<>();
 
         if (user == null) {
-            response.put("unauthorized", "Brak zalogowanego użytkownika");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         try {
+            event.setReceiptImage(Base64Util.convertBase64ToBytes(event.getBase64String()));
             event.setUser(user);
             eventRepository.save(event);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    public ResponseEntity<Void> loadDemo(){
+        User user = getCurrentUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        try {
+
+        }
+
+
     }
 
     private User getCurrentUser() {

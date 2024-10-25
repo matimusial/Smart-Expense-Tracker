@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-from config import BLUR_KERNEL_SIZE, CANNY_HIGH, MORPH_KERNEL_SIZE, MORPH_ITERATIONS, DILATION_ITERATIONS, CANNY_LOW, \
-    EROSION_ITERATIONS, EPSILON_FACTOR
+from config import (BLUR_KERNEL_SIZE, MORPH_KERNEL_SIZE, MORPH_ITERATIONS, DILATION_ITERATIONS,
+                    EROSION_ITERATIONS, EPSILON_FACTOR)
 
 
 def load_image(image_path):
@@ -30,11 +30,13 @@ def apply_gaussian_blur(gray, kernel_size):
     return cv2.GaussianBlur(gray, kernel_size, 0)
 
 
-def detect_edges(blurred, low_threshold, high_threshold):
+def detect_edges(blurred):
     """
     Wykrywa krawędzie za pomocą metody Canny'ego.
     """
-    return cv2.Canny(blurred, low_threshold, high_threshold)
+    _, thresh = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    return cv2.Canny(thresh, 0, 255)
 
 
 def morph_operations(edged, kernel_size, morph_type=cv2.MORPH_CLOSE, iterations=1):
@@ -121,6 +123,26 @@ def prepare_for_ocr(image):
     return sharpened_image
 
 
+def resize_if_needed(image, max_pixels=2073600):
+    """
+    Przeskalowuje obraz, jeśli liczba pikseli przekracza max_pixels, zachowując proporcje.
+
+    :param image: Obraz do przeskalowania.
+    :param max_pixels: Maksymalna liczba pikseli.
+    :return: Przeskalowany lub oryginalny obraz.
+    """
+    height, width = image.shape[:2]
+    total_pixels = height * width
+    if total_pixels > max_pixels:
+        scale = (max_pixels / total_pixels) ** 0.5
+        new_width = int(width * scale)
+        new_height = int(height * scale)
+        resized_image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
+        print(f"Obraz został przeskalowany z ({width}x{height}) do ({new_width}x{new_height})")
+        return resized_image
+    return image
+
+
 def draw_pics(edged, processed, output, warped, prepared_image):
     """
     Rysuje i wyświetla obrazy za pomocą Matplotlib.
@@ -165,9 +187,11 @@ def trim_receipt(image):
 
     # Przetwarzanie obrazu
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
     gray = convert_to_grayscale(image)
+
     blurred = apply_gaussian_blur(gray, BLUR_KERNEL_SIZE)
-    edged = detect_edges(blurred, CANNY_LOW, CANNY_HIGH)
+    edged = detect_edges(blurred)
 
     # Operacje morfologiczne
     closed = morph_operations(edged, MORPH_KERNEL_SIZE, morph_type=cv2.MORPH_CLOSE, iterations=MORPH_ITERATIONS)
@@ -191,9 +215,29 @@ def trim_receipt(image):
     # Przygotowanie obrazu do OCR
     prepared_image = prepare_for_ocr(warped)
 
+    resized_image = resize_if_needed(prepared_image)
+
     #draw_pics(edged, processed, output, warped, prepared_image)
 
-    return prepared_image
+    return resized_image
 
-img = load_image(r"C:\Users\matim\Desktop\drive-download-20241004T220528Z-001\20241005_000104.jpg")
-print(type(trim_receipt(img)))
+# import os
+# folder_path = r'C:\Users\matim\Desktop\Paragony-20241025T224554Z-001\Paragony'
+# counter = 0
+# for filename in os.listdir(folder_path):
+#     if filename.endswith('.jpg') :  # Dopasuj do formatów obrazu
+#         file_path = os.path.join(folder_path, filename)
+#
+#         # Wczytaj obraz
+#         image = cv2.imread(file_path)
+#         counter = counter + 1
+#         # Jeśli obraz został poprawnie wczytany, zastosuj losowy filtr
+#         if image is not None :
+#
+#             processed_image = trim_receipt(image)
+#             # Zapisz przetworzony obraz pod tą samą nazwą
+#             cv2.imwrite(file_path, processed_image)
+
+
+# img = load_image(r'C:\Users\matim\Desktop\Paragony-20241025T224554Z-001\Paragony\29.78.jpg')
+# print(type(trim_receipt(img)))

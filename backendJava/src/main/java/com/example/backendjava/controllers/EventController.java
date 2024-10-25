@@ -24,7 +24,7 @@ public class EventController {
     }
 
     @PostMapping("/add-event")
-    public ResponseEntity<Map<String, String>> createEvent(@RequestBody Event event) {
+    public ResponseEntity<Void> createEvent(@RequestBody Event event) {
         return eventService.getIdAndSave(event);
     }
 
@@ -44,5 +44,10 @@ public class EventController {
         } catch (DateTimeParseException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @PostMapping("/load-demo")
+    public ResponseEntity<Void> loadDemoEvents() {
+        return eventService.loadDemo();
     }
 }

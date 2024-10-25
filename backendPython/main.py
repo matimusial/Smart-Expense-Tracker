@@ -117,13 +117,10 @@ async def process_receipt(file: UploadFile = File(...)):
         if image is None:
             raise HTTPException(status_code=400, detail="Invalid image format")
 
-        # Wywołanie funkcji trim_receipt
         trimmed_image = trim_receipt(image)
 
-        # Kodowanie przetworzonego obrazu z powrotem do formatu .jpg (lub innego)
         _, buffer = cv2.imencode('.jpg', trimmed_image)
 
-        # Przygotowanie obrazu do odpowiedzi HTTP w formie strumienia
         return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
 
     except Exception as e:

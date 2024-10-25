@@ -311,8 +311,7 @@ export const uploadAndProcessImage = async (imageFile) => {
             return null;
         }
 
-        const imageBlob = await response.blob();
-        return URL.createObjectURL(imageBlob);
+        return await response.blob();
 
     } catch (error) {
         console.error('Error uploading and processing the image:', error);

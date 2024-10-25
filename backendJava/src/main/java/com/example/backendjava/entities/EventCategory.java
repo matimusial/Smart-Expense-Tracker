@@ -8,7 +8,7 @@ public enum EventCategory {
     FASHION_AND_ACCESSORIES,      // moda i dodatki
     REAL_ESTATE,                  // nieruchomości
     HOME_BILLS,                   // opłaty domowe
-    LOANS_AND_CREDITS,            // pożyczki i kredyty
+    LOANS_AND_CREDITS,            // pozyczki i kredyty
     GIFTS_AND_FAMILY,             // prezenty i rodzina
     TRANSFERS_AND_TRANSACTIONS,   // przelewy i transakcje
     ENTERTAINMENT_AND_LEISURE,    // rozrywka i wypoczynek

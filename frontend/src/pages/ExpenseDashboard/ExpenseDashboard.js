@@ -18,7 +18,6 @@ const ExpenseDashboard = () => {
     const [dateFrom, setDateFrom] = useState(dayjs().startOf('month'));
     const [dateTo, setDateTo] = useState(dayjs().endOf('month'));
     const [eventList, setEventList] = useState([]);
-    const fetchingPerformed = useRef(false);
     const [possibleDateFrom, setPossibleDateFrom] = useState(null);
     const [balance, setBalance] = useState(0);
     const [incomes, setIncomes] = useState(0);
@@ -45,9 +44,6 @@ const ExpenseDashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (fetchingPerformed.current) return;
-
-            fetchingPerformed.current = true;
             const data = await getEvents(dateFrom.format('YYYY-MM-DD'), dateTo.format('YYYY-MM-DD'));
             if (data == null) {
                 openWelcomeDialog();
@@ -58,17 +54,21 @@ const ExpenseDashboard = () => {
         };
 
         fetchData();
-        setBalance(calculateBalance(eventList)[2]);
-        setIncomes(calculateBalance(eventList)[2]);
-        setExpenses(calculateBalance(eventList)[0]);
     }, [dateFrom, dateTo]);
+
+    useEffect(() => {
+        const [incomes, expenses, balance] = calculateBalance(eventList);
+        setExpenses(expenses);
+        setIncomes(incomes);
+        setBalance(balance);
+    }, [eventList]);
 
 
     return (
         <div>
             <Header />
 
-            <div className="container">
+            <div className="dashboard-container">
                     <Box
                         sx={{
                             display: 'grid',

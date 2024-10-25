@@ -11,7 +11,7 @@ import {
     LinearProgress,
     Radio,
     RadioGroup,
-    Tooltip, // Dodany import
+    Tooltip,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'dayjs/locale/pl';
@@ -25,16 +25,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import {getCategory, registerUser, uploadAndProcessImage} from "../../../utils/PublicApi";
+import {getCategory, uploadAndProcessImage} from "../../../utils/PublicApi";
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import { motion } from 'framer-motion';
 import ShowPictureDialog from "../ShowPictureDialog/ShowPictureDialog";
 import {mapPolishToEnglish} from "../../../mappers/CategoryMapper";
+import TextField from "@mui/material/TextField";
+import {addEventUser} from "../../../utils/ProtectedApi";
 
 dayjs.locale('pl');
 
 const AddEventDialog = ({ open, onClose }) => {
     const [title, setTitle] = useState('');
+    const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imageName, setImageName] = useState("Dodaj paragon / fakturę");
@@ -46,21 +49,30 @@ const AddEventDialog = ({ open, onClose }) => {
     const [isExpenseChecked, setIsExpenseChecked] = useState(true);
     const [isImageTrimming, setIsImageTrimming] = useState(false);
     const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+    const [imageBase64, setImageBase64] = useState(null);
+    const [error, setError] = useState(false);
+    const [errorKey, setErrorKey] = useState(0);
+
+
+    const resetForm = () => {
+        setTitle('');
+        setDescription('');
+        setImage(null);
+        setImageName("Dodaj paragon / fakturę");
+        setDate(dayjs());
+        setInsertLoading(false);
+        setIsCategoryLoading(false);
+        setCategories("");
+        setSelectedCategory('');
+        setIsExpenseChecked(true);
+        setIsImageTrimming(false);
+        setIsImageDialogOpen(false);
+        setImageBase64(null);
+    }
 
     useEffect(() => {
         if (!open) {
-            setTitle('');
-            setDescription('');
-            setImage(null);
-            setImageName("Dodaj paragon / fakturę");
-            setDate(dayjs());
-            setInsertLoading(false);
-            setIsCategoryLoading(false);
-            setCategories("");
-            setSelectedCategory('');
-            setIsExpenseChecked(true);
-            setIsImageTrimming(false);
-            setIsImageDialogOpen(false);
+            resetForm();
         }
     }, [open]);
 
@@ -89,39 +101,37 @@ const AddEventDialog = ({ open, onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorKey(prevKey => prevKey + 1);
         setInsertLoading(true);
         const category = mapPolishToEnglish(selectedCategory);
-        if (isFormValid()) {
-            const userData = {
-                firstName,
-                email,
-                username,
-                password,
-                conPassword
-            };
+        const type = isExpenseChecked ? 'EXPENSE' : 'INCOME';
+        const eventData = {
+            title,
+            category,
+            amount,
+            date: date.format('YYYY-MM-DD'),
+            base64String: imageBase64,
+            description,
+            type
+        };
 
-            try {
-                setRegistrationLoading(true);
-                await registerUser(userData);
-                setFirstName('');
-                setEmail('');
-                setUsername('');
-                setPassword('');
-                setConPassword('');
-                setRegistrationLoading(false);
-                openRegistrationSuccessDialog();
-            } catch (error) {
-                console.error('Registration error:', error);
-                throw error;
-            }
+        try {
+            setInsertLoading(true);
+            const response = await addEventUser(eventData);
+            if (!response) setError(true);
+            resetForm();
+            setInsertLoading(false);
+            onClose();
+        } catch (error) {
+            console.error('Inserting event:', error);
+            throw error;
         }
-
-
     };
 
     const handleRemoveImage = () => {
         setImage(null);
         setImageName('Dodaj paragon / fakturę');
+        setImageBase64(null);
     };
 
     const handleFileChange = async (event) => {
@@ -129,9 +139,22 @@ const AddEventDialog = ({ open, onClose }) => {
         const file = event.target.files[0];
         if (file) {
             const trimmedName = file.name.length > 40 ? `...${file.name.slice(-40)}` : file.name;
-            const imageUrl = await uploadAndProcessImage(file);
-            setImageName(trimmedName);
-            setImage(imageUrl);
+            const processedImageBlob = await uploadAndProcessImage(file);
+            if (processedImageBlob) {
+                const imageUrl = URL.createObjectURL(processedImageBlob);
+                setImage(imageUrl);
+                setImageName(trimmedName);
+
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = () => reject('Błąd konwersji Blob na Base64');
+                    reader.readAsDataURL(processedImageBlob);
+                });
+                setImageBase64(base64);
+            } else {
+                console.error('Przetwarzanie obrazu nie powiodło się.');
+            }
         }
         setIsImageTrimming(false);
     };
@@ -166,8 +189,6 @@ const AddEventDialog = ({ open, onClose }) => {
         }
         return children;
     };
-
-
 
     return (
         <Dialog
@@ -350,8 +371,8 @@ const AddEventDialog = ({ open, onClose }) => {
                             gap: 2,
                             marginTop: '2%',
                             marginBottom: '2%',
-                            paddingLeft: '5%',
-                            paddingRight: '5%',
+                            paddingLeft: '2%',
+                            paddingRight: '2%',
                             alignItems: 'center',
                         }}
                     >
@@ -398,6 +419,7 @@ const AddEventDialog = ({ open, onClose }) => {
                                         sx: {
                                             width: '70%',
                                             borderRadius: '8px',
+                                            backgroundColor: '#f5f5f5',
                                             borderColor: '#333',
                                             '& .MuiInputBase-root': {
                                                 borderColor: 'gray',
@@ -416,13 +438,50 @@ const AddEventDialog = ({ open, onClose }) => {
                                 }}
                             />
                         </LocalizationProvider>
+
+                        <TextField
+                            label="Kwota zł"
+                            type="number"
+                            inputProps={{ step: '0.01', min: '0' }}
+                            InputLabelProps={{
+                                style: { color: '#333' },
+                            }}
+                            variant="outlined"
+                            value={amount}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setAmount(value === '' ? '' : parseFloat(value));
+                            }}
+
+                            fullWidth
+                            required={true}
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    borderRadius: '8px',
+                                    backgroundColor: '#f5f5f5',
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderWidth: '1px',
+                                        borderColor: 'inherit',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderWidth: '2px',
+                                        borderColor: 'inherit',
+                                    },
+                                },
+                            }}
+                        />
                     </Box>
 
                     <SubmitButton
                         label="Dodaj"
-                        type="sumbit"
+                        type="submit"
                         isLoading={insertLoading}
                     />
+
+                    {error ?
+                        <div className="error-message" key={errorKey}>
+                            {error}
+                        </div> : null}
                 </form>
             </DialogContent>
         </Dialog>

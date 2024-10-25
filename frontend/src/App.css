@@ -41,7 +41,7 @@ html, body {
     }
 
     html::before {
-        content: "Rozdzielczość ekranu jest zbyt mała!";
+        content: "Włącz tryb tylko dla komputera";
         display: block;
         text-align: center;
         font-size: 100%;

@@ -34,12 +34,11 @@ public class Event {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Lob
     @Column(name = "receipt_image", columnDefinition = "BYTEA")
     private byte[] receiptImage;
 
     @Column(name = "invoice_number")
-    private String invoiceNumber;
+    private Long invoiceNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_type")
@@ -55,6 +54,16 @@ public class Event {
     @Column(name = "type", nullable = false)
     private EventType type;
 
+    @Transient
+    private String base64String;
+
+    public String getBase64String() {
+        return base64String;
+    }
+
+    public void setBase64String(String base64String) {
+        this.base64String = base64String;
+    }
 
     public Long getId() {
         return id;
@@ -112,11 +121,11 @@ public class Event {
         this.receiptImage = receiptImage;
     }
 
-    public String getInvoiceNumber() {
+    public Long getInvoiceNumber() {
         return invoiceNumber;
     }
 
-    public void setInvoiceNumber(String invoiceNumber) {
+    public void setInvoiceNumber(Long invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
     }
 
@@ -150,16 +159,5 @@ public class Event {
 
     public void setType(EventType type) {
         this.type = type;
-    }
-
-    @PrePersist
-    @PreUpdate
-    private void validateReceiptFields() {
-        if (this.receiptImage != null && this.receiptImage.length > 0) {
-            if (this.invoiceNumber == null || this.paymentType == null || this.nip == null) {
-                throw new IllegalArgumentException("Receipt number, payment type and Tax Identification Number are " +
-                        "required when a photo is inserted.");
-            }
-        }
     }
 }
