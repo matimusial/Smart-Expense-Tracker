@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Header from '../../components/layout/Header/Header';
 import {Box, Paper, Typography} from '@mui/material';
 import './ExpenseDashboard.css';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import DatePicker from '../../components/ui/DatePicker/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -60,7 +60,7 @@ const ExpenseDashboard = () => {
         if (eventAdded) {
             setEventAdded(false);
         }
-    }, [dateFrom, dateTo, demoLoaded, eventAdded]);
+    }, [dateFrom, dateTo, demoLoaded, eventAdded, openWelcomeDialog]);
 
 
     useEffect(() => {
@@ -97,65 +97,25 @@ const ExpenseDashboard = () => {
                                         gap: 2,
                                     }}
                                 >
-                                    <DesktopDatePicker
-                                        label="Data od"
-                                        value={dateFrom}
-                                        onChange={(newValue) => setDateFrom(newValue)}
-                                        disableFuture
-                                        minDate={dayjs(possibleDateFrom)}
-                                        maxDate={dateTo}
-                                        disabled={!!!possibleDateFrom}
-                                        slotProps={{
-                                            textField: {
-                                                sx: {
-                                                    width: '100%',
-                                                    borderRadius: '8px',
-                                                    borderColor: '#333',
-                                                    '& .MuiInputBase-root': {
-                                                        borderColor: 'gray',
-                                                    },
-                                                    '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                        borderWidth: '1px',
-                                                        borderColor: '#333',
-                                                    },
-                                                    '& .Mui-focused': {
-                                                        color: '#333',
-                                                        borderWidth: '1px',
-                                                        borderColor: '#333',
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                    />
-                                    <DesktopDatePicker
-                                        label="Data do"
-                                        value={dateTo}
-                                        onChange={(newValue) => setDateTo(newValue)}
-                                        minDate={dateFrom}
-                                        maxDate={dayjs().endOf('month')}
-                                        disabled={!!!possibleDateFrom}
-                                        slotProps={{
-                                            textField: {
-                                                sx: {
-                                                    width: '100%',
-                                                    borderRadius: '8px',
-                                                    borderColor: '#333',
-                                                    '& .MuiInputBase-root': {
-                                                        borderColor: 'gray',
-                                                    },
-                                                    '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                        borderWidth: '1px',
-                                                        borderColor: 'inherit',
-                                                    },
-                                                    '& .Mui-focused': {
-                                                        color: '#333',
-                                                        borderWidth: '1px',
-                                                        borderColor: 'inherit',
-                                                    },
-                                                },
-                                            },
-                                        }}
-                                    />
+                                <DatePicker
+                                    label="Data od"
+                                    value={dateFrom}
+                                    onChange={(newValue) => setDateFrom(newValue)}
+                                    disableFuture
+                                    minDate={dayjs(possibleDateFrom)}
+                                    maxDate={dateTo}
+                                    disabled={!possibleDateFrom}
+                                />
+
+                                <DatePicker
+                                    label="Data do"
+                                    value={dateTo}
+                                    onChange={(newValue) => setDateTo(newValue)}
+                                    minDate={dateFrom}
+                                    maxDate={dayjs().endOf('month')}
+                                    disabled={!possibleDateFrom}
+                                />
+
                                 </Box>
                             </LocalizationProvider>
                         </Paper>

@@ -2,20 +2,20 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 
 const InputLabel = ({
-                             label,
-                             value,
-                             onChange,
-                             error,
-                             helperText,
-                             onBlur=null,
-                             endAdornment=null,
-                             fullWidth = true,
-                             variant = "outlined",
-                             margin = "normal",
-                             required = true,
-                             type = "text",
-                             min=null
-                         }) => {
+                        label,
+                        value,
+                        onChange,
+                        error,
+                        helperText,
+                        onBlur = null,
+                        endAdornment = null,
+                        fullWidth = true,
+                        variant = "outlined",
+                        margin = "normal",
+                        required = true,
+                        type = "text",
+                        inputProps = {},
+                    }) => {
     return (
         <TextField
             label={label}
@@ -34,21 +34,21 @@ const InputLabel = ({
                     borderRadius: '8px',
                     backgroundColor: error ? '#fff4f4' : '#f5f5f5',
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderWidth: '1px', // Pogrubienie obramowania podczas hovera
-                        borderColor: 'inherit', // Dziedziczenie koloru
+                        borderWidth: '1px',
+                        borderColor: 'inherit',
                     },
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderWidth: '2px', // Pogrubienie obramowania przy focusie
-                        borderColor: 'inherit', // Dziedziczenie koloru przy focusie
+                        borderWidth: '2px',
+                        borderColor: 'inherit',
                     },
                 },
             }}
+            inputProps={inputProps}
             fullWidth={fullWidth}
             variant={variant}
             margin={margin}
             required={required}
             type={type}
-            min={min}
         />
     );
 };
