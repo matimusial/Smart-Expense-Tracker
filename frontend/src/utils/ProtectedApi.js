@@ -95,3 +95,20 @@ export const addEventUser = async (userData) => {
         throw error;
     }
 };
+
+
+export const addDemoEvents = async () => {
+    const apiUrl = 'http://localhost:8080/spring-api/event/load-demo';
+
+    try {
+        const response = await fetchWrapper(apiUrl, {
+            method: 'POST',
+        })
+
+        return !response.ok;
+    }
+    catch (error){
+        console.error('Error loading demo data: ', error);
+        throw error;
+    }
+}

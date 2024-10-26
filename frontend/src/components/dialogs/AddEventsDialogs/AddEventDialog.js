@@ -35,7 +35,7 @@ import {addEventUser} from "../../../utils/ProtectedApi";
 
 dayjs.locale('pl');
 
-const AddEventDialog = ({ open, onClose }) => {
+const AddEventDialog = ({ open, onClose, onEventAdded }) => {
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
@@ -118,10 +118,15 @@ const AddEventDialog = ({ open, onClose }) => {
         try {
             setInsertLoading(true);
             const response = await addEventUser(eventData);
-            if (!response) setError(true);
+            if (!response){
+                setError(true);
+                setInsertLoading(false);
+                return;
+            }
             resetForm();
             setInsertLoading(false);
             onClose();
+            if (onEventAdded) onEventAdded();
         } catch (error) {
             console.error('Inserting event:', error);
             throw error;

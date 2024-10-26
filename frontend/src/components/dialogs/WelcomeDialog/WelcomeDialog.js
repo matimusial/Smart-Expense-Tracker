@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Dialog,
     DialogContent,
@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 import { styled } from '@mui/system';
 import SubmitButton from "../../ui/SubmitButton/SubmitButton";
+import {addDemoEvents} from "../../../utils/ProtectedApi";
 
 const BounceAnimation = styled('div')`
     @keyframes bounce {
@@ -26,12 +27,38 @@ const BounceAnimation = styled('div')`
     animation: bounce 1s ease-in-out;
 `;
 
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} timeout={{ enter: 500, exit: 500 }} />;
 });
 
-const WelcomeDialog = ({ open, onClose }) => {
+const WelcomeDialog = ({ open, onClose, onDemoSuccess }) => {
     const [isLoadingDemo, setIsLoadingDemo] = useState(false);
+    const [errorKey, setErrorKey] = useState(0);
+    const [error, setError] = useState(false);
+
+
+    useEffect(() => {
+        if (!open) {
+            setErrorKey(0);
+            setError(false);
+        }
+    }, [error, open]);
+
+
+    const handleDemo = async (e) => {
+        e.preventDefault();
+        setErrorKey(prevKey => prevKey + 1);
+        setIsLoadingDemo(true);
+        const hasError = await addDemoEvents();
+        setError(hasError);
+        setIsLoadingDemo(false);
+        if (!hasError){
+            onClose();
+            if(onDemoSuccess) onDemoSuccess();
+        }
+    }
 
     return (
         <Dialog
@@ -55,11 +82,18 @@ const WelcomeDialog = ({ open, onClose }) => {
                 <TagFacesIcon style={{fontSize: '5rem', color: 'green'}}/>
                 <p>Dziękujemy za wybranie naszej aplikacji do zarządzania wydatkami!</p>
                 <p>Zachęcamy do skorzystania z bezpłatnej wersji demo</p>
+
                 <SubmitButton
                     label="Wypróbuj demo"
-                    // onClick={handleDemo}
+                    onClick={handleDemo}
                     isLoading={isLoadingDemo}
                 />
+                {error ?
+                    <div className="error-message" key={errorKey}>
+                        Wystąpił błąd.
+                    </div> : null}
+
+
             </DialogContent>
         </Dialog>
     );

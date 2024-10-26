@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Header from '../../components/layout/Header/Header';
 import {Box, Paper, Typography} from '@mui/material';
 import './ExpenseDashboard.css';
@@ -24,6 +24,10 @@ const ExpenseDashboard = () => {
     const [expenses, setExpenses] = useState(0);
     const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
     const [isEventAddDialogOpen, setIsEventAddDialogOpen] = useState(false);
+    const [demoLoaded, setDemoLoaded] = useState(false);
+    const [eventAdded, setEventAdded] = useState(false);
+
+
 
     const closeDialogs = useCallback(() => {
         setIsWelcomeDialogOpen(false);
@@ -41,7 +45,6 @@ const ExpenseDashboard = () => {
     }, [closeDialogs]);
 
 
-
     useEffect(() => {
         const fetchData = async () => {
             const data = await getEvents(dateFrom.format('YYYY-MM-DD'), dateTo.format('YYYY-MM-DD'));
@@ -54,7 +57,11 @@ const ExpenseDashboard = () => {
         };
 
         fetchData();
-    }, [dateFrom, dateTo]);
+        if (eventAdded) {
+            setEventAdded(false);
+        }
+    }, [dateFrom, dateTo, demoLoaded, eventAdded]);
+
 
     useEffect(() => {
         const [incomes, expenses, balance] = calculateBalance(eventList);
@@ -186,11 +193,13 @@ const ExpenseDashboard = () => {
                 <WelcomeDialog
                     open={isWelcomeDialogOpen}
                     onClose={closeDialogs}
+                    onDemoSuccess={() => setDemoLoaded(prev => !prev)}
                 />
 
                 <AddEventDialog
                     open={isEventAddDialogOpen}
                     onClose={closeDialogs}
+                    onEventAdded={() => setEventAdded(prev => !prev)}
                 />
             </div>
         </div>
