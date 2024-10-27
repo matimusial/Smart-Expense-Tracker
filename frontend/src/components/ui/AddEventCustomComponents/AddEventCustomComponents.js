@@ -1,11 +1,13 @@
 import React from 'react';
-import { LinearProgress, Box, Chip, Card, IconButton, Tooltip, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
+import { LinearProgress, Box, Chip, Card, IconButton, Tooltip, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import { motion } from 'framer-motion';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import InputLabel from "../InputLabel/InputLabel";
+import DatePicker from "../DatePicker/DatePicker";
 
 const CustomLinearProgress = ({
                                   marginLeft = '6%',
@@ -270,16 +272,18 @@ const RadioDateImgBox = ({
                 />
             </LocalizationProvider>
 
-            <TextField
+            <InputLabel
                 label="Kwota zł"
                 type="number"
                 inputProps={{ step: '0.01', min: '0' }}
                 variant="outlined"
                 value={amount}
+                required={true}
                 onChange={(e) => {
                     const value = e.target.value;
                     setAmount(value === '' ? '' : parseFloat(value));
                 }}
+                margin='none'
             />
         </Box>
     );

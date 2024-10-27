@@ -46,7 +46,7 @@ async def startup_event():
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
 
 
-@app.post("/fastapi/getcategory")
+@app.post("/fast-api/get-category")
 async def get_category(data: CategoryRequest):
     """
     :param:
@@ -77,7 +77,7 @@ async def get_category(data: CategoryRequest):
     return response
 
 
-@app.post("/fastapi/getimagetext")
+@app.post("/fast-api/getimagetext")
 async def get_image_text(file: UploadFile = File(...)):
     """
     :param file: UploadFile, an image of a receipt
@@ -107,7 +107,7 @@ async def get_image_text(file: UploadFile = File(...)):
     return response
 
 
-@app.post("/fastapi/trim-receipt")
+@app.post("/fast-api/trim-receipt")
 async def process_receipt(file: UploadFile = File(...)):
     try:
         image_stream = await file.read()

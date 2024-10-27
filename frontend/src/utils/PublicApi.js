@@ -1,5 +1,7 @@
 export const checkEmailAvailability = async (email) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/check-email';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/check-email`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -24,7 +26,9 @@ export const checkEmailAvailability = async (email) => {
 };
 
 export const checkUsernameAvailability = async (username) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/check-username';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/check-username`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -49,7 +53,9 @@ export const checkUsernameAvailability = async (username) => {
 };
 
 export const fetchCurrencyRates = async () => {
-    const apiUrl = 'http://localhost:8080/spring-api/currency-rates';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/currency-rates`;
+
+
     try {
         const response = await fetch(apiUrl);
         return await response.json();
@@ -60,7 +66,9 @@ export const fetchCurrencyRates = async () => {
 };
 
 export const registerUser = async (userData) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/registration';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/registration`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -94,7 +102,9 @@ export const registerUser = async (userData) => {
 };
 
 export const authorizeRegistration = async (pincode) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/authorize-registration/';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/authorize-registration/`;
+
+
     try {
         if (!pincode) {
             return [false, 'Brak kodu PIN w adresie URL.'];
@@ -117,7 +127,9 @@ export const authorizeRegistration = async (pincode) => {
 };
 
 export const loginUser = async (username, password) => {
-    const apiUrl = `http://localhost:8080/spring-api/user/login`
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/login`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -141,7 +153,9 @@ export const loginUser = async (username, password) => {
 }
 
 export const logoutUser = async () => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/logout';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/logout`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -160,7 +174,8 @@ export const logoutUser = async () => {
 }
 
 export const SendPasswordEmail = async (email) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/forgot-password';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/forgot-password`;
+
 
     try {
         const response = await fetch(apiUrl, {
@@ -186,12 +201,11 @@ export const SendPasswordEmail = async (email) => {
 
 
 export const verifyReset = async (pincode, email) => {
-
     if (!pincode || !email) {
         return [false, "Błędny adres URL."];
     }
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/verify-reset/${pincode}/${email}`;
 
-    const apiUrl = `http://localhost:8080/spring-api/user/verify-reset/${pincode}/${email}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -215,12 +229,11 @@ export const verifyReset = async (pincode, email) => {
 
 
 export const changePassword = async (password, conPassword) => {
-
     const params = new URLSearchParams(window.location.search);
     const pincode = params.get('pincode');
     const email = params.get('email');
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/reset-password/${pincode}/${email}`;
 
-    const apiUrl = `http://localhost:8080/spring-api/user/reset-password/${pincode}/${email}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -248,7 +261,9 @@ export const changePassword = async (password, conPassword) => {
 }
 
 export const getCurrentUser = async () => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/me';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/me`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -272,7 +287,9 @@ export const getCurrentUser = async () => {
 };
 
 export const getCategory = async (title, k) => {
-    const apiUrl = 'http://localhost:8000/fastapi/getcategory';
+    const apiUrl = `${process.env.REACT_APP_FAST_API_BASE_URL}/get-category`;
+
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -298,11 +315,13 @@ export const getCategory = async (title, k) => {
 }
 
 export const uploadAndProcessImage = async (imageFile) => {
+    const apiUrl = `${process.env.REACT_APP_FAST_API_BASE_URL}/trim-receipt`;
+
+
     const formData = new FormData();
     formData.append('file', imageFile);
-
     try {
-        const response = await fetch('http://localhost:8000/fastapi/trim-receipt', {
+        const response = await fetch(apiUrl, {
             method: 'POST',
             body: formData,
         });

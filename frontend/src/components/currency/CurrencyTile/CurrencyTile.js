@@ -3,7 +3,7 @@ import './CurrencyTile.css';
 
 const CurrencyTile = ({ rate, selectedCurrency }) => {
     const change = ((rate.rate - rate.prevRate) / rate.prevRate) * 100;
-    const hasIncreased = change > 0;
+    const hasIncreased = change.toFixed(2) > 0;
 
     return (
         <div className={`currency-tile ${selectedCurrency?.currencyCode === rate.currencyCode ? 'selected' : ''}`}>
@@ -17,7 +17,7 @@ const CurrencyTile = ({ rate, selectedCurrency }) => {
                 {rate.rate}
                 {change !== 0 ?
                 <span className={`rate-change ${hasIncreased ? 'up' : 'down'}`}>
-                    {hasIncreased ? '↑' : '↓'} {Math.abs(change).toFixed(1)}%
+                    {hasIncreased ? '↑' : '↓'} {Math.abs(change).toFixed(2)}%
                 </span>
                     : null}
             </div>

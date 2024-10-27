@@ -29,6 +29,7 @@ const InputLabel = ({
                 style: { color: error ? 'red' : '#333' },
             }}
             InputProps={{
+
                 endAdornment: endAdornment,
                 sx: {
                     borderRadius: '8px',
