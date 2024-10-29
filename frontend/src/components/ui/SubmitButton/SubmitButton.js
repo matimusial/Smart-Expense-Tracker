@@ -3,7 +3,7 @@ import Ripples from 'react-ripples';
 import CircularProgress from '@mui/material/CircularProgress';
 import './SubmitButton.css';
 
-const SubmitButton = ({ label, type = "submit", onClick = null, isLoading = false, sx = {} }) => {
+const SubmitButton = ({ label, type = "submit", onClick = null, isLoading = false, sx = {}}) => {
     return (
         <Ripples color="rgba(0, 0, 0, 0.3)" className="ripple-wrapper-component">
             <button

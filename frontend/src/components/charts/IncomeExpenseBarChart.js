@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis,} from 'recharts';
+import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,} from 'recharts';
 
 const prepareDataForBarChart = (events, dateFrom, dateTo) => {
     const dataByPeriod = {};
@@ -96,7 +96,7 @@ const prepareDataForBarChart = (events, dateFrom, dateTo) => {
             periodKey = `${startDateStr}-${endDateStr}`;
         }
 
-        dataByPeriod[periodKey] = { name: periodKey, Przychód: 0, Wydatek: 0, start: period.start, end: period.end };
+        dataByPeriod[periodKey] = { name: periodKey, Przychody: 0, Wydatki: 0, start: period.start, end: period.end };
     });
 
     events.forEach(event => {
@@ -107,10 +107,10 @@ const prepareDataForBarChart = (events, dateFrom, dateTo) => {
             for (let key in dataByPeriod) {
                 const period = dataByPeriod[key];
                 if (eventDate >= period.start && eventDate <= period.end) {
-                    if (event.type === 'INCOME') {
-                        period.Przychód += event.amount;
-                    } else if (event.type === 'EXPENSE') {
-                        period.Wydatek += event.amount;
+                    if (event.type === 'Wpływ') {
+                        period.Przychody += event.amount;
+                    } else if (event.type === 'Wydatek') {
+                        period.Wydatki += event.amount;
                     }
                     break;
                 }
@@ -159,14 +159,12 @@ const ExpenseIncomeBarChart = ({ events, dateFrom, dateTo }) => {
                 <Tooltip formatter={(value) => `${value.toFixed(2)} zł`} />
                 <Legend />
                 <Bar
-                    dataKey="Wydatek"
+                    dataKey="Wydatki"
                     fill="#bd4a4a"
-                    activeBar={<Rectangle fill="pink" stroke="blue" />}
                 />
                 <Bar
-                    dataKey="Przychód"
+                    dataKey="Przychody"
                     fill="#4dd151"
-                    activeBar={<Rectangle fill="gold" stroke="purple" />}
                 />
             </BarChart>
         </ResponsiveContainer>

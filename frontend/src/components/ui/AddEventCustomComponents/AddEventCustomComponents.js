@@ -92,7 +92,7 @@ const ConditionalTooltip = ({ image, children }) => {
     if (!image) {
         return (
             <Tooltip
-                title="Dokument powinien być równomiernie oświetlony, umieszczony na kontrastującym (najlepiej czarnym) tle oraz nie zawierać żadnych dodatkowych elementów poza tłem. Subtelne korekty perspektywy są dozwolone."
+                title="Dokument nie powinien być zniszczony, ale równomiernie oświetlony, umieszczony na kontrastującym (najlepiej czarnym) tle oraz nie zawierać żadnych dodatkowych elementów poza tłem. Subtelne korekty perspektywy są dozwolone."
                 arrow
             >
                 {children}

@@ -10,7 +10,7 @@ const prepareDataForPieChart = (events) => {
     const expensesByCategory = {};
 
     events.forEach(event => {
-        if (event.type === "EXPENSE") {
+        if (event.type === "Wydatek") {
             const category = event.category;
             const amount = event.amount;
 
@@ -46,7 +46,7 @@ const renderActiveShape = (props) => {
 
     return (
         <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} fontSize={12}>
+            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} fontSize={15}>
                 {payload.name}
             </text>
             <Sector
@@ -69,7 +69,7 @@ const renderActiveShape = (props) => {
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value.toFixed(2)} zł`}</text>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} fontSize={13} textAnchor={textAnchor} fill="#333">{`${value.toFixed(2)} zł`}</text>
         </g>
     );
 };
@@ -88,7 +88,7 @@ const ExpensePieChart = ({ events }) => {
     };
 
     return (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={335}>
             <PieChart>
                 <Pie
                     activeIndex={activeIndex}
@@ -96,8 +96,8 @@ const ExpensePieChart = ({ events }) => {
                     data={data}
                     cx="50%"
                     cy="50%"
-                    innerRadius={70}
-                    outerRadius={90}
+                    innerRadius={85}
+                    outerRadius={110}
                     dataKey="value"
                     onMouseEnter={onPieEnter}
                 />
