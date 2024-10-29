@@ -11,6 +11,7 @@ export const onUnauthorized = () => {
 };
 
 export const fetchWrapper = async (url, options = {}) => {
+    console.log(url);
     try {
         const response = await fetch(url, {
             ...options,
@@ -32,7 +33,7 @@ export const fetchWrapper = async (url, options = {}) => {
 
 
 export const deleteAccount = async (password) => {
-    const apiUrl = 'http://localhost:8080/spring-api/user/delete-account';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/user/delete-account`;
     try {
         const response = await fetchWrapper(apiUrl, {
             method: 'DELETE',
@@ -54,7 +55,7 @@ export const deleteAccount = async (password) => {
 
 
 export const getEvents = async (startDate, endDate) => {
-    const apiUrl = `http://localhost:8080/spring-api/event/get-events?startDate=${startDate}&endDate=${endDate}`;
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/event/get-events?startDate=${startDate}&endDate=${endDate}`;
 
     try {
         const response = await fetchWrapper(apiUrl, {
@@ -78,7 +79,7 @@ export const getEvents = async (startDate, endDate) => {
 
 
 export const addEventUser = async (userData) => {
-    const apiUrl = 'http://localhost:8080/spring-api/event/add-event';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/event/add-event`;
     try {
         const response = await fetchWrapper(apiUrl, {
             method: 'POST',
@@ -98,7 +99,7 @@ export const addEventUser = async (userData) => {
 
 
 export const addDemoEvents = async () => {
-    const apiUrl = 'http://localhost:8080/spring-api/event/load-demo';
+    const apiUrl = `${process.env.REACT_APP_SPRING_BASE_URL}/event/load-demo`;
 
     try {
         const response = await fetchWrapper(apiUrl, {

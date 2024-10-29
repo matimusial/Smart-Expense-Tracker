@@ -3,16 +3,23 @@ import Header from '../../components/layout/Header/Header';
 import {Box, Paper, Typography} from '@mui/material';
 import './ExpenseDashboard.css';
 import DatePicker from '../../components/ui/DatePicker/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import {getEvents} from '../../utils/ProtectedApi';
-import { calculateBalance } from './functions';
+import {calculateBalance} from './functions';
 import WelcomeDialog from "../../components/dialogs/WelcomeDialog/WelcomeDialog";
 import Confetti from "react-confetti";
 import AddEventDialog from "../../components/dialogs/AddEventsDialogs/AddEventDialog";
 import SubmitButton from "../../components/ui/SubmitButton/SubmitButton";
+import BalanceIcon from '@mui/icons-material/Balance';
+import SavingsIcon from '@mui/icons-material/Savings';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import { mapEnglishToPolish } from '../../mappers/CategoryMapper';
 import 'dayjs/locale/pl';
+import ExpensePieChart from "../../components/charts/ExpensePieChart";
+import ExpenseIncomeBarChart from "../../components/charts/IncomeExpenseBarChart";
+
 dayjs.locale('pl');
 const ExpenseDashboard = () => {
     const [dateFrom, setDateFrom] = useState(dayjs().startOf('month'));
@@ -26,7 +33,6 @@ const ExpenseDashboard = () => {
     const [isEventAddDialogOpen, setIsEventAddDialogOpen] = useState(false);
     const [demoLoaded, setDemoLoaded] = useState(false);
     const [eventAdded, setEventAdded] = useState(false);
-
 
 
     const closeDialogs = useCallback(() => {
@@ -51,7 +57,12 @@ const ExpenseDashboard = () => {
             if (data == null) {
                 openWelcomeDialog();
             } else {
-                setEventList(data.events);
+                const events = data.events;
+                events.forEach(event => {
+                    const category = event.category;
+                    event.category = mapEnglishToPolish(category);
+                });
+                setEventList(events);
                 setPossibleDateFrom(data.firstEventDate);
             }
         };
@@ -80,14 +91,14 @@ const ExpenseDashboard = () => {
                         sx={{
                             display: 'grid',
                             gridTemplateColumns: 'auto auto auto',
-                            gridTemplateRows: 'repeat(5, 1fr)',
-                            gap: 2,
+                            gridTemplateRows: 'auto auto auto auto',
+                            gap: 1.5,
                             padding: 2,
                             width: '100%',
                             flexWrap: 'wrap',
                         }}
                     >
-                        <Paper elevation={3} sx={{ gridColumn: '4 / 5', padding: 2 }}>
+                        <Paper elevation={3} sx={{ gridRow: '1',  gridColumn: '4 / 5', padding: 2 }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pl">
 
                             <Box
@@ -119,34 +130,59 @@ const ExpenseDashboard = () => {
                                 </Box>
                             </LocalizationProvider>
                         </Paper>
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant="h6">Balans = {balance}</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '1', padding: 2, textAlign: 'left' }}>
+                            <Typography variant="subtitle1">Balans</Typography>
+                            <Box display="flex" alignItems="center" mt={1}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold', marginRight: 1 }}>
+                                    zł {balance.toFixed(2)}
+                                </Typography>
+                                <BalanceIcon sx={{ color: 'primary.main' }} />
+                            </Box>
                         </Paper>
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant="h6">Wydatki zł = {expenses}</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '1', padding: 2, textAlign: 'left' }}>
+                            <Typography variant="subtitle1">Wydatki</Typography>
+                            <Box display="flex" alignItems="center" mt={1}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold', marginRight: 1 }}>
+                                    zł {expenses.toFixed(2)}
+                                </Typography>
+                                <PointOfSaleIcon sx={{ color: 'primary.main' }} />
+                            </Box>
                         </Paper>
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant="h6">Przychody zł = {incomes}</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '1', padding: 2, textAlign: 'left' }}>
+                            <Typography variant="subtitle1">Przychody</Typography>
+                            <Box display="flex" alignItems="center" mt={1}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold', marginRight: 1 }}>
+                                    zł {incomes.toFixed(2)}
+                                </Typography>
+                                <SavingsIcon sx={{ color: 'primary.main' }} />
+                            </Box>
                         </Paper>
-                        <Paper elevation={3} sx={{ gridColumn: '4 / 5', gridRow: '2 / 6', padding: 2 }}>
+                        <Paper elevation={3} sx={{ gridRow: '2 / 5', gridColumn: '4 / 5',  padding: 2 }}>
                             <Typography variant="h6">Historia</Typography>
                         </Paper>
-                        <Paper elevation={3} sx={{ gridColumn: '1 / 4', padding: 2 }}>
-                            <Typography variant="h6">Wykres</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '2', gridColumn: '1 / 4', paddingTop: 2, paddingBottom: 2 }}>
+                            <ExpenseIncomeBarChart events={eventList} dateFrom={dateFrom} dateTo={dateTo} />
 
                         </Paper>
-                        <Paper elevation={3} sx={{ gridColumn: '1 / 3', gridRow: '4 / 6', padding: 2 }}>
-                            <Typography variant="h6">Wykres kołowy</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '3 / 5', gridColumn: '1 / 3',  paddingTop: 2, paddingBottom: 2 }}>
+                            <ExpensePieChart events={eventList} />
                         </Paper>
-                        <Paper elevation={3} sx={{ padding: 2 }}>
+                        <Paper elevation={3} sx={{ gridRow: '3', display: 'flex', alignItems: "stretch" }}>
                             <SubmitButton
                                 label="Dodaj wydatek"
                                 type="button"
                                 onClick={openEventAddDialog}
                                 />
                         </Paper>
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant="h6">Dodaj lidl/biedronka</Typography>
+                        <Paper elevation={3} sx={{ gridRow: '4', display: 'flex', alignItems: "stretch"}}>
+                            <SubmitButton
+                                label="Dodaj wydatek lidl/biedronka"
+                                type="button"
+                                onClick={openEventAddDialog}
+                                sx = {{
+                                    color: 'red',
+                                }}
+                            />
                         </Paper>
                     </Box>
                 {isWelcomeDialogOpen && <Confetti />}

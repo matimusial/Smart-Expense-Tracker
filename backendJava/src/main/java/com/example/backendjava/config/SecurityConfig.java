@@ -81,7 +81,7 @@ public class SecurityConfig {
                 )
                 .userDetailsService(customUserDetailsService)
                 .sessionManagement(sessionManagement -> sessionManagement
-                        .maximumSessions(2)
+                        .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 );
 
@@ -92,7 +92,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(frontendBaseUrl, fastapiBaseUrl));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 
@@ -103,7 +104,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
