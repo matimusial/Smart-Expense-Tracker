@@ -8,9 +8,9 @@ export const calculateBalance = (events) => {
     let expenseTotal = 0;
 
     events.forEach(event => {
-        if (event.type === "INCOME") {
+        if (event.type === "Wpływ") {
             incomeTotal += event.amount;
-        } else if (event.type === "EXPENSE") {
+        } else if (event.type === "Wydatek") {
             expenseTotal += event.amount;
         }
     });

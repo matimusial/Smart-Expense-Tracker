@@ -188,7 +188,7 @@ const InsertImageComponent = ({
                         <input
                             id="file-upload"
                             type="file"
-                            accept="image/png, image/jpeg"
+                            accept="image/jpeg"
                             capture="environment"
                             onChange={onHandleFileChange}
                             style={{ display: 'none' }}

@@ -13,10 +13,9 @@ public class Base64Util {
         return Base64.getDecoder().decode(base64String);
     }
 
-    public static byte[] convertImageToBase64(Resource imgResource) throws IOException {
+    public static byte[] readImageAsBytes(Resource imgResource) throws IOException {
         try (InputStream inputStream = imgResource.getInputStream()) {
-            byte[] fileContent = inputStream.readAllBytes();
-            return Base64.getEncoder().encode(fileContent);
+            return inputStream.readAllBytes();
         }
     }
 }

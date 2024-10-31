@@ -35,7 +35,7 @@ html, body {
     }
 }
 
-@media (max-width: 500px), (max-height: 500px) {
+@media (max-width: 700px), (max-height: 250px) {
     body {
         display: none;
     }

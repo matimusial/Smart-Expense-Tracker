@@ -26,6 +26,8 @@ import org.springframework.core.io.Resource;
 import java.io.InputStream;
 import java.util.List;
 
+import static com.example.backendjava.utils.Base64Util.readImageAsBytes;
+
 @Service
 public class EventService {
 
@@ -111,12 +113,13 @@ public class EventService {
                 if (imgNames.contains(event.getAmount())) {
                     Resource imgResource = new ClassPathResource("static/receipts/" + event.getAmount().toPlainString() + ".jpg");
                     if (imgResource.exists()) {
-                        event.setReceiptImage(Base64Util.convertImageToBase64(imgResource));
+                        event.setReceiptImage(readImageAsBytes(imgResource));
                     } else {
                         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
                     }
                 }
             }
+
             eventRepository.saveAll(events);
 
             return ResponseEntity.status(HttpStatus.CREATED).build();

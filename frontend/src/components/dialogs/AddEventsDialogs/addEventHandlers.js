@@ -15,7 +15,7 @@ export const handleTitleBlur = async (title, setIsCategoryLoading, setCategories
         setIsCategoryLoading(true);
         setCategories('');
         try {
-            const data = await getCategory(title.toLowerCase(), 3);
+            const data = await getCategory(title.toLowerCase(), 2);
             let updatedCategories;
             if (Object.values(data)[0].score <= 0.5) {
                 updatedCategories = {

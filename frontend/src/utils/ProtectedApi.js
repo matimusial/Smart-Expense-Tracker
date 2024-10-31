@@ -11,7 +11,6 @@ export const onUnauthorized = () => {
 };
 
 export const fetchWrapper = async (url, options = {}) => {
-    console.log(url);
     try {
         const response = await fetch(url, {
             ...options,

@@ -3,6 +3,7 @@ import { Box, Typography, Avatar, Button } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ShowPictureDialog from "../../dialogs/ShowPictureDialog/ShowPictureDialog";
+import SubmitButton from "../../ui/SubmitButton/SubmitButton";
 
 const SingleEvent = ({ event, color, onEventClick }) => {
     useEffect(() => {}, [color, event]);
@@ -13,11 +14,11 @@ const SingleEvent = ({ event, color, onEventClick }) => {
             alignItems="center"
             p={2}
             sx={{
-                backgroundColor: '#f4f8fb',
+                backgroundColor: event.type === 'Wydatek' ? '#ffecec' : '#e8ffeb',
                 marginTop: 2,
                 borderRadius: 2,
                 '&:hover': {
-                    backgroundColor: '#e0f2f1',
+                    backgroundColor: event.type === 'Wydatek' ? '#ffdede' : '#d9f5db',
                     cursor: 'pointer',
                 },
             }}
@@ -36,7 +37,7 @@ const SingleEvent = ({ event, color, onEventClick }) => {
             </Box>
             <Box display="flex" alignItems="center">
                 <Typography variant="body1" fontWeight="bold" mr={0.5}>
-                    {event.amount} zł
+                    {event.type === 'Wydatek' ? `-${event.amount.toFixed(2)} zł` : `+${event.amount.toFixed(2)} zł`}
                 </Typography>
                 <KeyboardArrowDownIcon fontSize="small" sx={{ color: 'text.secondary' }} />
             </Box>
@@ -53,16 +54,13 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
         e.stopPropagation();
         if (event.receiptImage && event.receiptImage.length > 0) {
             try {
-                // Tworzenie URL obrazu bezpośrednio z base64
-                const imageUrl = `data:image/jpeg;base64,${event.receiptImage}`;
-                console.log("Stworzony URL obrazu z Base64:", imageUrl);
+                const base64Prefix = "data:image/jpeg;base64,";
+                const imageUrl =`${base64Prefix}${event.receiptImage}`;
                 setImage(imageUrl);
                 setIsImageDialogOpen(true);
             } catch (error) {
                 console.error('Błąd podczas konwersji obrazu na Base64:', error);
             }
-        } else {
-            console.log("Dane receiptImage są puste.");
         }
     };
 
@@ -79,11 +77,11 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
             flexDirection="column"
             p={2}
             sx={{
-                backgroundColor: '#f4f8fb',
+                backgroundColor: event.type === 'Wydatek' ? '#ffecec' : '#e8ffeb',
                 marginTop: 2,
                 borderRadius: 2,
                 '&:hover': {
-                    backgroundColor: '#e0f2f1',
+                    backgroundColor: event.type === 'Wydatek' ? '#ffdede' : '#d9f5db',
                     cursor: 'pointer',
                 },
             }}
@@ -103,7 +101,7 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
                 </Box>
                 <Box display="flex" alignItems="center">
                     <Typography variant="h6" fontWeight="bold" mr={0.5}>
-                        {event.amount} zł
+                        {event.type === 'Wydatek' ? `-${event.amount.toFixed(2)} zł` : `+${event.amount.toFixed(2)} zł`}
                     </Typography>
                     <KeyboardArrowUpIcon fontSize="small" sx={{ color: 'text.secondary' }} />
                 </Box>
@@ -155,9 +153,13 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
             )}
             {/* Opcjonalny przycisk do wyświetlenia zdjęcia */}
             {event.receiptImage && (
-                <Button variant="outlined" color="primary" onClick={handleImageDialogOpen}>
-                    Pokaż zdjęcie
-                </Button>
+                <SubmitButton
+                    label="Pokaż zdjęcie"
+                    onClick={handleImageDialogOpen}
+                    sx={{
+                        minWidth: '120px',
+                    }}
+                />
             )}
 
             {/* Komponent dialogu do wyświetlania zdjęcia */}
