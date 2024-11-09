@@ -1,7 +1,22 @@
 import cv2
 import numpy as np
+import os
+import itertools
+import concurrent.futures
+from collections import defaultdict
+
 from cnnTrimChecker.cnn_service.cnn_predict import check_trimmed_image, load_cnn_model
 from config import CNN_MODEL_NAME
+
+# Globalna zmienna do przechowywania modelu CNN w każdym procesie
+cnn_model = None
+
+def initialize_cnn_model():
+    """
+    Inicjalizuje model CNN. Funkcja jest wywoływana raz na proces.
+    """
+    global cnn_model
+    cnn_model = load_cnn_model(CNN_MODEL_NAME)
 
 def load_image(image_path):
     """
@@ -144,9 +159,21 @@ def resize_if_needed(image, max_pixels=2073600):
     return image
 
 def rotate(image):
+    """
+    Obraca obraz o 90 stopni w prawo.
+    """
     return cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
 
-def trim_receipt(image, cnn_model, blur_kernel_size, morph_kernel_size, morph_iterations, epsilon_factor, dilation_iterations, erosion_iterations):
+def trim_receipt(image, blur_kernel_size, morph_kernel_size, morph_iterations, epsilon_factor, dilation_iterations, erosion_iterations):
+    """
+    Przetwarza obraz paragonu z określonymi parametrami.
+
+    :return: 'positive', 'negative', lub 'rotated'
+    """
+    global cnn_model
+    if cnn_model is None:
+        raise ValueError("Model CNN nie został załadowany.")
+
     # Przetwarzanie obrazu
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -164,98 +191,137 @@ def trim_receipt(image, cnn_model, blur_kernel_size, morph_kernel_size, morph_it
     # Znajdowanie konturu paragonu
     receipt_contour = find_receipt_contour(processed, epsilon_factor)
     if receipt_contour is None:
-        #print("Nie znaleziono konturu paragonu.")
-        return None
+        return 'negative'
 
     # Przekształcenie perspektywy
     warped = perform_perspective_transform(image, receipt_contour)
     if warped is None:
-        return None
+        return 'negative'
 
     # Przygotowanie obrazu do OCR
     prepared_image = prepare_for_ocr(warped)
     resized_image = resize_if_needed(prepared_image)
 
-    result = None
-    for i in range(3):
+    for _ in range(4):
         classification = check_trimmed_image(resized_image, cnn_model)
         if classification == 'rotated':
             resized_image = rotate(resized_image)
         else:
-            result = classification
-            break
-    return result
+            return classification
+    return 'negative'
 
-import cv2
-import os
-import itertools
+def process_image(filename, input_path, parameter_combinations):
+    """
+    Przetwarza jeden obraz dla wszystkich kombinacji parametrów.
 
-input_path = r'C:\Users\matim\Desktop\chuj'
-output_path = r'C:\Users\matim\Desktop\paragony_trimmed'
-cnn_model = load_cnn_model(CNN_MODEL_NAME)
+    :return: Lista kombinacji, które zwróciły 'positive'
+    """
+    file_path = os.path.join(input_path, filename)
+    try:
+        image = load_image(file_path)
+    except FileNotFoundError:
+        return []
 
-# Definicja list możliwych wartości parametrów
-blur_kernel_sizes = [(3,3), (5,5), (7,7), (9,9), (11,11)]
-morph_kernel_sizes = [(3,3), (5,5), (7,7), (9,9), (11,11)]
-morph_iterations_list = [1, 2, 3]
-epsilon_factors = [0.01, 0.02, 0.03, 0.04, 0.05]
-dilation_iterations_list = [1, 2, 3]
-erosion_iterations_list = [1, 2, 3]
+    positive_combinations = []
 
-# Generowanie wszystkich kombinacji parametrów
-parameter_combinations = list(itertools.product(
-    blur_kernel_sizes,
-    morph_kernel_sizes,
-    morph_iterations_list,
-    epsilon_factors,
-    dilation_iterations_list,
-    erosion_iterations_list
-))
+    for combination in parameter_combinations:
+        blur_kernel_size = combination[0]
+        morph_kernel_size = combination[1]
+        morph_iterations = combination[2]
+        epsilon_factor = combination[3]
+        dilation_iterations = combination[4]
+        erosion_iterations = combination[5]
 
-# Słownik do przechowywania liczby sukcesów dla każdej kombinacji
-combination_success_counts = {}
+        result = trim_receipt(
+            image,
+            blur_kernel_size,
+            morph_kernel_size,
+            morph_iterations,
+            epsilon_factor,
+            dilation_iterations,
+            erosion_iterations
+        )
 
-if not os.path.exists(output_path):
-    os.makedirs(output_path)
+        if result == 'positive':
+            positive_combinations.append(combination)
 
-# Przetwarzanie obrazów
-for filename in os.listdir(input_path):
-    if filename.endswith('.jpg'):
-        file_path = os.path.join(input_path, filename)
+    return positive_combinations
 
-        image = cv2.imread(file_path)
-        if image is not None:
-            for combination in parameter_combinations:
-                blur_kernel_size = combination[0]
-                morph_kernel_size = combination[1]
-                morph_iterations = combination[2]
-                epsilon_factor = combination[3]
-                dilation_iterations = combination[4]
-                erosion_iterations = combination[5]
+def main():
+    input_path = r'C:\Users\matim\Desktop\Paragony_ALL'
+    output_path = r'C:\Users\matim\Desktop\paragony_trimmed'
+    ranking_file = os.path.join(output_path, 'combination_ranking.txt')
 
-                result = trim_receipt(
-                    image,
-                    cnn_model,
-                    blur_kernel_size,
-                    morph_kernel_size,
-                    morph_iterations,
-                    epsilon_factor,
-                    dilation_iterations,
-                    erosion_iterations
-                )
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
-                if result == 'positive':
-                    combination_key = combination
-                    if combination_key in combination_success_counts:
-                        combination_success_counts[combination_key] += 1
-                    else:
-                        combination_success_counts[combination_key] = 1
+    # Definicja list możliwych wartości parametrów
+    blur_kernel_sizes = [(3,3), (5,5), (7,7), (9,9), (11,11), (19, 19)]
+    morph_kernel_sizes = [(3,3), (5,5), (7,7), (9,9), (11,11), (19, 19)]
+    morph_iterations_list = [1, 2, 3]
+    epsilon_factors = [0.01, 0.02, 0.03, 0.04, 0.05]
+    dilation_iterations_list = [0, 1, 2, 3]
+    erosion_iterations_list = [0, 1, 2, 3]
 
+    # Generowanie wszystkich kombinacji parametrów
+    parameter_combinations = list(itertools.product(
+        blur_kernel_sizes,
+        morph_kernel_sizes,
+        morph_iterations_list,
+        epsilon_factors,
+        dilation_iterations_list,
+        erosion_iterations_list
+    ))
 
-sorted_combinations = sorted(combination_success_counts.items(), key=lambda x: x[1], reverse=True)
+    # Słownik do przechowywania liczby sukcesów dla każdej kombinacji
+    combination_success_counts = defaultdict(int)
 
-# Zapisanie rankingu do pliku tekstowego
-ranking_file = os.path.join(output_path, 'combination_ranking.txt')
-with open(ranking_file, 'w') as f:
-    for combo, count in sorted_combinations:
-        f.write(f"Kombinacja: {combo}, Sukcesy: {count}\n")
+    # Pobranie listy plików .jpg
+    image_filenames = [f for f in os.listdir(input_path) if f.endswith('.jpg')]
+
+    total_images = len(image_filenames)
+    print(f"Rozpoczęcie przetwarzania {total_images} obrazów.")
+
+    # Ustawienie liczby procesów na liczbę dostępnych rdzeni CPU
+    max_workers = os.cpu_count()
+    print(f"Liczba dostępnych rdzeni CPU: {max_workers}")
+
+    # Użycie ProcessPoolExecutor z inicjalizatorem do ładowania modelu w każdym procesie
+    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers, initializer=initialize_cnn_model) as executor:
+        # Tworzenie listy przyszłych zadań z mapowaniem na nazwy plików
+        futures_to_filenames = {
+            executor.submit(process_image, filename, input_path, parameter_combinations): filename
+            for filename in image_filenames
+        }
+
+        processed_count = 0
+
+        # Iterowanie po ukończonych zadaniach
+        for future in concurrent.futures.as_completed(futures_to_filenames):
+            filename = futures_to_filenames[future]
+            try:
+                positive_combinations = future.result()
+                for combo in positive_combinations:
+                    combination_success_counts[combo] += 1
+
+                processed_count += 1
+
+                # Printowanie informacji po przetworzeniu każdego obrazu
+                print(f"Przetworzono obraz: {filename} ({processed_count}/{total_images}) | Kombinacje pozytywne: {len(positive_combinations)}")
+            except Exception as e:
+                processed_count += 1
+                print(f"Błąd podczas przetwarzania obrazu {filename}: {str(e)} ({processed_count}/{total_images})")
+
+    # Sortowanie kombinacji według liczby sukcesów
+    sorted_combinations = sorted(combination_success_counts.items(), key=lambda x: x[1], reverse=True)
+
+    # Zapisanie rankingu do pliku tekstowego
+    with open(ranking_file, 'w') as f:
+        for combo, count in sorted_combinations:
+            f.write(f"Kombinacja: {combo}, Sukcesy: {count}\n")
+
+    print("Przetwarzanie zakończone.")
+    print(f"Ranking kombinacji zapisano w: {ranking_file}")
+
+if __name__ == "__main__":
+    main()
