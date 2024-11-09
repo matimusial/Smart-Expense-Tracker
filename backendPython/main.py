@@ -9,9 +9,10 @@ import cv2
 import numpy as np
 from io import BytesIO
 
+from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import TEMP_PATH, BERT_MODEL_NAME
+from config import TEMP_PATH, BERT_MODEL_NAME, CNN_MODEL_NAME
 from services.image_ocr import image_ocr
 from services.receipt_trimmer import trim_receipt
 
@@ -33,6 +34,7 @@ app.add_middleware(
 model = None
 tokenizer = None
 label_encoder = None
+cnn_model = None
 
 
 class CategoryRequest(BaseModel):
@@ -42,8 +44,9 @@ class CategoryRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup_event():
-    global model, tokenizer, label_encoder
+    global model, tokenizer, label_encoder, cnn_model
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
+    cnn_model = load_cnn_model(CNN_MODEL_NAME)
 
 
 @app.post("/fast-api/get-category")
@@ -117,7 +120,7 @@ async def process_receipt(file: UploadFile = File(...)):
         if image is None:
             raise HTTPException(status_code=400, detail="Invalid image format")
 
-        trimmed_image = trim_receipt(image)
+        trimmed_image = trim_receipt(image, cnn_model)
 
         _, buffer = cv2.imencode('.jpg', trimmed_image)
 

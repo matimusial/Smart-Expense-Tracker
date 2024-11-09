@@ -2,6 +2,12 @@
 bertTrainer/bert_model/*
 !bertTrainer/bert_model/link
 
+cnnTrimChecker/cnn_data/*
+!cnnTrimChecker/cnn_data/link
+
+cnnTrimChecker/cnn_model/*
+!cnnTrimChecker/cnn_model/link
+
 # Python
 __pycache__/
 *.py[cod]
