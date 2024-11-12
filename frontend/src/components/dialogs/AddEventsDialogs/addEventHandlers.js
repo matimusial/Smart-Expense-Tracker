@@ -116,7 +116,6 @@ export const handleFileChange = async (event, setIsImageTrimming, setImage, setI
             }
         } catch (error) {
             console.error('Błąd podczas przetwarzania obrazu:', error);
-            // Opcjonalnie możesz ustawić stan błędu tutaj
         }
     }
     setIsImageTrimming(false);

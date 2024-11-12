@@ -12,9 +12,9 @@ from io import BytesIO
 from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import TEMP_PATH, BERT_MODEL_NAME, CNN_MODEL_NAME
+from config import TEMP_PATH, BERT_MODEL_NAME
 from services.image_ocr import image_ocr
-from services.receipt_trimmer import trim_receipt
+from services.receipt_trimmer import perform_trimming
 
 app = FastAPI()
 
@@ -31,6 +31,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from cnnTrimChecker.cnn_config import SEQUENCE_1
+trim_sequence = SEQUENCE_1
+
 model = None
 tokenizer = None
 label_encoder = None
@@ -44,9 +47,9 @@ class CategoryRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup_event():
-    global model, tokenizer, label_encoder, cnn_model
+    global model, tokenizer, label_encoder, cnn_model, trim_sequence
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
-    cnn_model = load_cnn_model(CNN_MODEL_NAME)
+    cnn_model = load_cnn_model(trim_sequence["model_name"])
 
 
 @app.post("/fast-api/get-category")
@@ -120,7 +123,7 @@ async def process_receipt(file: UploadFile = File(...)):
         if image is None:
             raise HTTPException(status_code=400, detail="Invalid image format")
 
-        trimmed_image = trim_receipt(image, cnn_model)
+        trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
         _, buffer = cv2.imencode('.jpg', trimmed_image)
 

@@ -1,17 +1,18 @@
 import os
+from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Input
-from sklearn.model_selection import train_test_split
 
 from cnnTrimChecker.cnn_config import CNN_MODEL_PATH, CNN_INPUT_SIZE, CNN_EPOCHS, CNN_BATCH_SIZE
 from cnnTrimChecker.cnn_service.cnn_data_processing import load_data
 
+
 X, y = load_data()
 X /= 255.0
 
-X_train, X_val, y_train, y_val = train_test_split(
-    X, y, test_size=0.2, stratify=y)
+
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y)
 
 model = Sequential([
     Input(shape=(CNN_INPUT_SIZE[1], CNN_INPUT_SIZE[0], 3)),
@@ -43,5 +44,6 @@ history = model.fit(
     validation_data=(X_val, y_val)
 )
 
-_, test_accuracy = model.evaluate(X_val, y_val)
-model.save(os.path.join(CNN_MODEL_PATH, f'{round(test_accuracy, 4)}.keras'))
+_, val_accuracy = model.evaluate(X_val, y_val, verbose=0)
+
+model.save(os.path.join(CNN_MODEL_PATH, f'{round(val_accuracy, 4)}.keras'))

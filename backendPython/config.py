@@ -10,5 +10,4 @@ pytesseract.pytesseract.tesseract_cmd = os.path.join(TESSERACT_DIR, TESSERACT_EX
 TEMP_PATH = os.path.join(MAIN_PATH, 'temp')
 
 BERT_MODEL_NAME = "0.9228"
-CNN_MODEL_NAME = '0.9603'
-
+CNN_FIND_SEQUENCE_MODEL_NAME = '0.9708'
