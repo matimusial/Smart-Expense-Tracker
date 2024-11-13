@@ -106,8 +106,8 @@ def main():
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    blur_kernel_sizes = [(3, 3)]
-    morph_kernel_sizes = [(3, 3)]
+    blur_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9,9), (11, 11), (13, 13), (19,19)]
+    morph_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9,9), (11, 11), (13,13), (19,19)]
     morph_iterations_list = [1, 2, 3]
     epsilon_factors = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09]
     dilation_iterations_list = [0, 1, 2]
