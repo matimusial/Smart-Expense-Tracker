@@ -147,14 +147,47 @@ def perform_trimming(image, combinations, cnn_model):
             return resized_image, True
     return original_image, False
 
-# path = r"C:\Users\matim\Desktop\seq1\bad\20241102_002521.jpg"
+
+# from cnnTrimChecker.cnn_config import SEQUENCE_3
+# model = load_cnn_model(SEQUENCE_3["model_name"])
+# path = r"C:\Users\matim\Desktop\wqeqwe\20241104_145327.jpg"
 # img = cv2.imread(path)
-# out = perform_trimming(img)
-# plt.imshow(out, cmap="gray")
+# processed_image, _ = perform_trimming(img, SEQUENCE_3["combination_list"], model)
+# plt.imshow(processed_image, cmap="gray")
 # plt.show()
 
+import os
+
+
+def rename_files_in_folder(folder_path):
+    try:
+        # Pobranie listy plików w katalogu
+        files = os.listdir(folder_path)
+
+        for index, file_name in enumerate(files):
+            old_path = os.path.join(folder_path, file_name)
+
+            # Pomijanie folderów, zmiana nazw tylko dla plików
+            if os.path.isfile(old_path):
+                # Nowa nazwa pliku (np. dodanie prefiksu 'renamed_')
+                new_file_name = f"renamed_{index}_{file_name}"
+                new_path = os.path.join(folder_path, new_file_name)
+
+                # Zmiana nazwy pliku
+                os.rename(old_path, new_path)
+                print(f"Zmieniono nazwę: {file_name} -> {new_file_name}")
+
+    except Exception as e:
+        print(f"Wystąpił błąd: {e}")
+
+
+# Przykładowe użycie
+folder_path = r"C:\Users\matim\Desktop\wqe"
+rename_files_in_folder(folder_path)
+
 # input_folder = r"C:\Users\matim\Desktop\Paragony_ALL"
-# output_folder = r"C:\Users\matim\Desktop\seq2"
+# output_folder = r"C:\Users\matim\Desktop\seq3"
+
 # if not os.path.exists(output_folder):
 #     os.makedirs(output_folder)
 #
@@ -166,7 +199,7 @@ def perform_trimming(image, combinations, cnn_model):
 #         image = cv2.imread(image_path)
 #
 #         # Przetwórz obraz funkcją perform_trimming
-#         processed_image = perform_trimming(image)
+#         processed_image, _ = perform_trimming(image, SEQUENCE_3["combination_list"], model)
 #
 #         # Zapisz wynik w folderze wyjściowym
 #         output_path = os.path.join(output_folder, filename)
