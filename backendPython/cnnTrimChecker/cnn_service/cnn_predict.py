@@ -25,8 +25,3 @@ def check_trimmed_image(image, model):
 def load_cnn_model(model_name):
     from tensorflow.keras.models import load_model
     return load_model(os.path.join(CNN_MODEL_PATH, model_name + '.keras'))
-
-
-# image = cv2.imread(r"C:\Users\matim\Desktop\paragony_trimmed\20241030_135327.jpg")
-# model = load_cnn_model('0.9603')
-# print(check_trimmed_image(image, model))

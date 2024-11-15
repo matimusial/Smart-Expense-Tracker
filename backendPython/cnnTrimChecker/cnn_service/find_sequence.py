@@ -43,7 +43,6 @@ def process_image(filename, input_path, parameter_combinations):
             dilation_iterations,
             erosion_iterations
         )
-
         if result == 'positive':
             positive_combinations.append(combination)
 
@@ -179,6 +178,7 @@ def main():
         combination_success_images,
         total_images_set,
         sequence_file_template)
+
 
 if __name__ == "__main__":
     main()

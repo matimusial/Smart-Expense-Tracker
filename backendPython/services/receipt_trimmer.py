@@ -1,10 +1,7 @@
-import os
-
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 
-from cnnTrimChecker.cnn_service.cnn_predict import check_trimmed_image, load_cnn_model
+from cnnTrimChecker.cnn_service.cnn_predict import check_trimmed_image
 
 
 def convert_to_grayscale(image):
@@ -149,33 +146,3 @@ def perform_trimming(image, combinations, cnn_model):
         if result == "positive":
             return resized_image, True
     return original_image, False
-
-
-# from cnnTrimChecker.cnn_config import SEQUENCE_1
-# model = load_cnn_model(SEQUENCE_1["model_name"])
-# path = r"C:\Users\matim\Desktop\wqe\20241104_142644.jpg"
-# img = cv2.imread(path)
-# processed_image, _ = perform_trimming(img, SEQUENCE_1["combination_list"], model)
-# plt.imshow(processed_image, cmap="gray")
-# plt.show()
-#
-# input_folder = r"C:\Users\matim\Desktop\Paragony_ALL"
-# output_folder = r"C:\Users\matim\Desktop\toyolo"
-#
-# if not os.path.exists(output_folder):
-#     os.makedirs(output_folder)
-#
-# # Iteruj przez wszystkie pliki w folderze wejściowym
-# for filename in os.listdir(input_folder):
-#     if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-#         # Załaduj obraz używając cv2
-#         image_path = os.path.join(input_folder, filename)
-#         image = cv2.imread(image_path)
-#
-#         # Przetwórz obraz funkcją perform_trimming
-#         processed_image, flag = perform_trimming(image, SEQUENCE_1["combination_list"], model)
-#         if flag:
-#             # Zapisz wynik w folderze wyjściowym
-#             output_path = os.path.join(output_folder, filename)
-#             cv2.imwrite(output_path, processed_image)
-            # print(f"Zapisano przetworzony obraz: {output_path}")
