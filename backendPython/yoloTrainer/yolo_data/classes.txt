@@ -1,0 +1,5 @@
+date
+nip
+payment_type
+sum
+transaction_number

@@ -1,0 +1,29 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "date"
+    },
+    {
+      "id": 1,
+      "name": "nip"
+    },
+    {
+      "id": 2,
+      "name": "payment_type"
+    },
+    {
+      "id": 3,
+      "name": "sum"
+    },
+    {
+      "id": 4,
+      "name": "transaction_number"
+    }
+  ],
+  "info": {
+    "year": 2024,
+    "version": "1.0",
+    "contributor": "Label Studio"
+  }
+}
