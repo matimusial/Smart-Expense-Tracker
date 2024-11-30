@@ -1,5 +1,5 @@
-train: yolo_data_tmp/images/train
-val: yolo_data_tmp/images/val
+train: C:\Users\matim\Desktop\Smart-Expense-Tracker\backendPython\yoloTrainer\yolo_data_tmp\images\train
+val: C:\Users\matim\Desktop\Smart-Expense-Tracker\backendPython\yoloTrainer\yolo_data_tmp\images\val
 nc: 5
 names:
   - date
