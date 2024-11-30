@@ -8,6 +8,8 @@ cnnTrimChecker/cnn_data/*
 cnnTrimChecker/cnn_model/*
 !cnnTrimChecker/cnn_model/link
 
+yoloTrainer/yolov5
+
 # Python
 __pycache__/
 *.py[cod]
