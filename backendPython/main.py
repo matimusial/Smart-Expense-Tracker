@@ -12,8 +12,8 @@ from io import BytesIO
 from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import TEMP_PATH, BERT_MODEL_NAME
-from services.image_ocr import image_ocr
+from config import TEMP_PATH, BERT_MODEL_NAME, YOLO_PATH
+from services.image_ocr import load_yolo_model, predict_image
 from services.receipt_trimmer import perform_trimming
 
 app = FastAPI()
@@ -38,6 +38,7 @@ model = None
 tokenizer = None
 label_encoder = None
 cnn_model = None
+yolo_model = None
 
 
 class CategoryRequest(BaseModel):
@@ -47,9 +48,10 @@ class CategoryRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup_event():
-    global model, tokenizer, label_encoder, cnn_model, trim_sequence
+    global model, tokenizer, label_encoder, cnn_model, trim_sequence, yolo_model
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
     cnn_model = load_cnn_model(trim_sequence["model_name"])
+    yolo_model = load_yolo_model(YOLO_PATH)
 
 
 @app.post("/fast-api/get-category")
@@ -125,8 +127,12 @@ async def process_receipt(file: UploadFile = File(...)):
 
         trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
-        _, buffer = cv2.imencode('.jpg', trimmed_image)
 
+        if flag:
+            ocr_data, yolo_image = predict_image(trimmed_image, yolo_model)
+            _, buffer = cv2.imencode('.jpg', yolo_image)
+            return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
+        _, buffer = cv2.imencode('.jpg', trimmed_image)
         return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
 
     except Exception as e:

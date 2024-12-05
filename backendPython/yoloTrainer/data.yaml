@@ -1,9 +1,0 @@
-train: C:\Users\matim\Desktop\Smart-Expense-Tracker\backendPython\yoloTrainer\yolo_data_tmp\images\train
-val: C:\Users\matim\Desktop\Smart-Expense-Tracker\backendPython\yoloTrainer\yolo_data_tmp\images\val
-nc: 5
-names:
-  - date
-  - nip
-  - payment_type
-  - sum
-  - transaction_number
