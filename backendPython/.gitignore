@@ -10,6 +10,8 @@ cnnTrimChecker/cnn_model/*
 
 yoloTrainer/runs
 yoloTrainer/models
+yoloTrainer/yolo_data
+yoloTrainer/yolo_training_runs
 
 # Python
 __pycache__/

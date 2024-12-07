@@ -1,19 +1,19 @@
-import shutil
+import random
 import os
 
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, File, UploadFile, HTTPException, Query
 import cv2
 import numpy as np
-from io import BytesIO
+
+from ultralytics import YOLO
 
 from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import TEMP_PATH, BERT_MODEL_NAME, YOLO_PATH
-from services.image_ocr import load_yolo_model, predict_image
+from config import BERT_MODEL_NAME, YOLO_PATH, EXAMPLE_RECEIPTS_PATH
+from services.image_ocr import predict_image
 from services.receipt_trimmer import perform_trimming
 
 app = FastAPI()
@@ -51,23 +51,24 @@ async def startup_event():
     global model, tokenizer, label_encoder, cnn_model, trim_sequence, yolo_model
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
     cnn_model = load_cnn_model(trim_sequence["model_name"])
-    yolo_model = load_yolo_model(YOLO_PATH)
+    yolo_model = YOLO(YOLO_PATH)
 
 
 @app.post("/fast-api/get-category")
 async def get_category(data: CategoryRequest):
     """
-    :param:
+    Przyjmuje:
     {
-      "title": "",
-      "k":
+      "title": str - Tytuł tekstu, na podstawie którego będą przewidywane kategorie,
+      "k": int - Liczba najlepszych kategorii do zwrócenia.
     }
-    :return:
+    Zwraca:
     {
       "category_1": {
-        "category": "",
-        "score":
-      }
+        "category": str - Nazwa kategorii,
+        "score": float - Prawdopodobieństwo przewidzianej kategorii.
+      },
+      ...
     }
     """
     title = data.title
@@ -85,38 +86,21 @@ async def get_category(data: CategoryRequest):
     return response
 
 
-@app.post("/fast-api/getimagetext")
-async def get_image_text(file: UploadFile = File(...)):
-    """
-    :param file: UploadFile, an image of a receipt
-    :return:
-    {
-      "title": "",
-      "total_amount": "",
-      "shop": "",
-      "content": ""
-    }
-    """
-    file_location = os.path.join(TEMP_PATH, file.filename)
-    os.makedirs(TEMP_PATH, exist_ok=True)
-    with open(file_location, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    receipt_data = image_ocr(file_location)
-
-    response = {
-        "title": receipt_data["title"],
-        "total_amount": receipt_data["total_amount"],
-        "shop": receipt_data["shop"],
-        "content": receipt_data["content"]
-    }
-    os.remove(file_location)
-
-    return response
-
-
-@app.post("/fast-api/trim-receipt")
+@app.post("/fast-api/perform-ocr")
 async def process_receipt(file: UploadFile = File(...)):
+    """
+    Przyjmuje:
+    - file: UploadFile - Plik obrazu przesłany przez użytkownika.
+
+    Zwraca:
+    - JSON:
+        {
+            "ocr_data": dict lub None - Wyniki OCR,
+            "yolo_image": bytes lub None - Obraz przetworzony przez YOLO,
+            "trimmed_image": bytes lub None - Obraz przycięty.
+        }
+    - HTTPException: W przypadku błędu odpowiedni kod statusu i komunikat.
+    """
     try:
         image_stream = await file.read()
         np_arr = np.frombuffer(image_stream, np.uint8)
@@ -127,13 +111,62 @@ async def process_receipt(file: UploadFile = File(...)):
 
         trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
-
         if flag:
             ocr_data, yolo_image = predict_image(trimmed_image, yolo_model)
-            _, buffer = cv2.imencode('.jpg', yolo_image)
-            return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
-        _, buffer = cv2.imencode('.jpg', trimmed_image)
-        return StreamingResponse(BytesIO(buffer.tobytes()), media_type="image/jpeg")
+
+            _, yolo_buffer = cv2.imencode('.jpg', yolo_image)
+            _, trimmed_buffer = cv2.imencode('.jpg', trimmed_image)
+
+            return {
+                "ocr_data": ocr_data,
+                "yolo_image": yolo_buffer.tobytes(),
+                "trimmed_image": trimmed_buffer.tobytes()
+            }
+        else:
+            _, original_buffer = cv2.imencode('.jpg', image)
+            return {
+                "ocr_data": None,
+                "yolo_image": None,
+                "trimmed_image": original_buffer.tobytes()
+            }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+
+
+@app.get("/fast-api/random-images")
+async def get_random_images(count: int = Query(default=3, ge=1, le=5)):
+    """
+    Przyjmuje:
+    - count: int (Query) - Liczba zdjęć do wylosowania. Wartość musi być w zakresie od 1 do 5.
+
+    Zwraca:
+    - JSON:
+      {
+        "selected_images": list[bytes] - Lista obrazów w formacie bajtów (zakodowane jako .jpg).
+      }
+    - HTTPException: W przypadku błędu odpowiedni kod statusu i komunikat.
+    """
+    try:
+        all_images = [os.path.join(EXAMPLE_RECEIPTS_PATH, f) for f in os.listdir(EXAMPLE_RECEIPTS_PATH) if
+                      f.lower().endswith(('png', 'jpg', 'jpeg'))]
+
+        if not all_images:
+            raise HTTPException(status_code=404, detail="No images found in the specified path")
+
+        selected_images_paths = random.sample(all_images, min(count, len(all_images)))
+
+        encoded_images = []
+        for image_path in selected_images_paths:
+            image = cv2.imread(image_path)
+            if image is None:
+                raise HTTPException(status_code=500, detail=f"Failed to read image at {image_path}")
+            _, buffer = cv2.imencode('.jpg', image)
+            encoded_images.append(buffer.tobytes())
+
+        return {"selected_images": encoded_images}
+
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=f"Invalid number of images to sample: {str(ve)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error while selecting images: {str(e)}")
