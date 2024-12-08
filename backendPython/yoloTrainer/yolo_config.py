@@ -9,3 +9,4 @@ YOLO_MODELS_PATH = os.path.join(YOLO_TRAINING_PATH, 'models')
 YOLO_DATA_PATH = os.path.join(YOLO_TRAINING_PATH, 'yolo_data')
 YOLO_RUNS_DIR = os.path.join(YOLO_TRAINING_PATH, 'yolo_training_runs')
 YOLO_TRAIN_SIZE = 0.8
+

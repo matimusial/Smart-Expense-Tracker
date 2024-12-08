@@ -1,18 +1,18 @@
-import random
-import os
+import base64
 
+import numpy as np
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, File, UploadFile, HTTPException, Query
+from fastapi import FastAPI, File, HTTPException, UploadFile
 import cv2
-import numpy as np
+import pytesseract
 
 from ultralytics import YOLO
 
 from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import BERT_MODEL_NAME, YOLO_PATH, EXAMPLE_RECEIPTS_PATH
+from config import BERT_MODEL_NAME, YOLO_PATH
 from services.image_ocr import predict_image
 from services.receipt_trimmer import perform_trimming
 
@@ -52,6 +52,7 @@ async def startup_event():
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
     cnn_model = load_cnn_model(trim_sequence["model_name"])
     yolo_model = YOLO(YOLO_PATH)
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
 @app.post("/fast-api/get-category")
@@ -88,85 +89,42 @@ async def get_category(data: CategoryRequest):
 
 @app.post("/fast-api/perform-ocr")
 async def process_receipt(file: UploadFile = File(...)):
-    """
-    Przyjmuje:
-    - file: UploadFile - Plik obrazu przesłany przez użytkownika.
-
-    Zwraca:
-    - JSON:
-        {
-            "ocr_data": dict lub None - Wyniki OCR,
-            "yolo_image": bytes lub None - Obraz przetworzony przez YOLO,
-            "trimmed_image": bytes lub None - Obraz przycięty.
-        }
-    - HTTPException: W przypadku błędu odpowiedni kod statusu i komunikat.
-    """
     try:
-        image_stream = await file.read()
-        np_arr = np.frombuffer(image_stream, np.uint8)
-        image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-
+        file_bytes = np.asarray(bytearray(await file.read()), dtype=np.uint8)
+        image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
         if image is None:
             raise HTTPException(status_code=400, detail="Invalid image format")
+
+        if len(image.shape) == 2 or (len(image.shape) == 3 and image.shape[2] == 1):
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
         trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
         if flag:
+            if len(trimmed_image.shape) == 2 or (len(trimmed_image.shape) == 3 and trimmed_image.shape[2] == 1):
+                trimmed_image = cv2.cvtColor(trimmed_image, cv2.COLOR_GRAY2BGR)
+
             ocr_data, yolo_image = predict_image(trimmed_image, yolo_model)
 
             _, yolo_buffer = cv2.imencode('.jpg', yolo_image)
             _, trimmed_buffer = cv2.imencode('.jpg', trimmed_image)
 
+            yolo_base64 = base64.b64encode(yolo_buffer).decode('utf-8')
+            trimmed_base64 = base64.b64encode(trimmed_buffer).decode('utf-8')
             return {
                 "ocr_data": ocr_data,
-                "yolo_image": yolo_buffer.tobytes(),
-                "trimmed_image": trimmed_buffer.tobytes()
+                "yolo_image": yolo_base64,
+                "trimmed_image": trimmed_base64
             }
         else:
             _, original_buffer = cv2.imencode('.jpg', image)
+            original_base64 = base64.b64encode(original_buffer).decode('utf-8')
             return {
                 "ocr_data": None,
                 "yolo_image": None,
-                "trimmed_image": original_buffer.tobytes()
+                "trimmed_image": original_base64
             }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
 
-
-@app.get("/fast-api/random-images")
-async def get_random_images(count: int = Query(default=3, ge=1, le=5)):
-    """
-    Przyjmuje:
-    - count: int (Query) - Liczba zdjęć do wylosowania. Wartość musi być w zakresie od 1 do 5.
-
-    Zwraca:
-    - JSON:
-      {
-        "selected_images": list[bytes] - Lista obrazów w formacie bajtów (zakodowane jako .jpg).
-      }
-    - HTTPException: W przypadku błędu odpowiedni kod statusu i komunikat.
-    """
-    try:
-        all_images = [os.path.join(EXAMPLE_RECEIPTS_PATH, f) for f in os.listdir(EXAMPLE_RECEIPTS_PATH) if
-                      f.lower().endswith(('png', 'jpg', 'jpeg'))]
-
-        if not all_images:
-            raise HTTPException(status_code=404, detail="No images found in the specified path")
-
-        selected_images_paths = random.sample(all_images, min(count, len(all_images)))
-
-        encoded_images = []
-        for image_path in selected_images_paths:
-            image = cv2.imread(image_path)
-            if image is None:
-                raise HTTPException(status_code=500, detail=f"Failed to read image at {image_path}")
-            _, buffer = cv2.imencode('.jpg', image)
-            encoded_images.append(buffer.tobytes())
-
-        return {"selected_images": encoded_images}
-
-    except ValueError as ve:
-        raise HTTPException(status_code=400, detail=f"Invalid number of images to sample: {str(ve)}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error while selecting images: {str(e)}")

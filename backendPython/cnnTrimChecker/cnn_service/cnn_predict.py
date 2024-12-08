@@ -2,7 +2,6 @@ import os
 
 import numpy as np
 
-import services.yolo_service.yolo
 from cnnTrimChecker.cnn_config import CNN_MODEL_PATH
 from cnnTrimChecker.cnn_service.cnn_data_processing import process_image
 
@@ -18,7 +17,7 @@ def check_trimmed_image(image, model):
 
     image = image.astype('float32') / 255.0
     image = np.expand_dims(image, axis=0)
-    prediction = services.yolo_service.yolo.predict(image, verbose=0)
+    prediction = model.predict(image, verbose=0)
     predicted_class = np.argmax(prediction, axis=1)[0]
     return class_names[predicted_class]
 

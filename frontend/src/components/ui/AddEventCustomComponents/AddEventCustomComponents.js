@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { LinearProgress, Box, Chip, Card, IconButton, Tooltip, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
@@ -86,6 +86,56 @@ const CustomCategoryBox = ({
     );
 };
 
+const CustomPaymentMethodBox = ({
+                                    selectedPaymentMethod,
+                                    setPaymentMethod,
+                                    iconSize = 'large',
+                                    gap = 2,
+                                    marginTop = '2%',
+                                    selectedColor = '#A0C4C4',
+                                    unselectedColor = 'transparent',
+                                    ...otherProps
+                                }) => {
+    const [paymentTypes] = useState(["KARTA", "GOTÓWKA", "BLIK", "INNA"]);
+    return (
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: gap,
+                marginTop: marginTop,
+                alignItems: 'center',
+                width: '100%',
+                ...otherProps.sx,
+            }}
+            {...otherProps}
+        >
+            {paymentTypes.map((item, index) => (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.2 }}
+                >
+                    <Chip
+                        label={item}
+                        variant={selectedPaymentMethod === item ? 'filled' : 'outlined'}
+                        color={selectedPaymentMethod === item ? 'primary' : 'default'}
+                        onClick={() => setPaymentMethod(item)}
+                        tabIndex={-1}
+                        sx={{
+                            backgroundColor: selectedPaymentMethod === item ? selectedColor : unselectedColor,
+                            "&:hover": {
+                                backgroundColor: selectedPaymentMethod === item ? selectedColor : unselectedColor,
+                            },
+                        }}
+                    />
+                </motion.div>
+            ))}
+        </Box>
+    );
+};
+
 const ConditionalTooltip = ({ image, children }) => {
     if (!image) {
         return (
@@ -103,7 +153,7 @@ const ConditionalTooltip = ({ image, children }) => {
 const InsertImageComponent = ({
                                    image,
                                    imageName,
-                                   isImageTrimming,
+                                   isImageTrimming= false,
                                    onHandleFileChange,
                                    handleRemoveImage,
                                    handleCardClick,
@@ -286,4 +336,4 @@ const RadioDateImgBox = ({
     );
 };
 
-export { CustomLinearProgress, CustomCategoryBox, InsertImageComponent, RadioDateImgBox };
+export { CustomLinearProgress, CustomCategoryBox, InsertImageComponent, RadioDateImgBox, CustomPaymentMethodBox };

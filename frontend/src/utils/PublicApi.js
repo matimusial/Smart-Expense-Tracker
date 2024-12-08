@@ -314,26 +314,23 @@ export const getCategory = async (title, k) => {
     }
 }
 
-export const uploadAndProcessImage = async (imageFile) => {
-    const apiUrl = `${process.env.REACT_APP_FAST_API_BASE_URL}/trim-receipt`;
 
-
+export const uploadAndProcessImage = async (file) => {
+    const apiUrl = `${process.env.REACT_APP_FAST_API_BASE_URL}/perform-ocr`;
     const formData = new FormData();
-    formData.append('file', imageFile);
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: formData,
-        });
+    formData.append('file', file);
 
-        if (!response.ok) {
-            return null;
-        }
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+    });
 
-        return await response.blob();
-
-    } catch (error) {
-        console.error('Error uploading and processing the image:', error);
-        throw error;
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Błąd podczas przetwarzania obrazu');
     }
-}
+
+    const data = await response.json();
+    return data;
+};

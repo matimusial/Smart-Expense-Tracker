@@ -14,7 +14,7 @@ import InputLabel from '../../ui/InputLabel/InputLabel';
 import dayjs from "dayjs";
 import ShowPictureDialog from "../ShowPictureDialog/ShowPictureDialog";
 
-import {handleTitleBlur, handleSubmit, handleFileChange} from "./addEventHandlers";
+import {handleTitleBlur, handleSubmit} from "./addEventHandlers";
 import {mapPolishToEnglish} from "../../../mappers/CategoryMapper";
 import {
     CustomLinearProgress,
@@ -26,7 +26,6 @@ import {
 dayjs.locale('pl');
 
 const AddEventDialog = ({ open, onClose, onEventAdded }) => {
-
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
@@ -38,7 +37,6 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
     const [categories, setCategories] = useState("");
     const [selectedCategory, setSelectedCategory] = useState('');
     const [isExpenseChecked, setIsExpenseChecked] = useState(true);
-    const [isImageTrimming, setIsImageTrimming] = useState(false);
     const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
     const [imageBase64, setImageBase64] = useState(null);
     const [error, setError] = useState(false);
@@ -55,7 +53,6 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
         setCategories("");
         setSelectedCategory('');
         setIsExpenseChecked(true);
-        setIsImageTrimming(false);
         setIsImageDialogOpen(false);
         setImageBase64(null);
         setError(false);
@@ -94,8 +91,26 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
         );
     };
 
-    const onHandleFileChange = (e) => {
-        handleFileChange(e, setIsImageTrimming, setImage, setImageName, setImageBase64);
+    const setImageFunction = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const trimmedName = file.name.length > 40 ? `...${file.name.slice(-40)}` : file.name;
+            try {
+                const imageUrl = URL.createObjectURL(file);
+                setImage(imageUrl);
+                setImageName(trimmedName);
+
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = () => reject('Błąd konwersji pliku na Base64');
+                    reader.readAsDataURL(file);
+                });
+                setImageBase64(base64);
+            } catch (error) {
+                console.error('Błąd podczas przetwarzania obrazu:', error);
+            }
+        }
     };
 
     const handleRemoveImage = () => {
@@ -158,7 +173,6 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
                         setSelectedCategory={setSelectedCategory}
                     />
 
-
                     {isCategoryLoading && (
                         <CustomLinearProgress/>
                     )}
@@ -174,8 +188,7 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
                     <InsertImageComponent
                         image={image}
                         imageName={imageName}
-                        isImageTrimming={isImageTrimming}
-                        onHandleFileChange={onHandleFileChange}
+                        onHandleFileChange={setImageFunction}
                         handleRemoveImage={handleRemoveImage}
                         handleCardClick={handleCardClick}
                     />

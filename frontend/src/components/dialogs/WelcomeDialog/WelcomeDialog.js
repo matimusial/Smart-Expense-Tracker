@@ -81,8 +81,8 @@ const WelcomeDialog = ({ open, onClose, onDemoSuccess }) => {
                 <div className="welcome-message">Drogi użytkowniku!</div>
                 <TagFacesIcon style={{fontSize: '5rem', color: 'green'}}/>
                 <p>Dziękujemy za wybranie naszej aplikacji do zarządzania wydatkami!</p>
-                <p>Zachęcamy do skorzystania z bezpłatnej wersji demo</p>
-                <strong>Transakcje w demo są w datach 2023-01-02/2024-09-30</strong>
+                <p><strong>Transakcje w demo są w datach 2023-01-02 do 2024-09-30, pamiętaj o zmianie w kalendarzu!</strong></p>
+                <p><strong>Istnieje możliwość pobrania paragonów demonstracyjnych w panelu użytkownika</strong></p>
                 <SubmitButton
                     label="Wypróbuj demo"
                     onClick={handleDemo}

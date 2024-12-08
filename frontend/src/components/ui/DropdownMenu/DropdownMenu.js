@@ -15,7 +15,7 @@ import DeleteAccountDialog from "../../dialogs/AccountDialogs/DeleteAccountDialo
 function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const { username, logout } = useUser();
+    const { username, logout, downloadRandomImages } = useUser();
     const navigate = useNavigate();
 
     const {
@@ -79,6 +79,7 @@ function DropdownMenu() {
                     {username ? (
                         <>
                             <button onClick={handleMyExpenseClick}>Moje wydatki</button>
+                            <button onClick={downloadRandomImages}>Pobierz paragony</button>
                             <button onClick={logout}>Wyloguj się</button>
                             <button onClick={openDeleteAccountDialog}>Usuń konto</button>
                         </>

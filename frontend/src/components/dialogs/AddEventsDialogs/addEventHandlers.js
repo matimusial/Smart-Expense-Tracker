@@ -1,7 +1,5 @@
-import { getCategory, uploadAndProcessImage } from "../../../utils/PublicApi";
+import { getCategory } from "../../../utils/PublicApi";
 import { addEventUser } from "../../../utils/ProtectedApi";
-import {Tooltip} from "@mui/material";
-import React from "react";
 
 /**
  * Obsługuje zdarzenie utraty fokusu pola tytułu.
@@ -82,41 +80,4 @@ export const handleSubmit = async (
         setError(true);
         setInsertLoading(false);
     }
-};
-
-/**
- * Obsługuje zmianę pliku (upload obrazka).
- * @param {object} event - Obiekt zdarzenia.
- * @param {function} setIsImageTrimming - Funkcja ustawiająca stan przycinania obrazu.
- * @param {function} setImage - Funkcja ustawiająca obraz.
- * @param {function} setImageName - Funkcja ustawiająca nazwę obrazu.
- * @param {function} setImageBase64 - Funkcja ustawiająca base64 obrazu.
- */
-export const handleFileChange = async (event, setIsImageTrimming, setImage, setImageName, setImageBase64) => {
-    setIsImageTrimming(true);
-    const file = event.target.files[0];
-    if (file) {
-        const trimmedName = file.name.length > 40 ? `...${file.name.slice(-40)}` : file.name;
-        try {
-            const processedImageBlob = await uploadAndProcessImage(file);
-            if (processedImageBlob) {
-                const imageUrl = URL.createObjectURL(processedImageBlob);
-                setImage(imageUrl);
-                setImageName(trimmedName);
-
-                const base64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                    reader.onerror = () => reject('Błąd konwersji Blob na Base64');
-                    reader.readAsDataURL(processedImageBlob);
-                });
-                setImageBase64(base64);
-            } else {
-                console.error('Przetwarzanie obrazu nie powiodło się.');
-            }
-        } catch (error) {
-            console.error('Błąd podczas przetwarzania obrazu:', error);
-        }
-    }
-    setIsImageTrimming(false);
 };

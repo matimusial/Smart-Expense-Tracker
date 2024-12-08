@@ -24,6 +24,7 @@ import {mapEnglishToPolishPaymentType} from "../../mappers/PaymentTypeMapper";
 import {mapEnglishToPolishEventType} from "../../mappers/EventTypeMapper";
 import ExpandIcon from '@mui/icons-material/Expand';
 import WideExtendedHistoryContainer from "../../components/layout/WideExtendedHistoryContainer/WideExtendedHistoryContainer";
+import AddBiedronkaLidlDialog from "../../components/dialogs/AddEventsDialogs/AddBiedronkaLidlDialog";
 
 dayjs.locale('pl');
 
@@ -37,6 +38,7 @@ const ExpenseDashboard = () => {
     const [expenses, setExpenses] = useState(0);
     const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
     const [isEventAddDialogOpen, setIsEventAddDialogOpen] = useState(false);
+    const [isBiedronkaLidlAddDialogOpen, setIsBiedronkaLidlAddDialogOpen] = useState(false);
     const [demoLoaded, setDemoLoaded] = useState(false);
     const [eventAdded, setEventAdded] = useState(false);
 
@@ -49,11 +51,17 @@ const ExpenseDashboard = () => {
     const closeDialogs = useCallback(() => {
         setIsWelcomeDialogOpen(false);
         setIsEventAddDialogOpen(false);
+        setIsBiedronkaLidlAddDialogOpen(false);
     }, []);
 
     const openEventAddDialog = useCallback(()=> {
         closeDialogs();
         setIsEventAddDialogOpen(true);
+    }, [closeDialogs]);
+
+    const openBiedronkaLidlAddDialog = useCallback(()=> {
+        closeDialogs();
+        setIsBiedronkaLidlAddDialogOpen(true);
     }, [closeDialogs]);
 
     const openWelcomeDialog = useCallback (()=> {
@@ -247,7 +255,7 @@ const ExpenseDashboard = () => {
                                     <SubmitButton
                                         label="Dodaj wydatek lidl/biedronka"
                                         type="button"
-                                        onClick={openEventAddDialog}
+                                        onClick={openBiedronkaLidlAddDialog}
                                         sx={{
                                             color: 'black',
                                             backgroundColor: 'transparent',
@@ -340,6 +348,11 @@ const ExpenseDashboard = () => {
 
                     <AddEventDialog
                         open={isEventAddDialogOpen}
+                        onClose={closeDialogs}
+                        onEventAdded={() => setEventAdded(prev => !prev)}
+                    />
+                    <AddBiedronkaLidlDialog
+                        open={isBiedronkaLidlAddDialogOpen}
                         onClose={closeDialogs}
                         onEventAdded={() => setEventAdded(prev => !prev)}
                     />

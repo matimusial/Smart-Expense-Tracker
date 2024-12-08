@@ -101,6 +101,49 @@ export const UserProvider = ({ children }) => {
     }, []);
 
 
+    const downloadRandomImages = useCallback(async () => {
+        try {
+            const response = await fetch("/receipts.json");
+            const fileNames = await response.json();
+
+            if (!Array.isArray(fileNames) || fileNames.length === 0) {
+                console.error("Lista nazw plików jest pusta lub niepoprawna.");
+                return;
+            }
+
+            const shuffled = fileNames.sort(() => 0.5 - Math.random());
+            const selectedFiles = shuffled.slice(0, 4);
+
+            let counter = 1; // Licznik dla nazw plików
+
+            for (const fileName of selectedFiles) {
+                try {
+                    const url = `/exampleReceipts/${fileName}`;
+                    const imageResponse = await fetch(url);
+
+                    if (!imageResponse.ok) {
+                        throw new Error(`Nie udało się pobrać obrazu: ${url}`);
+                    }
+
+                    const blob = await imageResponse.blob();
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+
+                    link.download = `paragon_demonstracyjny_${counter}.jpg`;
+                    counter++;
+
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                } catch (imageError) {
+                    console.error("Błąd podczas pobierania obrazu:", fileName, imageError);
+                }
+            }
+        } catch (error) {
+            console.error("Błąd podczas pobierania zdjęć:", error);
+        }
+    }, []);
+
+
     useEffect(() => {
         checkUser();
         setOnUnauthorized(() => {
@@ -112,7 +155,7 @@ export const UserProvider = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ username, login, logout, deleteAccountHandler, error, clearError }}>
+        <UserContext.Provider value={{ username, login, logout, deleteAccountHandler, error, clearError, downloadRandomImages }}>
             <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: isLoggingOut ? 0 : 1 }}
