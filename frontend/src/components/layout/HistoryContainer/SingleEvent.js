@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Box, Typography, Avatar, Button } from '@mui/material';
+import { Box, Typography, Avatar } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ShowPictureDialog from "../../dialogs/ShowPictureDialog/ShowPictureDialog";

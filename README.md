@@ -58,37 +58,41 @@ The Finance Management Application is an advanced web-based tool designed to sim
 
 ## How to Run
 
-1. Install dependencies in `frontend/`:
-   - Recommended Node.js version: v20.18.0.
-
-   ```bash
-   npm install
-   ```
-
-2. Python:
-    - Recommended Python version: 3.12.1.
-    - Download models and training files:
-        - `bert_model/link - 0.9228.zip`
-        - `cnn_model/link - 0.9737.keras`
-        - `yoloTrainer/link - /models, /yolo_training_runs`
-        - in `backendPython` folder:
-        ```bash
-        pip install -r requirements.txt
-        ```
-    - Unzip all archives — ensure no duplicated folders.
-   - Set the path to Tesseract in the `main.py`.   
-
-3. Spring Boot configuration:
-    - Recommended Java version: 17 JDK.
-    - Install dependencies listed in `pom.xml` for `/backendJava`.
-    - Set an Outlook email address in `application-properties`.
-    - Create a PostgreSQL database named `smartExpenseApp` or `smartexpenseapp` (Linux - change properties).
-    - Create a file `application-secrets.properties` with the following fields:
+1. Spring Boot configuration:
+   - Recommended: Java version 17 JDK and InteliJ IDEA.
+   - Set an Outlook email address in `application-properties`.
+   - Create a PostgreSQL database named `smartExpenseApp` or `smartexpenseapp` (Linux - change properties).
+   - Create a file `application-secrets.properties` with the following fields:
     ```properties
    spring.mail.password=outlook_email_password
    spring.datasource.password=database_password
    ```
 
+2. Python:
+   - Recommended Uvicorn/Python version: 0.31.0 with Python 3.12.1 on Windows
+   - Download models and training files:
+      - `bert_model/link - 0.9228.zip`
+      - `cnn_model/link - 0.9737.keras`
+      - `yoloTrainer/link - /models, /yolo_training_runs`
+      - in `backendPython` folder:
+       ```bash
+       pip install -r requirements.txt
+       ```
+   - Unzip all archives — ensure no duplicated folders.
+   - Set the path to Tesseract in the `main.py`.
+   ```bash
+   uvicorn api:app --reload
+   ```
+
+3. Install dependencies in `frontend/`:
+   - Recommended Node.js version: v20.18.0.
+
+   ```bash
+   npm install
+   ```
+   ```bash
+   npm start
+   ```
 
 ## Contact
 
