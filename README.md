@@ -5,8 +5,8 @@
 The Finance Management Application is an advanced web-based tool designed to simplify personal finance management by automatically extracting and classifying data from receipts. Users can track their expenses, analyze financial trends, and access currency exchange rates—all through an intuitive dashboard.
 
 <div style="display: flex; justify-content: space-around; align-items: center;">
-    <img src="images/bert.png" alt="Bert">
-    <img src="images/yolo_result.png" alt="Yolo result">
+    <img src="images/bert.png" alt="Bert" width="45%">
+    <img src="images/yolo_result.png" alt="Yolo result" width="45%">
 </div>
 
 <img src="images/dashboard.png" alt="Dashboard" style="display: block; margin: 20px auto;">
