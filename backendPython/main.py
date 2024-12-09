@@ -92,17 +92,19 @@ async def process_receipt(file: UploadFile = File(...)):
     try:
         file_bytes = np.asarray(bytearray(await file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+
         if image is None:
             raise HTTPException(status_code=400, detail="Invalid image format")
 
         if len(image.shape) == 2 or (len(image.shape) == 3 and image.shape[2] == 1):
             image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
+        if len(image.shape) == 3 and image.shape[2] != 3:
+            image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGR if image.shape[2] == 4 else cv2.COLOR_BGRA2BGR)
+
         trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
         if flag:
-            if len(trimmed_image.shape) == 2 or (len(trimmed_image.shape) == 3 and trimmed_image.shape[2] == 1):
-                trimmed_image = cv2.cvtColor(trimmed_image, cv2.COLOR_GRAY2BGR)
 
             ocr_data, yolo_image = predict_image(trimmed_image, yolo_model)
 

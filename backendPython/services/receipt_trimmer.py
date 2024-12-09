@@ -71,15 +71,7 @@ def perform_perspective_transform(image, contour, border_color=(255, 255, 255)):
         return None
 
 
-def prepare_for_ocr(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    kernel = np.array([[0, -1, 0],
-                       [-1, 5, -1],
-                       [0, -1, 0]])
-    return cv2.filter2D(gray, -1, kernel)
-
-
-def resize_if_needed(image, max_pixels=2073600):
+def resize_if_needed(image, max_pixels=8294400):
     height, width = image.shape[:2]
     total_pixels = height * width
     if total_pixels > max_pixels:
@@ -116,8 +108,7 @@ def trim_receipt(image, cnn_model, blur_kernel_size, morph_kernel_size, morph_it
     if warped is None:
         return None, None
 
-    prepared_image = prepare_for_ocr(warped)
-    resized_image = resize_if_needed(prepared_image)
+    resized_image = resize_if_needed(warped)
 
     result = None
     for i in range(4):

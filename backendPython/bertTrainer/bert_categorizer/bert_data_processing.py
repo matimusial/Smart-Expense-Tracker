@@ -3,7 +3,7 @@ import os
 import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 
-from bert_config import BERT_DATA_PATH, BERT_BATCH_SIZE
+from bertTrainer.bert_config import BERT_DATA_PATH, BERT_BATCH_SIZE
 
 
 def get_bert_data_dict():
