@@ -5,8 +5,8 @@
 The Finance Management Application is an advanced web-based tool designed to simplify personal finance management by automatically extracting and classifying data from receipts. Users can track their expenses, analyze financial trends, and access currency exchange rates—all through an intuitive dashboard.
 
 <div style="display: flex; justify-content: space-around; align-items: center;">
-    <img src="images/bert.png" alt="Bert" width="45%">
-    <img src="images/yolo_result.png" alt="Yolo result" width="45%">
+    <img src="images/bert.png" alt="Bert" width="50%">
+    <img src="images/yolo_result.png" alt="Yolo result" width="50%">
 </div>
 
 <img src="images/dashboard.png" alt="Dashboard" style="display: block; margin: 20px auto;">
@@ -17,13 +17,14 @@ The Finance Management Application is an advanced web-based tool designed to sim
 
 1. **Automatic Expense Classification:**
 
-    - Extracts information from receipts and invoices using OCR and YOLOv8 object detection.
-    - Classifies expenses using a fine-tuned Polish BERT model (herbert-large-cased).
+    - Extracts information from receipts using OCR and YOLOv8 object detection.
+    - Classifies transactions from title using a Polish BERT model (herbert-large-cased).
 
 2. **Advanced Image Processing:**
 
     - Utilizes Gaussian noise reduction, morphological operations, and perspective transformations for document isolation.
     - Employs a CNN to optimize image processing workflows.
+    - **Custom Algorithm**: Developed an algorithm to accurately extract receipts from contrasting backgrounds, ensuring precise document detection and preprocessing.
 
 3. **Interactive Dashboard:**
 
@@ -38,12 +39,12 @@ The Finance Management Application is an advanced web-based tool designed to sim
 
 ### Frontend:
 
-- **React**
+- **React** -> Material-UI
 
 ### Backend:
 
-- **Spring Boot**
-- **FastAPI**
+- **Spring Boot** -> Spring Security & Hibernate
+- **FastAPI** -> Tensorflow & OpenCV & Ultralytics & Transformers
 
 ### Database:
 
@@ -68,14 +69,12 @@ The Finance Management Application is an advanced web-based tool designed to sim
         - `bert_model/link - 0.9228.zip`
         - `cnn_model/link - 0.9737.keras`
         - `yoloTrainer/link - /models, /yolo_training_runs`
-        - `pip install -r requirements.txt` - in main folder
+        - in `backendPython` folder:
+        ```bash
+        pip install -r requirements.txt
+        ```
     - Unzip all archives — ensure no duplicated folders.
-   - Set the path to Tesseract in the main Python file.
-   - Run the FastAPI server:
-   ```bash
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
-   ```
-   
+   - Set the path to Tesseract in the `main.py`.   
 
 3. Spring Boot configuration:
     - Install dependencies listed in `pom.xml` for `/backendJava`.
