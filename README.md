@@ -59,12 +59,14 @@ The Finance Management Application is an advanced web-based tool designed to sim
 ## How to Run
 
 1. Install dependencies in `frontend/`:
+   - Recommended Node.js version: v20.18.0.
 
    ```bash
    npm install
    ```
 
 2. Python:
+    - Recommended Python version: 3.12.1.
     - Download models and training files:
         - `bert_model/link - 0.9228.zip`
         - `cnn_model/link - 0.9737.keras`
@@ -77,6 +79,7 @@ The Finance Management Application is an advanced web-based tool designed to sim
    - Set the path to Tesseract in the `main.py`.   
 
 3. Spring Boot configuration:
+    - Recommended Java version: 17 JDK.
     - Install dependencies listed in `pom.xml` for `/backendJava`.
     - Set an Outlook email address in `application-properties`.
     - Create a PostgreSQL database named `smartExpenseApp` or `smartexpenseapp` (Linux - change properties).
