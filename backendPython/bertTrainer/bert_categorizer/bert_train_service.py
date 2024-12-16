@@ -8,9 +8,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, confusion_m
 import numpy as np
 
 
-from bert_config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
-
-import services.yolo_service.yolo
+from bertTrainer.bert_config import BERT_MODEL, BERT_LEARNING_RATE, BERT_EPOCHS, BERT_MODEL_PATH
 
 
 def train_model(train_dataset, val_dataset, num_labels, class_weights_dict):
@@ -81,7 +79,7 @@ def save_model_and_tokenizer(model, tokenizer, label_encoder, accuracy):
 
 
 def print_metrics(model, test_dataset, test_labels):
-    predictions = services.yolo_service.yolo.predict(test_dataset).logits
+    predictions = model.predict(test_dataset).logits
     predicted_labels = np.argmax(predictions, axis=1)
 
     precision = precision_score(test_labels, predicted_labels, average='weighted')

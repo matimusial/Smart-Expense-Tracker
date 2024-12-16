@@ -17,38 +17,31 @@ def predict(model, image):
 def get_best_detections(results):
     best_detections = {}
     for result in results:
-        if hasattr(result, 'boxes') and result.boxes is not None:
-            boxes = result.boxes
-            if len(boxes) > 0:
-                for box in boxes:
-                    class_id = int(box.cls.item()) if box.cls is not None else None
-                    confidence = box.conf.item() if box.conf is not None else 0.0
-                    if class_id is None:
-                        continue
-                    if class_id not in best_detections or confidence > best_detections[class_id]['conf']:
-                        best_detections[class_id] = {
-                            'box': box,
-                            'conf': confidence
-                        }
-            else:
-                print("  Brak detekcji obiektów powyżej progu pewności w 'boxes'.")
-        elif hasattr(result, 'obb') and result.obb is not None:
-            obbs = result.obb
-            if len(obbs) > 0:
-                for obb in obbs:
-                    class_id = int(obb.cls.item()) if obb.cls is not None else None
-                    confidence = obb.conf.item() if obb.conf is not None else 0.0
-                    if class_id is None:
-                        continue
-                    if class_id not in best_detections or confidence > best_detections[class_id]['conf']:
-                        best_detections[class_id] = {
-                            'obb': obb,
-                            'conf': confidence
-                        }
-            else:
-                print("  Brak detekcji obiektów powyżej progu pewności w 'obb'.")
+        # List of attributes to process
+        for attr_name in ['boxes', 'obb']:
+            detections = getattr(result, attr_name, None)
+            if detections is not None:
+                if len(detections) > 0:
+                    for det in detections:
+                        class_id = int(det.cls.item()) if det.cls is not None else None
+                        confidence = det.conf.item() if det.conf is not None else 0.0
+
+                        if class_id is None:
+                            continue
+
+                        # Update the best detection for the given class
+                        if (class_id not in best_detections) or (confidence > best_detections[class_id]['conf']):
+                            best_detections[class_id] = {
+                                attr_name: det,
+                                'conf': confidence
+                            }
+                    # After processing detections for one attribute, move to the next result
+                    break
+                else:
+                    print(f"  No object detections above the confidence threshold in '{attr_name}'.")
         else:
-            print("  'boxes' lub 'obb' są None lub brak detekcji obiektów.")
+            # If neither 'boxes' nor 'obb' contain detections
+            print("  No object detections above the confidence threshold (neither 'boxes' nor 'obb').")
     return best_detections
 
 

@@ -12,20 +12,15 @@ from ultralytics import YOLO
 from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.bert_predict import load_model_and_tokenizer, predict_top_k
 
-from config import BERT_MODEL_NAME, YOLO_PATH
+from config import BERT_MODEL_NAME, YOLO_PATH, OTHER_SERVICES_ADRESSES, PYTESSERACT_PATH
 from services.image_ocr import predict_image
 from services.receipt_trimmer import perform_trimming
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:8000",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=OTHER_SERVICES_ADRESSES,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -52,7 +47,7 @@ async def startup_event():
     model, tokenizer, label_encoder = load_model_and_tokenizer(BERT_MODEL_NAME)
     cnn_model = load_cnn_model(trim_sequence["model_name"])
     yolo_model = YOLO(YOLO_PATH)
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_PATH
 
 
 @app.post("/fast-api/get-category")

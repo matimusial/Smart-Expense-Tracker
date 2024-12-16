@@ -50,12 +50,6 @@ The Finance Management Application is an advanced web-based tool designed to sim
 
 - **PostgreSQL**
 
-### Machine Learning:
-
-- **YOLOv8 OBB**: Detects receipt details (e.g., date, total, NIP).
-- **Tesseract OCR**: Extracts text from receipts.
-- **BERT (herbert-large-cased)**: Classifies transactions based on title content.
-
 ## How to Run
 
 1. Spring Boot configuration:
