@@ -5,8 +5,6 @@ from PIL import Image
 import cv2
 from ultralytics import YOLO
 import itertools
-import concurrent.futures
-import multiprocessing
 import gc
 
 from services.image_ocr import load_image
@@ -193,31 +191,21 @@ def perform_ocr_tests(combinations, receipts_data, images_dir):
     results = []
     output_file = "ranking_wynikow.txt"
 
-    # Use all available CPU cores
-    max_workers = multiprocessing.cpu_count()
+    for config in combinations:
+        try:
+            overall_accuracy, field_accuracies, config_used = test_configuration(config, receipts_data, images_dir)
+            results.append((overall_accuracy, field_accuracies, config_used))
+            print(f"Konfiguracja przetworzona: {config_used} - Dokładność: {overall_accuracy:.2f}%")
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
-        # Submit all configurations to the executor
-        future_to_config = {executor.submit(test_configuration, config, receipts_data, images_dir): config for config in combinations}
-
-        for future in concurrent.futures.as_completed(future_to_config):
-            config = future_to_config[future]
-            try:
-                overall_accuracy, field_accuracies, config_used = future.result()
-                results.append((overall_accuracy, field_accuracies, config_used))
-                print(f"Konfiguracja przetworzona: {config_used} - Dokładność: {overall_accuracy:.2f}%")
-
-                if overall_accuracy == 100.0:
-                    print(f"Osiągnięto 100% poprawności dla konfiguracji: {config_used}.")
-                    # Zapisz wynik i zakończ dalsze przetwarzanie
-                    with open(output_file, "w", encoding="utf-8") as f:
-                        f.write(f"Kombinacja osiągnęła 100% poprawności.\n")
-                        f.write(f"Konfiguracja: {config_used}\n")
-                    # Shutdown executor immediately
-                    executor.shutdown(wait=False, cancel_futures=True)
-                    return
-            except Exception as e:
-                print(f"Błąd podczas przetwarzania konfiguracji {config}: {e}")
+            if overall_accuracy == 100.0:
+                print(f"Osiągnięto 100% poprawności dla konfiguracji: {config_used}.")
+                # Zapisz wynik i zakończ dalsze przetwarzanie
+                with open(output_file, "w", encoding="utf-8") as f:
+                    f.write(f"Kombinacja osiągnęła 100% poprawności.\n")
+                    f.write(f"Konfiguracja: {config_used}\n")
+                return
+        except Exception as e:
+            print(f"Błąd podczas przetwarzania konfiguracji {config}: {e}")
 
     # Po przetworzeniu wszystkich konfiguracji, posortuj wyniki
     results.sort(key=lambda x: x[0], reverse=True)
@@ -305,16 +293,6 @@ def main():
     open_kernel = [(2, 2), (5, 5)]
     dilate_kernel = [(3, 3), (5, 5)]
 
-    clean_bg_function_ksize = [21]  # 21 jako optymalny dla usuwania nierównego tła
-    clean_bg_gaussian_ksize = [(21, 21)]
-    median_kernel = [5]  # Kernel 5 daje optymalne wyniki przy zachowaniu szczegółów liter
-    clahe_params = [(2.0, (8, 8))]  # CLAHE z 2.0 jako standardowy parametr
-    gamma = [False, 1.2]  # Gamma 1.2 rozjaśnia tekst, zachowując kontrast
-    adaptive_block_size = [15]  # Blok 15 skutecznie segmentuje małe fragmenty tekstu
-    adaptive_c = [2]  # Delikatna korekta progu binarnego
-    close_kernel = [(3, 3), (5, 5)]  # Małe jądra, aby delikatnie łączyć fragmenty
-    dilate_kernel = [(3, 3)]  # Wzmocnienie krawędzi liter
-
     combinations = list(itertools.product(
         clean_background, clean_bg_function_ksize,
         clean_bg_gaussian_ksize, denoise,
@@ -336,7 +314,7 @@ def main():
     combinations = [dict(zip(config_keys, comb)) for comb in combinations]
     print(f"Liczba kombinacji do przetestowania: {len(combinations)}")
 
-    # Krok 5: Testuj konfiguracje OCR równolegle
+    # Krok 5: Testuj konfiguracje OCR sekwencyjnie
     try:
         perform_ocr_tests(combinations, receipts_data, output_root)
     except Exception as e:
