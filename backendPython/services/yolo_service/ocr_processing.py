@@ -13,6 +13,7 @@ def clean_background_function(img, ksize):
     background = cv2.medianBlur(img, ksize)
     return cv2.absdiff(img, background)
 
+
 def clean_background_gaussian(img, ksize):
     background = cv2.GaussianBlur(img, ksize, 0)
     return cv2.absdiff(img, background)
@@ -92,17 +93,17 @@ def process_pil(image):
         _, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
     if morphological_operation == "closedilate":
-        if close_kernel_element and dilate_kernel_element:
+        if close_kernel_element is not None and dilate_kernel_element is not None:
             img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, close_kernel_element, iterations=1)
             img = cv2.dilate(img, dilate_kernel_element, iterations=1)
 
     elif morphological_operation == "openclose":
-        if open_kernel_element and close_kernel_element:
+        if open_kernel_element is not None and close_kernel_element is not None:
             img = cv2.morphologyEx(img, cv2.MORPH_OPEN, open_kernel_element, iterations=1)
             img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, close_kernel_element, iterations=1)
 
     elif morphological_operation == "closeerode":
-        if close_kernel_element and erode_kernel_element:
+        if close_kernel_element is not None and erode_kernel_element is not None:
             img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, close_kernel_element, iterations=1)
             img = cv2.erode(img, erode_kernel_element, iterations=1)
 
