@@ -21,32 +21,33 @@ from tests_files.example_receipts_data import receipts_data
 
 
 def compare_ocr_to_data(ocr_data, expected_data):
+    fields = ['date', 'nip', 'payment_type', 'sum', 'transaction_number']
     comparisons = {}
 
-    ocr_date = ocr_data.get('date', '').strip()
-    expected_date = expected_data[1]
-    comparisons['date'] = (ocr_date == expected_date)
+    for i, field in enumerate(fields):
+        ocr_value = ocr_data.get(field, '').strip()
+        expected_value = expected_data[i + 1].strip()
 
-    ocr_nip = ocr_data.get('nip', '').strip()
-    expected_nip = expected_data[2]
-    comparisons['nip'] = (ocr_nip == expected_nip)
+        if field == 'payment_type':
+            ocr_value = ocr_value.upper()
+            expected_value = expected_value.upper()
 
-    ocr_payment_type = ocr_data.get('payment_type', '').strip().upper()
-    expected_payment_type = expected_data[3].upper()
-    comparisons['payment_type'] = (ocr_payment_type == expected_payment_type)
+        elif field == 'sum':
+            try:
+                ocr_value = float(ocr_value.replace(',', '.'))
+                expected_value = float(expected_value.replace(',', '.'))
+            except ValueError:
+                comparisons[field] = False
+                # print(f"Pole: {field}\nOCR: {ocr_data.get(field, '')}\nOCZEKIWANE: {expected_value}\nWYNIK: Niepoprawne\n")
+                continue
 
-    try:
-        ocr_amount = float(ocr_data.get('sum', '').replace(',', '.').strip())
-        expected_amount = float(expected_data[4].replace(',', '.').strip())
-        comparisons['sum'] = (abs(ocr_amount - expected_amount) < 0.01)
-    except ValueError:
-        comparisons['sum'] = False
+        result = ocr_value == expected_value
+        comparisons[field] = result
 
-    ocr_transaction_number = ocr_data.get('transaction_number', '').strip()
-    expected_transaction_number = expected_data[5]
-    comparisons['transaction_number'] = (ocr_transaction_number == expected_transaction_number)
+        # print(f"Pole: {field}\nOCR: {ocr_value}\nOCZEKIWANE: {expected_value}\nWYNIK: {'Poprawne' if result else 'Niepoprawne'}\n")
 
     return comparisons
+
 
 
 def process_image(image_path, class_name, config):
@@ -65,6 +66,7 @@ def process_image(image_path, class_name, config):
 
 
 def process_entry(entry, base_path, config):
+
     folder_name, expected_date, expected_nip, expected_payment_type, expected_amount, expected_transaction_number = entry
     folder_path = os.path.join(base_path, folder_name)
 
@@ -78,6 +80,7 @@ def process_entry(entry, base_path, config):
     }
 
     for class_name, file_name in field_files.items():
+
         image_path = os.path.join(folder_path, file_name)
         if not os.path.exists(image_path):
             print(f"Plik nie istnieje: {image_path}")
@@ -157,7 +160,8 @@ def process_receipts_data(receipts_data, images_folder, output_root, trim_sequen
 
 
 def test_configuration(config, receipts_data, images_dir):
-    correct_records = 0
+    total_fields = 0
+    correct_fields = 0
     field_correct_counts = {
         'date': 0,
         'nip': 0,
@@ -173,41 +177,43 @@ def test_configuration(config, receipts_data, images_dir):
 
     for comparison in comparisons:
         if comparison:
-            if all(comparison.values()):
-                correct_records += 1
+            correct_fields += sum(comparison.values())
+            total_fields += len(comparison)
             for field, is_correct in comparison.items():
                 if is_correct:
                     field_correct_counts[field] += 1
 
-    total_records = len(receipts_data)
-    overall_accuracy = (correct_records / total_records) * 100 if total_records else 0
-    field_accuracies = {field: (count / total_records) * 100 if total_records else 0 for field, count in
-                        field_correct_counts.items()}
+    overall_accuracy = (correct_fields / total_fields) * 100 if total_fields else 0
+    field_accuracies = {field: (count / len(receipts_data)) * 100 if len(receipts_data) else 0
+                        for field, count in field_correct_counts.items()}
 
-    return (overall_accuracy, field_accuracies, config)
+    return overall_accuracy, field_accuracies, config
 
 
 def perform_ocr_tests(combinations, receipts_data, images_dir):
     results = []
     output_file = "ranking_wynikow.txt"
 
-    for config in combinations:
+    print(f"Liczba kombinacji do przetestowania: {len(combinations)}")
+    for idx, config in enumerate(combinations, start=1):
+        print(f"\n### TESTUJĘ KONFIGURACJĘ {idx}/{len(combinations)} ###")
+
         try:
             overall_accuracy, field_accuracies, config_used = test_configuration(config, receipts_data, images_dir)
+            print(f"Dokładności poszczególnych pól: {field_accuracies}")
+
             results.append((overall_accuracy, field_accuracies, config_used))
-            print(f"Konfiguracja przetworzona: {config_used} - Dokładność: {overall_accuracy:.2f}%")
+            print(results)
 
             if overall_accuracy == 100.0:
                 print(f"Osiągnięto 100% poprawności dla konfiguracji: {config_used}.")
-                # Zapisz wynik i zakończ dalsze przetwarzanie
                 with open(output_file, "w", encoding="utf-8") as f:
                     f.write(f"Kombinacja osiągnęła 100% poprawności.\n")
                     f.write(f"Konfiguracja: {config_used}\n")
                 return
         except Exception as e:
-            print(f"Błąd podczas przetwarzania konfiguracji {config}: {e}")
+            print(f"Błąd przy konfiguracji {idx}: {e}")
 
-    # Po przetworzeniu wszystkich konfiguracji, posortuj wyniki
     results.sort(key=lambda x: x[0], reverse=True)
     top_3 = results[:3]
 
@@ -276,22 +282,22 @@ def main():
 
     # Krok 4: Przygotuj kombinacje konfiguracji OCR
     clean_background = [False, 'function', 'gaussian']
-    clean_bg_function_ksize = [15, 21]
+    clean_bg_function_ksize = [15]
     clean_bg_gaussian_ksize = [(21, 21)]
     denoise = [False, 'median', 'bilateral']
-    median_kernel = [3, 5]
+    median_kernel = [3]
     bilateral_params = [(9, 75, 75)]
     enhance_contrast = [False, 'equalize', 'clahe']
-    clahe_params = [(2.0, (8, 8)), (3.0, (8, 8))]
-    gamma = [False, 1.0, 1.2]
+    clahe_params = [(2.0, (8, 8))]
+    gamma = [False, 1.2]
     adaptive_threshold = [False, 'gaussian', 'otsu']
-    adaptive_block_size = [11, 15]
-    adaptive_c = [2, 3]
+    adaptive_block_size = [15]
+    adaptive_c = [3]
     morphological_operation = [False, 'closedilate', 'openclose', 'closeerode']
-    close_kernel = [(2, 2), (5, 5)]
-    erode_kernel = [(2, 2), (5, 5)]
-    open_kernel = [(2, 2), (5, 5)]
-    dilate_kernel = [(3, 3), (5, 5)]
+    close_kernel = [(5, 5)]
+    erode_kernel = [(2, 2)]
+    open_kernel = [(2, 2)]
+    dilate_kernel = [(3, 3)]
 
     combinations = list(itertools.product(
         clean_background, clean_bg_function_ksize,
@@ -312,7 +318,6 @@ def main():
     ]
 
     combinations = [dict(zip(config_keys, comb)) for comb in combinations]
-    print(f"Liczba kombinacji do przetestowania: {len(combinations)}")
 
     # Krok 5: Testuj konfiguracje OCR sekwencyjnie
     try:

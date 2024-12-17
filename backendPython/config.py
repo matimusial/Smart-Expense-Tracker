@@ -1,7 +1,5 @@
 import os
 
-import cv2
-
 MAIN_PATH = os.path.dirname(__file__)
 
 BERT_MODEL_NAME = "0.9228"
