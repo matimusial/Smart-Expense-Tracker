@@ -28,8 +28,7 @@ def resize_image_to_dpi(img, target_dpi=300):
     return resized
 
 
-def process_pil(image):
-    from yoloTrainer.yolo_config import OCR_PROCESSING_CONFIGURATION
+def process_pil(image, OCR_PROCESSING_CONFIGURATION):
     clean_background = OCR_PROCESSING_CONFIGURATION.get('clean_background')
     if clean_background is None:
         raise ValueError("clean_background cannot be None")

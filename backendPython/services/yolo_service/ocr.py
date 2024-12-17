@@ -120,8 +120,8 @@ def extract_ocr_text(image, detection, class_name):
 
     cropped_pil = Image.fromarray(cropped_area)
     custom_config = get_tesseract_config(class_name)
-    processed_pil = process_pil(cropped_pil)
-    ocr_text = pytesseract.image_to_string(processed_pil, config=custom_config).strip()
+    # processed_pil = process_pil(cropped_pil)
+    ocr_text = pytesseract.image_to_string(cropped_pil, config=custom_config).strip()
     corrected_text = correct_ocr_text(ocr_text, class_name)
     return corrected_text
 

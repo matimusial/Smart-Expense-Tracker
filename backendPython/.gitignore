@@ -12,6 +12,7 @@ yoloTrainer/runs
 yoloTrainer/models
 yoloTrainer/yolo_data
 yoloTrainer/yolo_training_runs
+tests_files/ocr_test_images
 
 # Python
 __pycache__/
