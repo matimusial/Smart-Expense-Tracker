@@ -1,8 +1,6 @@
 import os
-from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from services.image_ocr import load_model
 from tests_files.example_receipts_data import receipts_data
-from cnnTrimChecker.cnn_config import SEQUENCE_1
 import itertools
 
 
@@ -43,8 +41,7 @@ def compare_ocr_to_data(ocr_data, expected_data):
     return comparisons
 
 
-def process_entry(entry, IMAGES_DIR, cnn_model, model):
-    from services.receipt_trimmer import perform_trimming
+def process_entry(entry, IMAGES_DIR, model):
     from services.image_ocr import predict_image, load_image
 
     image_filename, expected_date, expected_nip, expected_payment_type, expected_amount, expected_transaction_number = entry
@@ -52,8 +49,7 @@ def process_entry(entry, IMAGES_DIR, cnn_model, model):
 
     try:
         image = load_image(image_path)
-        trimmed_image, flag = perform_trimming(image, SEQUENCE_1["combination_list"], cnn_model)
-        ocr_data, yolo_image = predict_image(trimmed_image, model)
+        ocr_data, yolo_image = predict_image(image, model)
 
         if ocr_data:
             comparison = compare_ocr_to_data(ocr_data, entry)
@@ -68,11 +64,8 @@ def process_entry(entry, IMAGES_DIR, cnn_model, model):
 
 if __name__ == "__main__":
     MODEL_PATH = r"C:\Users\matim\Desktop\Smart-Expense-Tracker\backendPython\yoloTrainer\yolo_training_runs\run_6_200_16_0.0015_yolov8m-obb.pt\weights\best.pt"
-    IMAGES_DIR = r"C:\Users\matim\Desktop\Smart-Expense-Tracker\frontend\public\exampleReceipts"
+    IMAGES_DIR = r"C:\Users\matim\Desktop\exampleReceipts\Nowy folder"
 
-    cnn_model_path = SEQUENCE_1["model_name"]
-
-    cnn_model = load_cnn_model(cnn_model_path)
     model = load_model(MODEL_PATH)
 
     clean_background = [False, 'function', 'gaussian']
@@ -135,7 +128,7 @@ if __name__ == "__main__":
 
         comparisons = []
         for entry in receipts_data:
-            comparison = process_entry(entry, IMAGES_DIR, cnn_model, model)
+            comparison = process_entry(entry, IMAGES_DIR, model)
             comparisons.append(comparison)
 
         for comparison in comparisons:
