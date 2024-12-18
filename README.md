@@ -55,27 +55,28 @@ The Finance Management Application is an advanced web-based tool designed to sim
 1. Spring Boot configuration:
    - Recommended: Java version 17 JDK and InteliJ IDEA.
    - Set an Outlook email address in `application-properties`.
-   - Create a PostgreSQL database named `smartexpenseapp`.
-   - Create a file `application-secrets.properties` with the following fields:
-    ```properties
-   spring.mail.password=outlook_email_password
+   ```properties
+   spring.mail.username=outlook_email_adress
+   spring.mail.password=email_password
    spring.datasource.password=database_password
    ```
+   - Create a PostgreSQL database named `smartexpenseapp`.
+
 
 2. Python:
    - Recommended Uvicorn/Python version: 0.31.0 with Python 3.12.1 on Windows
    - Download models and training files:
       - `bert_model/link - 0.9228.zip`
       - `cnn_model/link - 0.9737.keras`
-      - `yoloTrainer/link - /models, /yolo_training_runs`
+      - `yoloTrainer/link - /yolo_training_runs`
       - in `backendPython` folder:
        ```bash
        pip install -r requirements.txt
        ```
    - Unzip all archives — ensure no duplicated folders.
-   - Set the path to Tesseract in the `main.py`.
+   - Install Tesseract and set path in the `config.py`.
    ```bash
-   uvicorn api:app --reload
+   uvicorn main:app --reload
    ```
 
 3. Install dependencies in `frontend/`:
@@ -87,7 +88,3 @@ The Finance Management Application is an advanced web-based tool designed to sim
    ```bash
    npm start
    ```
-
-## Contact
-
-matimusial5@gmail.com
