@@ -12,7 +12,7 @@ def load_model(model_path):
 def load_image(image_path):
     image = cv2.imread(image_path)
     if image is None:
-        raise FileNotFoundError(f"Nie można załadować obrazu ze ścieżki: {image_path}")
+        raise FileNotFoundError(f"Cannot load the image from the path: {image_path}")
     return image
 
 

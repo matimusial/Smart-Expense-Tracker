@@ -1,13 +1,7 @@
 import { getCategory } from "../../../utils/PublicApi";
 import { addEventUser } from "../../../utils/ProtectedApi";
 
-/**
- * Obsługuje zdarzenie utraty fokusu pola tytułu.
- * @param {string} title - Aktualna wartość tytułu.
- * @param {function} setIsCategoryLoading - Funkcja ustawiająca stan ładowania kategorii.
- * @param {function} setCategories - Funkcja ustawiająca dostępne kategorie.
- * @param {function} setSelectedCategory - Funkcja ustawiająca wybraną kategorię.
- */
+
 export const handleTitleBlur = async (title, setIsCategoryLoading, setCategories, setSelectedCategory) => {
     if (title.trim() !== '') {
         setIsCategoryLoading(true);
@@ -30,25 +24,13 @@ export const handleTitleBlur = async (title, setIsCategoryLoading, setCategories
             setSelectedCategory(Object.values(updatedCategories)[0].category);
         } catch (error) {
             console.error('Błąd podczas pobierania kategorii:', error);
-            // Opcjonalnie możesz ustawić stan błędu tutaj
         } finally {
             setIsCategoryLoading(false);
         }
     }
 };
 
-/**
- * Obsługuje zdarzenie przesłania formularza.
- * @param {object} event - Obiekt zdarzenia.
- * @param {object} formData - Gotowe dane formularza.
- * @param {function} resetForm - Funkcja resetująca formularz.
- * @param {function} onClose - Funkcja zamykająca dialog.
- * @param {function} onEventAdded - Funkcja wywoływana po dodaniu zdarzenia.
- * @param {function} setError - Funkcja ustawiająca stan błędu.
- * @param {function} setInsertLoading - Funkcja ustawiająca stan ładowania.
- * @param {number} errorKey - Klucz błędu dla React.
- * @param {function} setErrorKey - Funkcja ustawiająca klucz błędu.
- */
+
 export const handleSubmit = async (
     event,
     formData,

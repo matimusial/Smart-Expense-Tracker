@@ -140,7 +140,7 @@ const ConditionalTooltip = ({ image, children }) => {
     if (!image) {
         return (
             <Tooltip
-                title="Dokument nie powinien być zniszczony, równomiernie oświetlony, umieszczony na kontrastującym (najlepiej czarnym) tle oraz nie zawierać żadnych dodatkowych elementów poza tłem. Subtelne korekty perspektywy są dozwolone."
+                title="Dokument nie powinien być zniszczony, równomiernie oświetlony, umieszczony na kontrastującym (najlepiej czarnym) tle oraz nie zawierać żadnych dodatkowych elementów poza tłem. Subtelne korekty perspektywy są dozwolone. Tylko część fiskalna!"
                 arrow
             >
                 {children}
@@ -157,6 +157,7 @@ const InsertImageComponent = ({
                                    onHandleFileChange,
                                    handleRemoveImage,
                                    handleCardClick,
+                                   openImageDialog = false,
                                    ...otherProps
                                }) => {
     return (
@@ -202,7 +203,12 @@ const InsertImageComponent = ({
                             htmlFor="file-upload"
                             style={{ display: 'flex', alignItems: 'center', flexGrow: 1, cursor: 'pointer' }}
                         >
-                            <InsertPhotoOutlinedIcon sx={{ marginRight: 2 }} />
+
+                            {image && (
+                                <IconButton size="small" onClick={openImageDialog}>
+                                    <InsertPhotoOutlinedIcon/>
+                                </IconButton>
+                            )}
                             <Box
                                 sx={{
                                     textAlign: 'center',

@@ -114,6 +114,10 @@ const AddBiedronkaLidlDialog = ({ open, onClose, onEventAdded }) => {
         setIsImageDialogOpen(false);
     };
 
+    const handleImageDialogOpen = () => {
+        setIsImageDialogOpen(true);
+    };
+
     const handleCardClick = (event) => {
         if (image) {
             event.preventDefault();
@@ -181,10 +185,6 @@ const AddBiedronkaLidlDialog = ({ open, onClose, onEventAdded }) => {
     };
 
 
-
-
-
-
     return (
         <Dialog
             open={open}
@@ -243,6 +243,7 @@ const AddBiedronkaLidlDialog = ({ open, onClose, onEventAdded }) => {
                         onHandleFileChange={processImageFunction}
                         handleRemoveImage={handleRemoveImage}
                         handleCardClick={handleCardClick}
+                        openImageDialog={handleImageDialogOpen}
                     />
 
                     <InputLabel

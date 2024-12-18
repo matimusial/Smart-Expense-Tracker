@@ -55,7 +55,7 @@ The Finance Management Application is an advanced web-based tool designed to sim
 1. Spring Boot configuration:
    - Recommended: Java version 17 JDK and InteliJ IDEA.
    - Set an Outlook email address in `application-properties`.
-   - Create a PostgreSQL database named `smartExpenseApp` or `smartexpenseapp` (Linux - change properties).
+   - Create a PostgreSQL database named `smartexpenseapp`.
    - Create a file `application-secrets.properties` with the following fields:
     ```properties
    spring.mail.password=outlook_email_password

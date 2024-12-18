@@ -1,0 +1,7 @@
+Top 5 kombinacji (bez osiągnięcia 100%):
+
+1. Konfiguracja:
+   Dokładność: 52.08%
+   Dokładności poszczególnych pól: {'date': 66.66666666666666, 'nip': 6.25, 'payment_type': 79.16666666666666, 'sum': 58.333333333333336, 'transaction_number': 50.0}
+   Ustawienia: {'clean_background': False, 'clean_bg_function_ksize': 15, 'clean_bg_gaussian_ksize': (21, 21), 'denoise': False, 'median_kernel': 3, 'bilateral_params': (9, 75, 75), 'enhance_contrast': False, 'clahe_params': (2.0, (8, 8)), 'gamma': False, 'adaptive_threshold': False, 'adaptive_block_size': 15, 'adaptive_c': 3, 'morphological_operation': False, 'close_kernel': (5, 5), 'erode_kernel': (2, 2), 'open_kernel': (2, 2), 'dilate_kernel': (3, 3)}
+

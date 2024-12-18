@@ -62,35 +62,19 @@ def train_yolov8_obb(data_yaml, weights, epochs, batch, imgsz, device, name, wor
     return results.save_dir, results
 
 
-def main():
+def main(num_runs, models, epochs_list, batch_list, lr0_list):
     original_images_dir = os.path.join(YOLO_DATA_PATH, 'images')
     original_labels_dir = os.path.join(YOLO_DATA_PATH, 'labels')
 
     if not os.path.exists(original_images_dir):
-        print(f"Folder z obrazami nie istnieje: {original_images_dir}")
+        print(f"The folder with images does not exist: {original_images_dir}")
         return
     if not os.path.exists(original_labels_dir):
-        print(f"Folder z labelami nie istnieje: {original_labels_dir}")
+        print(f"The folder with labels does not exist: {original_labels_dir}")
         return
 
     classes = ['date', 'nip', 'payment_type', 'sum', 'transaction_number']
     nc = len(classes)
-
-    num_runs = 1
-
-    models = [
-        'yolov8n-obb.pt',
-        'yolov8n-obb.pt',
-        'yolov8m-obb.pt',
-        'yolov8m-obb.pt',
-        'yolov8m-obb.pt',
-        'yolov8m-obb.pt',
-        'yolov8m-obb.pt',
-    ]
-
-    epochs_list = [50, 100, 50, 100, 150, 200, 100]
-    batch_list = [8, 16, 8, 16, 16, 16, 8]
-    lr0_list = [0.001, 0.0015, 0.001, 0.0015, 0.002, 0.0015, 0.001]
 
     device = 'cpu'
     base_workers = 16
@@ -98,7 +82,7 @@ def main():
     os.makedirs(YOLO_RUNS_DIR, exist_ok=True)
 
     for run in range(1, num_runs + 1):
-        print(f"\n=== Rozpoczynanie treningu nr {run} ===")
+        print(f"\n=== Starting training run number {run} ===")
 
         epochs = epochs_list[run - 1]
         batch = batch_list[run - 1]
@@ -122,7 +106,7 @@ def main():
 
             weights_path = os.path.join(YOLO_MODELS_PATH, models[run-1])
             if not os.path.exists(weights_path):
-                print(f"Model {weights_path} nie istnieje!")
+                print(f"The model {weights_path} does not exist!")
                 return
 
             save_dir, results = train_yolov8_obb(
@@ -139,13 +123,29 @@ def main():
             shutil.move(save_dir, run_dir)
 
         except Exception as e:
-            print(f"Wystąpił błąd podczas treningu nr {run}: {e}")
+            print(f"An error occurred during training run number {run}: {e}")
         finally:
             if os.path.exists(temp_dir):
                 shutil.rmtree(temp_dir)
 
-    print("\n=== Wszystkie treningi zakończone ===")
+    print("\n=== All trainings completed ===")
 
 
 if __name__ == "__main__":
-    main()
+    num_runs = 1
+
+    models = [
+        'yolov8n-obb.pt',
+        'yolov8n-obb.pt',
+        'yolov8m-obb.pt',
+        'yolov8m-obb.pt',
+        'yolov8m-obb.pt',
+        'yolov8m-obb.pt',
+        'yolov8m-obb.pt',
+    ]
+
+    epochs_list = [50, 100, 50, 100, 150, 200, 100]
+    batch_list = [8, 16, 8, 16, 16, 16, 8]
+    lr0_list = [0.001, 0.0015, 0.001, 0.0015, 0.002, 0.0015, 0.001]
+
+    main(num_runs, models, epochs_list, batch_list, lr0_list)

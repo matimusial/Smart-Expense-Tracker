@@ -84,6 +84,18 @@ async def get_category(data: CategoryRequest):
 
 @app.post("/fast-api/perform-ocr")
 async def process_receipt(file: UploadFile = File(...)):
+    """
+    Przyjmuje:
+    {
+        "file": UploadFile - Plik obrazu do przetworzenia (np. paragonu).
+    }
+    Zwraca:
+    {
+        "ocr_data": list lub null - Dane OCR odczytane z obrazu. Zawiera teksty rozpoznane na paragonie lub null, jeśli przetwarzanie nie powiodło się,
+        "yolo_image": str lub null - Obraz z nałożonymi detekcjami YOLO zakodowany w formacie base64. Zwraca zakodowany obraz lub null, jeśli detekcje nie zostały wykonane,
+        "trimmed_image": str - Przycięty obraz oryginalnego pliku zakodowany w formacie base64.
+    }
+    """
     try:
         file_bytes = np.asarray(bytearray(await file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
@@ -124,4 +136,3 @@ async def process_receipt(file: UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
-

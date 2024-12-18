@@ -129,10 +129,6 @@ const prepareDataForBarChart = (events, dateFrom, dateTo) => {
 };
 
 
-
-
-
-
 const ExpenseIncomeBarChart = ({ events, dateFrom, dateTo }) => {
     const [data, setData] = useState([]);
 

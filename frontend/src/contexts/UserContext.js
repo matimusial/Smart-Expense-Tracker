@@ -114,7 +114,7 @@ export const UserProvider = ({ children }) => {
             const shuffled = fileNames.sort(() => 0.5 - Math.random());
             const selectedFiles = shuffled.slice(0, 4);
 
-            let counter = 1; // Licznik dla nazw plików
+            let counter = 1;
 
             for (const fileName of selectedFiles) {
                 try {

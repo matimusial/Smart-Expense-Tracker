@@ -120,8 +120,8 @@ def extract_ocr_text(image, detection, class_name):
 
     cropped_pil = Image.fromarray(cropped_area)
     custom_config = get_tesseract_config(class_name)
-    # processed_pil = process_pil(cropped_pil)
-    ocr_text = pytesseract.image_to_string(cropped_pil, config=custom_config).strip()
+    processed_pil = process_pil(cropped_pil)
+    ocr_text = pytesseract.image_to_string(processed_pil, config=custom_config).strip()
     corrected_text = correct_ocr_text(ocr_text, class_name)
     return corrected_text
 
@@ -150,40 +150,30 @@ def correct_ocr_text(text, class_name):
     text = text.strip()
 
     if class_name == "date":
-        # Próba dopasowania formatu daty
         match = re.search(r'(\d{4})[-/](\d{1,2})[-/](\d{1,2})', text)
         if match:
             year, month, day = match.groups()
             try:
-                # Sprawdzamy poprawność roku, miesiąca, dnia:
                 y = int(year)
                 m = int(month)
                 d = int(day)
-
-                # Sprawdzanie zakresów: miesiąc 1-12, dzień 1-31
                 if not (1 <= m <= 12) or not (1 <= d <= 31):
                     raise ValueError("Invalid month or day range")
 
                 parsed_date = datetime(y, m, d)
                 today = datetime.today()
 
-                # Sprawdzenie czy data nie jest w przyszłości
                 if parsed_date > today:
                     return today.strftime('%Y-%m-%d')
                 else:
-                    # Formatowanie daty z uzupełnieniem zer
                     return f"{y:04d}-{m:02d}-{d:02d}"
             except ValueError:
-                # Niepoprawna data - zwracamy bieżącą datę
                 return datetime.today().strftime('%Y-%m-%d')
         else:
-            # Nie udało się dopasować daty - zwracamy bieżącą datę
             return datetime.today().strftime('%Y-%m-%d')
 
     elif class_name == "nip":
-        # Usuwamy wszystko poza cyframi
         cleaned = re.sub(r'\D', '', text)
-        # Dostosowujemy do 10 cyfr
         if len(cleaned) < 10:
             cleaned = cleaned.zfill(10)
         elif len(cleaned) > 10:
@@ -191,36 +181,26 @@ def correct_ocr_text(text, class_name):
         return cleaned
 
     elif class_name == "sum":
-        # Zamiana przecinków na kropki
         cleaned = text.replace(',', '.')
-        # Próba parsowania float
-        cleaned = re.sub(r'[^0-9\.]', '', cleaned)  # usuwamy znaki spoza cyfr i kropki
+        cleaned = re.sub(r'[^0-9\.]', '', cleaned)
         if cleaned.count('.') > 1:
-            # Jeśli jest więcej niż jedna kropka, łączymy wszystko po pierwszej
             parts = cleaned.split('.')
             cleaned = parts[0] + '.' + ''.join(parts[1:])
 
         try:
             amount = float(cleaned)
-            # Formatowanie do 2 miejsc po przecinku
-            # Najpierw przekształćmy na string z 2 miejscami po przecinku
             formatted = f"{amount:.2f}"
 
-            # Sprawdzamy długość części całkowitej
             integer_part, decimal_part = formatted.split('.')
             if len(integer_part) > 8:
-                # Obcinamy do 4 ostatnich cyfr części całkowitej
                 integer_part = integer_part[-8:]
 
             return f"{integer_part}.{decimal_part}"
         except ValueError:
-            # Jeśli nie da się zparsować, zwracamy domyślnie "00.00"
             return "00.00"
 
     elif class_name == "transaction_number":
-        # Usuwamy wszystko poza cyframi
         cleaned = re.sub(r'\D', '', text)
-        # Dopasowujemy do 6 cyfr
         if len(cleaned) < 6:
             cleaned = cleaned.zfill(6)
         elif len(cleaned) > 6:
@@ -228,11 +208,9 @@ def correct_ocr_text(text, class_name):
         return cleaned
 
     elif class_name == "payment_type":
-        # Do lowercase i strip
         return text.lower().strip()
 
     else:
-        # Nieznana klasa - zwracamy oryginalny tekst
         return text
 
 

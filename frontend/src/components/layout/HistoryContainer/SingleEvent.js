@@ -107,7 +107,6 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
                 </Box>
             </Box>
 
-            {/* Wyświetlanie pól tylko wtedy, gdy mają zawartość */}
             {event.category && (
                 <Box mb={1}>
                     <Typography variant="body2" color="text.secondary">
@@ -151,7 +150,6 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
                     </Typography>
                 </Box>
             )}
-            {/* Opcjonalny przycisk do wyświetlenia zdjęcia */}
             {event.receiptImage && (
                 <SubmitButton
                     label="Pokaż zdjęcie"
@@ -162,7 +160,6 @@ const ExtendedSingleEvent = ({ event, color, onEventClick }) => {
                 />
             )}
 
-            {/* Komponent dialogu do wyświetlania zdjęcia */}
             {image && (
                 <ShowPictureDialog
                     open={isImageDialogOpen}

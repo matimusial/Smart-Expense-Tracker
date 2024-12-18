@@ -7,7 +7,7 @@ CNN_EPOCHS = 10
 CNN_BATCH_SIZE = 32
 
 CNN_MODEL_PATH = os.path.join(CNN_TRAINING_PATH, 'cnn_model')
-CNN_FIND_SEQUENCE_MODEL_NAME = '0.9875'
+CNN_FIND_SEQUENCE_MODEL_NAME = '0.9737'
 CNN_DATA_PATH = os.path.join(CNN_TRAINING_PATH, 'cnn_data')
 
 # 35/958 źle sklasyfikowanych obrazów i źle przyciętych

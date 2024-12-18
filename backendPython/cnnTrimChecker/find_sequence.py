@@ -49,7 +49,8 @@ def process_image(filename, input_path, parameter_combinations):
     return positive_combinations
 
 
-def create_sequences(sorted_combinations, combination_success_images, total_images_set, sequence_file_template, max_combinations=100):
+def create_sequences(sorted_combinations, combination_success_images, total_images_set, sequence_file_template,
+                     max_combinations=100):
     top_3_combinations = [combo for combo, count in sorted_combinations[:1]]
 
     for idx, initial_combination in enumerate(top_3_combinations, start=1):
@@ -62,7 +63,7 @@ def create_sequences(sorted_combinations, combination_success_images, total_imag
             covered_images.update(remaining_combinations[initial_combination])
             del remaining_combinations[initial_combination]
         else:
-            print(f"Kombinacja początkowa {initial_combination} nie została znaleziona w wynikach.")
+            print(f"The initial combination {initial_combination} was not found in the results.")
             continue
 
         while len(covered_images) < len(total_images_set) and len(selected_combinations) < max_combinations:
@@ -91,22 +92,23 @@ def create_sequences(sorted_combinations, combination_success_images, total_imag
             f.write(f"\nŁącznie pokrytych obrazów: {len(covered_images)} z {len(total_images_set)}\n")
             f.write(f"Liczba użytych kombinacji: {len(selected_combinations)}\n")
 
-        print(f"Sekwencja {idx} zapisana w: {sequence_file}")
-        print(f"Łączny wynik (pokryte obrazy): {len(covered_images)}")
-        print(f"Liczba użytych kombinacji: {len(selected_combinations)}\n")
+        print(f"Sequence {idx} saved in: {sequence_file}")
+        print(f"Total result (covered images): {len(covered_images)}")
+        print(f"Number of used combinations: {len(selected_combinations)}\n")
 
 
 def main():
-    input_path = r'C:\Users\matim\Desktop\wqe'
-    output_path = r'C:\Users\matim\Desktop\wqe'
+    input_path = r''
+    output_path = r''
+
     ranking_file = os.path.join(output_path, f'{CNN_FIND_SEQUENCE_MODEL_NAME}_combination_ranking.txt')
     sequence_file_template = os.path.join(output_path, f'{CNN_FIND_SEQUENCE_MODEL_NAME}_combination_sequence.txt')
 
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    blur_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9,9), (11, 11), (13, 13), (19,19)]
-    morph_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9,9), (11, 11), (13,13), (19,19)]
+    blur_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9, 9), (11, 11), (13, 13), (19, 19)]
+    morph_kernel_sizes = [(3, 3), (5, 5), (7, 7), (9, 9), (11, 11), (13, 13), (19, 19)]
     morph_iterations_list = [1, 2, 3]
     epsilon_factors = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09]
     dilation_iterations_list = [0, 1, 2]
@@ -127,10 +129,10 @@ def main():
     image_filenames = [f for f in os.listdir(input_path) if f.endswith('.jpg')]
 
     total_images = len(image_filenames)
-    print(f"Rozpoczęcie przetwarzania {total_images} obrazów.")
+    print(f"Starting processing of {total_images} images.")
 
     max_workers = os.cpu_count()
-    print(f"Liczba dostępnych rdzeni CPU: {max_workers}")
+    print(f"Number of available CPU cores: {max_workers}")
 
     images_with_no_positive = 0
 
@@ -156,10 +158,11 @@ def main():
 
                 processed_count += 1
 
-                print(f"Przetworzono obraz: {filename} ({processed_count}/{total_images}) | Kombinacje pozytywne: {len(positive_combinations)}")
+                print(f"Processed image: {filename} ({processed_count}/{total_images}) | Positive combinations: "
+                      f"{len(positive_combinations)}")
             except Exception as e:
                 processed_count += 1
-                print(f"Błąd podczas przetwarzania obrazu {filename}: {str(e)} ({processed_count}/{total_images})")
+                print(f"Error while processing image {filename}: {str(e)} ({processed_count}/{total_images})")
 
     sorted_combinations = sorted(combination_success_counts.items(), key=lambda x: x[1], reverse=True)
 
@@ -169,8 +172,8 @@ def main():
         for combo, count in sorted_combinations:
             f.write(f"Kombinacja: {combo}, Sukcesy: {count}\n")
 
-    print("Przetwarzanie zakończone.")
-    print(f"Ranking kombinacji zapisano w: {ranking_file}")
+    print("Processing completed.")
+    print(f"Combination ranking saved in: {ranking_file}")
 
     total_images_set = set(image_filenames)
     create_sequences(

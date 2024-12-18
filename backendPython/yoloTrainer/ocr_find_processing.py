@@ -5,7 +5,6 @@ from PIL import Image
 import cv2
 from ultralytics import YOLO
 import itertools
-import gc
 
 from services.image_ocr import load_image
 from services.yolo_service.ocr import correct_ocr_text, get_tesseract_config, classify_payment_type_fuzzy
@@ -17,14 +16,13 @@ from cnnTrimChecker.cnn_service.cnn_predict import load_cnn_model
 from yoloTrainer.yolo_config import CLASS_NAMES
 from cnnTrimChecker.cnn_config import SEQUENCE_1
 from config import YOLO_PATH
-from tests_files.example_receipts_data import receipts_data
+from yoloTrainer.example_receipts_data import receipts_data
 
 
 def compare_ocr_to_data(ocr_data, expected_data):
-    fields = ['date', 'nip', 'payment_type', 'sum', 'transaction_number']
     comparisons = {}
 
-    for i, field in enumerate(fields):
+    for i, field in enumerate(CLASS_NAMES):
         ocr_value = ocr_data.get(field, '').strip()
         expected_value = expected_data[i + 1].strip()
 
@@ -38,16 +36,10 @@ def compare_ocr_to_data(ocr_data, expected_data):
                 expected_value = float(expected_value.replace(',', '.'))
             except ValueError:
                 comparisons[field] = False
-                # print(f"Pole: {field}\nOCR: {ocr_data.get(field, '')}\nOCZEKIWANE: {expected_value}\nWYNIK: Niepoprawne\n")
                 continue
-
         result = ocr_value == expected_value
         comparisons[field] = result
-
-        # print(f"Pole: {field}\nOCR: {ocr_value}\nOCZEKIWANE: {expected_value}\nWYNIK: {'Poprawne' if result else 'Niepoprawne'}\n")
-
     return comparisons
-
 
 
 def process_image(image_path, class_name, config):
@@ -83,9 +75,9 @@ def process_entry(entry, base_path, config):
 
         image_path = os.path.join(folder_path, file_name)
         if not os.path.exists(image_path):
-            print(f"Plik nie istnieje: {image_path}")
+            print(f"File does not exist: {image_path}")
             ocr_data[class_name] = ""
-            raise Exception("Plik nie istnieje")
+            raise Exception("File does not exist")
         ocr_text = process_image(image_path, class_name, config)
         ocr_data[class_name] = ocr_text
 
@@ -126,24 +118,24 @@ def process_receipts_data(receipts_data, images_folder, output_root, trim_sequen
         image_path = os.path.join(images_folder, filename + ".jpg")
 
         if not os.path.isfile(image_path):
-            print(f"Plik nie istnieje: {image_path}")
+            print(f"File does not exist: {image_path}")
             raise Exception("Filename error")
         image = cv2.imread(image_path)
 
         if image is None:
-            print(f"Nie można wczytać obrazu: {image_path}")
+            print(f"Cannot load image: {image_path}")
             raise Exception("Filename error")
 
         trimmed_image, flag = perform_trimming(image, trim_sequence["combination_list"], cnn_model)
 
         if not flag:
-            raise Exception(f"Bad trimming for :{filename}")
+            raise Exception(f"Bad trimming for: {filename}")
 
         results = predict(model, trimmed_image)
         best_detections = get_best_detections(results)
 
         if not best_detections:
-            print(f"Brak wykryć dla obrazu: {filename}")
+            print(f"No detections for image: {filename}")
             raise Exception("YOLO ERROR")
 
         image_name, _ = os.path.splitext(filename)
@@ -192,112 +184,82 @@ def test_configuration(config, receipts_data, images_dir):
 
 def perform_ocr_tests(combinations, receipts_data, images_dir):
     results = []
-    output_file = "ranking_wynikow.txt"
+    output_file = os.path.join("yoloTrainer", "ocr_processing_results.txt")
 
-    print(f"Liczba kombinacji do przetestowania: {len(combinations)}")
+    print(f"Number of combinations to test: {len(combinations)}")
     for idx, config in enumerate(combinations, start=1):
-        print(f"\n### TESTUJĘ KONFIGURACJĘ {idx}/{len(combinations)} ###")
+        print(f"\n### TESTING CONFIGURATION {idx}/{len(combinations)} ###")
 
         try:
             overall_accuracy, field_accuracies, config_used = test_configuration(config, receipts_data, images_dir)
-            print(f"Dokładności poszczególnych pól: {field_accuracies}")
+            print(f"Field accuracies: {field_accuracies}")
 
             results.append((overall_accuracy, field_accuracies, config_used))
             print(results)
 
             if overall_accuracy == 100.0:
-                print(f"Osiągnięto 100% poprawności dla konfiguracji: {config_used}.")
+                print(f"Achieved 100% accuracy for configuration: {config_used}.")
                 with open(output_file, "w", encoding="utf-8") as f:
                     f.write(f"Kombinacja osiągnęła 100% poprawności.\n")
                     f.write(f"Konfiguracja: {config_used}\n")
                 return
         except Exception as e:
-            print(f"Błąd przy konfiguracji {idx}: {e}")
+            print(f"Error with configuration {idx}: {e}")
 
     results.sort(key=lambda x: x[0], reverse=True)
-    top_3 = results[:3]
+    top_3 = results[:5]
 
     with open(output_file, "w", encoding="utf-8") as f:
         if any(r[0] == 100.0 for r in results):
             pass
         else:
-            f.write("Top 3 kombinacje (bez osiągnięcia 100%):\n\n")
+            f.write("Top 5 kombinacji (bez osiągnięcia 100%):\n\n")
             for rank, (accuracy, field_acc, conf) in enumerate(top_3, start=1):
                 f.write(f"{rank}. Konfiguracja:\n")
                 f.write(f"   Dokładność: {accuracy:.2f}%\n")
                 f.write(f"   Dokładności poszczególnych pól: {field_acc}\n")
                 f.write(f"   Ustawienia: {conf}\n\n")
 
-    print("Zakończono testowanie konfiguracji OCR.")
+    print("OCR configuration testing completed.")
 
 
 def main():
-    images_folder = r'C:\Users\matim\Desktop\Smart-Expense-Tracker\frontend\public\exampleReceipts'
-    output_root = "ocr_test_images"
+    images_folder = os.path.join('..', 'frontend', 'public', 'exampleReceipts')
+    output_root = os.path.join("yoloTrainer", "ocr_test_images")
 
     if os.path.exists(output_root):
         try:
             shutil.rmtree(output_root)
-            print(f"Usunięto istniejący folder: {output_root}")
         except Exception as e:
-            print(f"Nie udało się usunąć folderu {output_root}: {e}")
+            print(f"Failed to remove folder {output_root}: {e}")
             return
 
-    # Krok 2: Stwórz nowy folder ocr_test_images
     os.makedirs(output_root, exist_ok=True)
-    print(f"Utworzono nowy folder: {output_root}")
-
-    # Inicjalizacja modeli
     trim_sequence = SEQUENCE_1
     try:
         cnn_model = load_cnn_model(trim_sequence["model_name"])
-        print("Załadowano model CNN.")
     except Exception as e:
-        print(f"Błąd podczas ładowania modelu CNN: {e}")
+        print(f"Error while loading the CNN model: {e}")
         return
 
     try:
         model = YOLO(YOLO_PATH)
-        print("Załadowano model YOLO.")
     except Exception as e:
-        print(f"Błąd podczas ładowania modelu YOLO: {e}")
+        print(f"Error while loading the YOLO model: {e}")
         return
 
-    # Krok 3: Przetwórz dane paragonów
     try:
         process_receipts_data(receipts_data, images_folder, output_root, trim_sequence, cnn_model, model)
-        print("Przetwarzanie danych paragonów zakończone.")
+        print("Receipt data processing completed.")
     except Exception as e:
-        print(f"Błąd podczas przetwarzania danych paragonów: {e}")
+        print(f"Error during receipt data processing: {e}")
         return
 
-    # *** Zwolnienie pamięci zajmowanej przez modele ***
     try:
         del cnn_model
         del model
-        gc.collect()
-        print("Zwolniono pamięć zajmowaną przez modele CNN i YOLO.")
     except Exception as e:
-        print(f"Błąd podczas zwalniania pamięci modeli: {e}")
-
-    # Krok 4: Przygotuj kombinacje konfiguracji OCR
-    clean_background = [False, 'function', 'gaussian']
-    clean_bg_function_ksize = [15]
-    clean_bg_gaussian_ksize = [(21, 21)]
-    denoise = [False, 'median', 'bilateral']
-    median_kernel = [3]
-    bilateral_params = [(9, 75, 75)]
-    enhance_contrast = [False, 'equalize', 'clahe']
-    clahe_params = [(2.0, (8, 8))]
-    gamma = [False, 1.2]
-    adaptive_threshold = [False, 'gaussian', 'otsu']
-    adaptive_block_size = [15]
-    adaptive_c = [3]
-    morphological_operation = [False, 'closedilate', 'openclose', 'closeerode']
-    close_kernel = [(5, 5)]
-    erode_kernel = [(2, 2)]
-    open_kernel = [(2, 2)]
-    dilate_kernel = [(3, 3)]
+        print(f"Error while releasing model memory: {e}")
 
     combinations = list(itertools.product(
         clean_background, clean_bg_function_ksize,
@@ -307,6 +269,10 @@ def main():
         adaptive_block_size, adaptive_c, morphological_operation,
         close_kernel, erode_kernel, open_kernel,
         dilate_kernel))
+
+    if len(combinations) > 2000:
+        print(f'Too many combinations: {len(combinations)}')
+        return
 
     config_keys = [
         'clean_background', 'clean_bg_function_ksize',
@@ -319,19 +285,46 @@ def main():
 
     combinations = [dict(zip(config_keys, comb)) for comb in combinations]
 
-    # Krok 5: Testuj konfiguracje OCR sekwencyjnie
     try:
         perform_ocr_tests(combinations, receipts_data, output_root)
     except Exception as e:
-        print(f"Błąd podczas testowania OCR: {e}")
+        print(f"Error during OCR testing: {e}")
     finally:
-        # Krok 6: Usuń folder ocr_test_images po zakończeniu
         try:
             shutil.rmtree(output_root)
-            print(f"Usunięto folder po przetwarzaniu: {output_root}")
         except Exception as e:
-            print(f"Nie udało się usunąć folderu {output_root}: {e}")
+            print(f"Failed to remove folder {output_root}: {e}")
 
 
 if __name__ == "__main__":
+
+    clean_background = [False, 'median', 'gaussian']  # Usuwanie tła: brak, medianowe, Gaussowskie.
+
+    denoise = [False, 'median', 'bilateral']  # Odszumianie: brak, medianowe, bilateralne.
+
+    enhance_contrast = [False, 'equalize', 'clahe']  # Kontrast: brak, equalize, CLAHE.
+
+    gamma = [False, 1.2]  # Korekcja gamma: brak lub współczynnik.
+
+    adaptive_threshold = [False, 'gaussian', 'otsu']  # Progowanie: brak, Gaussowskie, Otsu.
+
+    morphological_operation = [False, 'closedilate', 'openclose',
+                               'closeerode']  # Operacje: brak, zamknij/dylatacja, otwórz/zamknij, zamknij/erozja.
+
+    clean_bg_function_ksize = [15]  # Rozmiar jądra dla medianowego usuwania tła.
+    clean_bg_gaussian_ksize = [(21, 21)]  # Rozmiar jądra dla Gaussowskiego usuwania tła.
+
+    median_kernel = [3]  # Rozmiar jądra dla medianowego filtrowania.
+    bilateral_params = [(9, 75, 75)]  # Parametry bilateralne: średnica, sigmaColor, sigmaSpace.
+
+    clahe_params = [(2.0, (8, 8))]  # Parametry CLAHE: limit kontrastu, rozmiar siatki.
+
+    adaptive_block_size = [15]  # Rozmiar bloku dla progowania adaptacyjnego.
+    adaptive_c = [3]  # Stała odejmowana od średniej przy progowaniu.
+
+    close_kernel = [(5, 5)]  # Rozmiar jądra dla operacji zamknięcia.
+    erode_kernel = [(2, 2)]  # Rozmiar jądra dla operacji erozji.
+    open_kernel = [(2, 2)]  # Rozmiar jądra dla operacji otwarcia.
+    dilate_kernel = [(3, 3)]  # Rozmiar jądra dla operacji dylatacji.
+
     main()

@@ -68,6 +68,10 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
         handleTitleBlur(title, setIsCategoryLoading, setCategories, setSelectedCategory);
     };
 
+    const handleImageDialogOpen = () => {
+        setIsImageDialogOpen(true);
+    };
+
     const onHandleSubmit = (e) => {
         const formData = {
             title,
@@ -191,6 +195,7 @@ const AddEventDialog = ({ open, onClose, onEventAdded }) => {
                         onHandleFileChange={setImageFunction}
                         handleRemoveImage={handleRemoveImage}
                         handleCardClick={handleCardClick}
+                        openImageDialog={handleImageDialogOpen}
                     />
 
                     <RadioDateImgBox

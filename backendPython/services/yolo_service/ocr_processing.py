@@ -9,7 +9,7 @@ def adjust_gamma(image, gamma):
     return cv2.LUT(image, table)
 
 
-def clean_background_function(img, ksize):
+def clean_background_median(img, ksize):
     background = cv2.medianBlur(img, ksize)
     return cv2.absdiff(img, background)
 
@@ -28,7 +28,11 @@ def resize_image_to_dpi(img, target_dpi=300):
     return resized
 
 
-def process_pil(image, OCR_PROCESSING_CONFIGURATION):
+def process_pil(image, OCR_PROCESSING_CONFIGURATION=None):
+    if OCR_PROCESSING_CONFIGURATION is None:
+        from yoloTrainer.yolo_config import OCR_PROCESSING_CONFIGURATION as DEFAULT_OCR_CONFIG
+        OCR_PROCESSING_CONFIGURATION = DEFAULT_OCR_CONFIG
+
     clean_background = OCR_PROCESSING_CONFIGURATION.get('clean_background')
     if clean_background is None:
         raise ValueError("clean_background cannot be None")
@@ -58,8 +62,8 @@ def process_pil(image, OCR_PROCESSING_CONFIGURATION):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     img = resize_image_to_dpi(img)
 
-    if clean_background == 'function':
-        img = clean_background_function(img, ksize=clean_bg_function_ksize)
+    if clean_background == 'median':
+        img = clean_background_median(img, ksize=clean_bg_function_ksize)
     elif clean_background == 'gaussian':
         img = clean_background_gaussian(img, ksize=clean_bg_gaussian_ksize)
 
@@ -79,17 +83,17 @@ def process_pil(image, OCR_PROCESSING_CONFIGURATION):
     if gamma:
         img = adjust_gamma(img, gamma=gamma)
 
-    close_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, close_kernel) if close_kernel else None
-    open_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, open_kernel) if open_kernel else None
-    erode_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, erode_kernel) if erode_kernel else None
-    dilate_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, dilate_kernel) if dilate_kernel else None
-
     if adaptive_threshold == 'gaussian':
         img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,
                                     adaptive_block_size, adaptive_c)
     elif adaptive_threshold == 'otsu':
         img = cv2.GaussianBlur(img, (5, 5), 0)
         _, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    close_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, close_kernel) if close_kernel else None
+    open_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, open_kernel) if open_kernel else None
+    erode_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, erode_kernel) if erode_kernel else None
+    dilate_kernel_element = cv2.getStructuringElement(cv2.MORPH_RECT, dilate_kernel) if dilate_kernel else None
 
     if morphological_operation == "closedilate":
         if close_kernel_element is not None and dilate_kernel_element is not None:

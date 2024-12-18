@@ -28,7 +28,6 @@ const BounceAnimation = styled('div')`
 `;
 
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} timeout={{ enter: 500, exit: 500 }} />;
 });

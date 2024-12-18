@@ -17,7 +17,6 @@ def predict(model, image):
 def get_best_detections(results):
     best_detections = {}
     for result in results:
-        # List of attributes to process
         for attr_name in ['boxes', 'obb']:
             detections = getattr(result, attr_name, None)
             if detections is not None:
@@ -29,19 +28,16 @@ def get_best_detections(results):
                         if class_id is None:
                             continue
 
-                        # Update the best detection for the given class
                         if (class_id not in best_detections) or (confidence > best_detections[class_id]['conf']):
                             best_detections[class_id] = {
                                 attr_name: det,
                                 'conf': confidence
                             }
-                    # After processing detections for one attribute, move to the next result
                     break
                 else:
-                    print(f"  No object detections above the confidence threshold in '{attr_name}'.")
+                    print(f"No object detections above the confidence threshold in '{attr_name}'.")
         else:
-            # If neither 'boxes' nor 'obb' contain detections
-            print("  No object detections above the confidence threshold (neither 'boxes' nor 'obb').")
+            print("No object detections above the confidence threshold (neither 'boxes' nor 'obb').")
     return best_detections
 
 
