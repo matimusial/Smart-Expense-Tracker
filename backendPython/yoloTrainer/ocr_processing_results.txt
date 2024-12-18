@@ -1,7 +1,17 @@
-Top 5 kombinacji (bez osiągnięcia 100%):
+Top 3 kombinacje (bez osiągnięcia 100%):
 
 1. Konfiguracja:
-   Dokładność: 52.08%
-   Dokładności poszczególnych pól: {'date': 66.66666666666666, 'nip': 6.25, 'payment_type': 79.16666666666666, 'sum': 58.333333333333336, 'transaction_number': 50.0}
-   Ustawienia: {'clean_background': False, 'clean_bg_function_ksize': 15, 'clean_bg_gaussian_ksize': (21, 21), 'denoise': False, 'median_kernel': 3, 'bilateral_params': (9, 75, 75), 'enhance_contrast': False, 'clahe_params': (2.0, (8, 8)), 'gamma': False, 'adaptive_threshold': False, 'adaptive_block_size': 15, 'adaptive_c': 3, 'morphological_operation': False, 'close_kernel': (5, 5), 'erode_kernel': (2, 2), 'open_kernel': (2, 2), 'dilate_kernel': (3, 3)}
+   Dokładność: 64.58%
+   Dokładności poszczególnych pól: {'date': 75.0, 'nip': 18.75, 'payment_type': 100.0, 'sum': 77.08333333333334, 'transaction_number': 52.083333333333336}
+   Ustawienia: {'clean_background': False, 'clean_bg_function_ksize': 15, 'clean_bg_gaussian_ksize': (21, 21), 'denoise': 'median', 'median_kernel': 3, 'bilateral_params': (9, 75, 75), 'enhance_contrast': 'clahe', 'clahe_params': (1.5, (6, 6)), 'gamma': 1.5, 'adaptive_threshold': 'otsu', 'adaptive_block_size': 11, 'adaptive_c': 1, 'morphological_operation': 'closeerode', 'close_kernel': (5, 5), 'erode_kernel': (2, 2), 'open_kernel': (2, 2), 'dilate_kernel': (3, 3)}
+
+2. Konfiguracja:
+   Dokładność: 64.58%
+   Dokładności poszczególnych pól: {'date': 75.0, 'nip': 18.75, 'payment_type': 100.0, 'sum': 77.08333333333334, 'transaction_number': 52.083333333333336}
+   Ustawienia: {'clean_background': False, 'clean_bg_function_ksize': 15, 'clean_bg_gaussian_ksize': (21, 21), 'denoise': 'median', 'median_kernel': 3, 'bilateral_params': (9, 75, 75), 'enhance_contrast': 'clahe', 'clahe_params': (1.5, (6, 6)), 'gamma': 1.5, 'adaptive_threshold': 'otsu', 'adaptive_block_size': 11, 'adaptive_c': 3, 'morphological_operation': 'closeerode', 'close_kernel': (5, 5), 'erode_kernel': (2, 2), 'open_kernel': (2, 2), 'dilate_kernel': (3, 3)}
+
+3. Konfiguracja:
+   Dokładność: 64.58%
+   Dokładności poszczególnych pól: {'date': 75.0, 'nip': 18.75, 'payment_type': 100.0, 'sum': 77.08333333333334, 'transaction_number': 52.083333333333336}
+   Ustawienia: {'clean_background': False, 'clean_bg_function_ksize': 15, 'clean_bg_gaussian_ksize': (21, 21), 'denoise': 'median', 'median_kernel': 3, 'bilateral_params': (9, 75, 75), 'enhance_contrast': 'clahe', 'clahe_params': (1.5, (6, 6)), 'gamma': 1.5, 'adaptive_threshold': 'otsu', 'adaptive_block_size': 11, 'adaptive_c': 5, 'morphological_operation': 'closeerode', 'close_kernel': (5, 5), 'erode_kernel': (2, 2), 'open_kernel': (2, 2), 'dilate_kernel': (3, 3)}
 
